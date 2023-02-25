@@ -1,0 +1,56 @@
+*************************
+Présentation du projet
+*************************
+
+TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.
+
+
+Objectifs du projet
+===================
+
+TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.TourGuide est une application Spring Boot et une pièce maîtresse du portfolio
+d'applications TripMaster. Elle permet aux utilisateurs de voir quelles sont les
+attractions touristiques à proximité et d’obtenir des réductions sur les séjours d’hôtel
+ainsi que sur les billets de différents spectacles.
+
+example 2 
+=========
