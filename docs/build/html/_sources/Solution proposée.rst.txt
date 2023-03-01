@@ -23,6 +23,10 @@ Diagramme de classe de l'architecture 3 tiers
 +++++++++++++++++++++++++++++++++++++++++++++
 
 .. image:: _static/Class_diagram/MVC_diagram.png
+    :width: 100%
+    :alt: MVC_diagram
+    :name: Diagramme de classe MVC
+
 
 
 Spécifications techniques
