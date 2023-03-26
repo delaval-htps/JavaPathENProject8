@@ -49,8 +49,8 @@ public class Tracker extends Thread {
 			stopWatch.start();
 		
 			users.forEach(u -> {
-				// countUser++;
-				// logger.info("\u001B[33m tracker {} / user :{} /count: {}", Thread.currentThread().getName(), u.getUserId(),countUser);
+				countUser++;
+				logger.info("\u001B[33m tracker {} / user :{} /count: {}", Thread.currentThread().getName(), u.getUserId(),countUser);
 				
 				tourGuideService.trackUserLocation(u, tourGuideService.getUserService(), tourGuideService.getRewardsService());
 		
