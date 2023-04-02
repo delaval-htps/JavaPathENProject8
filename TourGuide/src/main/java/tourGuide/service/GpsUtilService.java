@@ -20,20 +20,20 @@ public class GpsUtilService {
   private GpsUtil gpsUtil;
   private Logger logger = LoggerFactory.getLogger(GpsUtilService.class);
 
-  public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*(1+110));
+  public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
   public GpsUtilService(GpsUtil gpsUtil) {
     this.gpsUtil = gpsUtil;
   }
 
-  public CompletableFuture<VisitedLocation> getLocation(User user) {
-    return CompletableFuture.supplyAsync(() -> {
-      logger.info("\u001B[35m thread GPS.getLocation():{}", Thread.currentThread().getName());
-      return gpsUtil.getUserLocation(user.getUserId());
-    }, gpsExecutorService).thenApplyAsync(result -> {
-      user.addToVisitedLocations(result);
-      return result;
-    }, gpsExecutorService);
+  public CompletableFuture<Void> getLocation(User user) {
+    return CompletableFuture.supplyAsync(() -> gpsUtil.getUserLocation(user.getUserId()))
+    .thenAccept(location -> {
+     logger.info(" add location {} to user {} ", location,user.getUserId());
+     user.addToVisitedLocations(location);
+     logger.info("call calculateReward for user {} ", user.getUserId());
+    //  rewardsService.calculateRewards(user);
+        });
   }
 
   public CompletableFuture<List<Attraction>> getAttractions() {
