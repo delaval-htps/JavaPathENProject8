@@ -1,10 +1,15 @@
 package tourGuide.service;
 
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.stereotype.Service;
 
 import gpsUtil.location.Attraction;
@@ -24,6 +29,7 @@ public class RewardsService {
 	private int attractionProximityRange = 200;
 	private final GpsUtilService gpsUtilService;
 	private final RewardCentral rewardsCentral;
+	public final ExecutorService rewardExecutorService = Executors.newFixedThreadPool(10000);
 
 	public RewardsService(GpsUtilService gpsUtilService, RewardCentral rewardCentral) {
 		this.gpsUtilService = gpsUtilService;
@@ -39,18 +45,18 @@ public class RewardsService {
 	}
 
 	public void calculateRewards(User user) {
-		logger.info("\u001B[31m calculateRewards {}",Thread.currentThread().getName());
-		List<VisitedLocation> userLocations = user.getVisitedLocations();
+		logger.debug("\u001B[31m calculateRewards {}", Thread.currentThread().getName());
+		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>(user.getVisitedLocations());
 		List<Attraction> attractions = gpsUtilService.getAttractions();
 
 		for (VisitedLocation visitedLocation : userLocations) {
 			for (Attraction attraction : attractions) {
-				
+
 				if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					boolean nearattraction = nearAttraction(visitedLocation, attraction);
-					
+
 					if (nearattraction) {
-						logger.debug("user.addUserReward(new UserReward)");
+
 						user.addUserReward(new UserReward(visitedLocation, attraction, getRewardPoints(attraction, user)));
 					}
 				}
@@ -67,7 +73,21 @@ public class RewardsService {
 	}
 
 	private int getRewardPoints(Attraction attraction, User user) {
-		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
+		// return rewardsCentral.getAttractionRewardPoints(attraction.attractionId,
+		// user.getUserId());
+		try {
+			Callable<Integer> callable = () -> {
+				return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
+			};
+
+			Future future = rewardExecutorService.submit(callable);
+
+			return (int) future.get();
+		} catch (InterruptedException | ExecutionException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 
 	public double getDistance(Location loc1, Location loc2) {

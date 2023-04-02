@@ -5,6 +5,8 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.StopWatch;
@@ -52,17 +54,29 @@ public class TestPerformance {
 		UserService userService = new UserService();
 		GpsUtilService gpsUtilService = new GpsUtilService(new GpsUtil());
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
+		ExecutorService trackExecutorService = Executors.newFixedThreadPool(1000);
 		// Users should be incremented up to 100,000, and test finishes within 15 minutes
-		InternalTestHelper.setInternalUserNumber(5);
+		InternalTestHelper.setInternalUserNumber(2);
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, userService);
+		
 
 		List<User> allUsers = new ArrayList<>();
 		allUsers = tourGuideService.getAllUsers();
 		
 	    StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-		for(User user : allUsers) {
-			tourGuideService.trackUserLocation(user, userService, rewardsService);
+		for (User user : allUsers) {
+			Runnable runnable = () -> {
+				tourGuideService.trackUserLocation(user, userService, rewardsService);
+			};
+			trackExecutorService.submit(runnable);
+		}
+		trackExecutorService.shutdown();
+		try {
+			trackExecutorService.awaitTermination(10, TimeUnit.MINUTES);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		stopWatch.stop();
 		tourGuideService.tracker.stopTracking();

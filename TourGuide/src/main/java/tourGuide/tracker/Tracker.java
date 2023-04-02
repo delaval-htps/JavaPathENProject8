@@ -1,6 +1,8 @@
 package tourGuide.tracker;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
@@ -10,7 +12,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import tourGuide.service.TourGuideService;
-import tourGuide.service.UserService;
 import tourGuide.user.User;
 
 public class Tracker extends Thread {
@@ -20,7 +21,7 @@ public class Tracker extends Thread {
 
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;
-
+	
 	public Tracker(TourGuideService tourGuideService) {
 		this.tourGuideService = tourGuideService;
 		executorService.submit(this);
@@ -32,7 +33,7 @@ public class Tracker extends Thread {
 	public void stopTracking() {
 		stop = true;
 		executorService.shutdownNow();
-		logger.info("shutdonw Tourguideservice");
+		logger.debug("shutdonw Tourguideservice");
 	}
 	int countUser = 0;
 	@Override
@@ -45,17 +46,20 @@ public class Tracker extends Thread {
 			}
 
 			List<User> users = tourGuideService.getAllUsers();
+		
+
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
 		
 			users.forEach(u -> {
 				countUser++;
-				logger.info("\u001B[33m tracker {} / user :{} /count: {}", Thread.currentThread().getName(), u.getUserId(),countUser);
+				logger.debug("\u001B[33m tracker {} / user :{} /count: {}", Thread.currentThread().getName(), u.getUserId(),countUser);
 				
 				tourGuideService.trackUserLocation(u, tourGuideService.getUserService(), tourGuideService.getRewardsService());
 		
 			});
-			logger.info("\u001B[33m coutUser ={}",countUser);
+
+			logger.debug("\u001B[33m coutUser ={}",countUser);
 			stopWatch.stop();
 			
 			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
