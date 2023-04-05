@@ -39,7 +39,7 @@ public class TourGuideService {
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
 	public final Tracker tracker;
-	private final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+	private final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
 
 	boolean testMode = true;
 
@@ -92,31 +92,39 @@ public class TourGuideService {
 	}
 
 	public VisitedLocation trackUserLocation(User user) {
-		
+
 		// user.addToVisitedLocations(visitedLocation);
 		// rewardsService.calculateRewards(user);
 		// return visitedLocation;
 
-		CompletableFuture<VisitedLocation> visitedLocationFuture = CompletableFuture.supplyAsync(
-				() -> {
-					logger.info("\033[32m inside TrackerUSerLocation(): gpstUtils.getUserLocation() {} in thread {}", user.getUserName(), Thread.currentThread().getName());
-					return gpsUtil.getUserLocation(user.getUserId());
-				}, tourGuideServiceExecutor);
+		CompletableFuture<VisitedLocation> visitedLocationFuture = CompletableFuture.supplyAsync(() -> {
+			logger.info("\033[37m inside TrackerUSerLocation(): gpstUtils.getUserLocation() {} in thread {}", user.getUserName(), Thread.currentThread().getName());
+			return gpsUtil.getUserLocation(user.getUserId());
+		}, tourGuideServiceExecutor);
 
-		visitedLocationFuture.thenAccept((location) -> {
+		visitedLocationFuture.thenAcceptAsync((location) -> {
 
-			logger.info("\033[33m add location {} to user {} in thread {}",location, user.getUserName(), Thread.currentThread().getName());
+			logger.info("\033[33m inside TrackerUSerLocation():  thenAccept add location {} to user {} in thread {}", location, user.getUserName(), Thread.currentThread().getName());
 			user.addToVisitedLocations(location);
-		});
+		}, tourGuideServiceExecutor);
 
 		visitedLocationFuture.thenRunAsync(() -> {
-			logger.info("\033[35m inside calculateRewards to user {} in thread {}", user.getUserName(), Thread.currentThread().getName());
+			logger.info("\033[35m inside TrackerUSerLocation(): thenRunAsync calculateRewards for user {} in thread {}", user.getUserName(), Thread.currentThread().getName());
 			rewardsService.calculateRewards(user);
 		}, tourGuideServiceExecutor);
-		
-		
 
 		return visitedLocationFuture.join();
+	}
+	
+	public void trackAllUserLocation() {
+		List<User> users = this.getAllUsers();
+		 users.parallelStream().map(this::trackUserLocation).collect(Collectors.toList());
+		// users.forEach(u -> {
+		// 	CompletableFuture.runAsync(() -> {
+		// 		logger.info("\033[37m inside trackAllUserLocation user: {} in thread {}", u.getUserName(), Thread.currentThread().getName());
+		// 		this.trackUserLocation(u);
+		// 	}, tourGuideServiceExecutor).join();
+		// });
 	}
 
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {

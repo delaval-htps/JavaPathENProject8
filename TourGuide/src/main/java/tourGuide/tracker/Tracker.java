@@ -30,7 +30,7 @@ public class Tracker extends Thread {
 		
 		executorService.submit(this);
 	}
-	
+
 	/**
 	 * Assures to shut down the Tracker thread
 	 */
@@ -39,34 +39,35 @@ public class Tracker extends Thread {
 		executorService.shutdownNow();
 	
 	}
-	
+
 	@Override
 	public void run() {
-		
+
 		StopWatch stopWatch = new StopWatch();
-		while(true) {
-			if(Thread.currentThread().isInterrupted() || stop) {
+		while (true) {
+			if (Thread.currentThread().isInterrupted() || stop) {
 				logger.debug("Tracker stopping");
 				break;
 			}
-			
+
 			List<User> users = tourGuideService.getAllUsers();
 			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
 			stopWatch.start();
-			
-			// List<VisitedLocation> trackedLocationOfUsers = users.parallelStream().map(u -> {
-			// 	logger.info("tourguideService .tarckeruser {} in thread {}", u.getUserId(),Thread.currentThread().getName());tourGuideService.trackUserLocation(u);				
-			// 	return tourGuideService.trackUserLocation(u);
-			// }).collect(Collectors.toList());
-			
-			users.forEach(u ->{
-			CompletableFuture.runAsync(() -> {
-			logger.info("\033[31m inside tracker: tourGuideService.trackUserLocation () {} in thread {}", u.getUserId(),
-					Thread.currentThread().getName());
-			tourGuideService.trackUserLocation(u);
-				}, executorServiceTourGuide);
-		});
 
+			// List<VisitedLocation> trackedLocationOfUsers = users.parallelStream().map(u
+			// -> {
+			// logger.info("tourguideService .tarckeruser {} in thread {}",
+			// u.getUserId(),Thread.currentThread().getName());tourGuideService.trackUserLocation(u);
+			// return tourGuideService.trackUserLocation(u);
+			// }).collect(Collectors.toList());
+
+			users.forEach(u -> {
+				CompletableFuture.runAsync(() -> {
+					logger.info("\033[31m inside tracker: tourGuideService.trackUserLocation () {} in thread {}", u.getUserName(), Thread.currentThread().getName());
+					tourGuideService.trackUserLocation(u);
+				}, executorServiceTourGuide);
+				// tourGuideService.trackUserLocation(u);
+			});
 			
 
 			stopWatch.stop();
