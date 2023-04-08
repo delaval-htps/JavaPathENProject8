@@ -4,14 +4,13 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -41,6 +40,8 @@ public class TourGuideService {
 	public final Tracker tracker;
 	private final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
 
+	public CountDownLatch usersCountDownLatch;
+
 	boolean testMode = true;
 
 	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
@@ -51,8 +52,10 @@ public class TourGuideService {
 			logger.info("TestMode enabled");
 			logger.debug("Initializing users");
 			initializeInternalUsers();
+			usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
 			logger.debug("Finished initializing users");
 		}
+		
 		tracker = new Tracker(this);
 		addShutDownHook();
 	}
@@ -62,9 +65,7 @@ public class TourGuideService {
 	}
 
 	public VisitedLocation getUserLocation(User user) {
-		VisitedLocation visitedLocation = (user.getVisitedLocations().size() > 0) ? user.getLastVisitedLocation()
-				: trackUserLocation(user);
-		return visitedLocation;
+		return (user.getVisitedLocations().size() > 0) ? user.getLastVisitedLocation() : trackUserLocation(user);
 	}
 
 	public User getUser(String userName) {
@@ -83,9 +84,7 @@ public class TourGuideService {
 
 	public List<Provider> getTripDeals(User user) {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(),
-				user.getUserPreferences().getNumberOfAdults(),
-				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),
+		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),
 				cumulatativeRewardPoints);
 		user.setTripDeals(providers);
 		return providers;
@@ -115,15 +114,16 @@ public class TourGuideService {
 
 		return visitedLocationFuture.join();
 	}
-	
+
 	public void trackAllUserLocation() {
 		List<User> users = this.getAllUsers();
-		 users.parallelStream().map(this::trackUserLocation).collect(Collectors.toList());
+		users.parallelStream().map(this::trackUserLocation).collect(Collectors.toList());
 		// users.forEach(u -> {
-		// 	CompletableFuture.runAsync(() -> {
-		// 		logger.info("\033[37m inside trackAllUserLocation user: {} in thread {}", u.getUserName(), Thread.currentThread().getName());
-		// 		this.trackUserLocation(u);
-		// 	}, tourGuideServiceExecutor).join();
+		// CompletableFuture.runAsync(() -> {
+		// logger.info("\033[37m inside trackAllUserLocation user: {} in thread {}",
+		// u.getUserName(), Thread.currentThread().getName());
+		// this.trackUserLocation(u);
+		// }, tourGuideServiceExecutor).join();
 		// });
 	}
 
@@ -155,7 +155,7 @@ public class TourGuideService {
 	private static final String tripPricerApiKey = "test-server-api-key";
 	// Database connection will be used for external users, but for testing purposes
 	// internal users are provided and stored in memory
-	private final Map<String, User> internalUserMap = new HashMap<>();
+	private final ConcurrentHashMap<String, User> internalUserMap = new ConcurrentHashMap();
 
 	private void initializeInternalUsers() {
 		// Set the user locale to english to not have NumberFormatException with visited
@@ -175,8 +175,7 @@ public class TourGuideService {
 
 	private void generateUserLocationHistory(User user) {
 		IntStream.range(0, 3).forEach(i -> {
-			user.addToVisitedLocations(new VisitedLocation(user.getUserId(),
-					new Location(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));
+			user.addToVisitedLocations(new VisitedLocation(user.getUserId(), new Location(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));
 		});
 	}
 

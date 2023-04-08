@@ -1,5 +1,6 @@
 package tourGuide.tracker;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
@@ -20,14 +21,14 @@ public class Tracker extends Thread {
 	private Logger logger = LoggerFactory.getLogger(Tracker.class);
 	private static final long trackingPollingInterval = TimeUnit.MINUTES.toSeconds(15);
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-	private final ExecutorService executorServiceTourGuide = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+	private final ExecutorService trackerService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;
 
 	public Tracker(TourGuideService tourGuideService) {
 		this.tourGuideService = tourGuideService;
-		
+
 		executorService.submit(this);
 	}
 
@@ -37,7 +38,8 @@ public class Tracker extends Thread {
 	public void stopTracking() {
 		stop = true;
 		executorService.shutdownNow();
-	
+		trackerService.shutdown();
+
 	}
 
 	@Override
@@ -49,30 +51,31 @@ public class Tracker extends Thread {
 				logger.debug("Tracker stopping");
 				break;
 			}
-
-			List<User> users = tourGuideService.getAllUsers();
-			logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
-			stopWatch.start();
-
-			// List<VisitedLocation> trackedLocationOfUsers = users.parallelStream().map(u
-			// -> {
-			// logger.info("tourguideService .tarckeruser {} in thread {}",
-			// u.getUserId(),Thread.currentThread().getName());tourGuideService.trackUserLocation(u);
-			// return tourGuideService.trackUserLocation(u);
-			// }).collect(Collectors.toList());
-
-			users.forEach(u -> {
-				CompletableFuture.runAsync(() -> {
-					logger.info("\033[31m inside tracker: tourGuideService.trackUserLocation () {} in thread {}", u.getUserName(), Thread.currentThread().getName());
-					tourGuideService.trackUserLocation(u);
-				}, executorServiceTourGuide);
-				// tourGuideService.trackUserLocation(u);
-			});
 			
+				List<User> users = tourGuideService.getAllUsers();
 
+				logger.debug("Begin Tracker. Tracking " + users.size() + " users.");
+
+				stopWatch.start();
+
+				// users.parallelStream().map(u -> {
+				// logger.debug("\033[31m inside tracker: tourGuideService.trackUserLocation (){} in thread {}", u.getUserName(), Thread.currentThread().getName());
+			
+				// return tourGuideService.trackUserLocation(u);
+				// }).collect(Collectors.toList());
+
+				users.forEach(u -> {
+					logger.debug("\033[31m inside tracker: tourGuideService.trackUserLocation () {} in thread {}", u.getUserName(), Thread.currentThread().getName());
+					tourGuideService.trackUserLocation(u);
+					tourGuideService.usersCountDownLatch.countDown();
+				});
+			
 			stopWatch.stop();
-			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds."); 
+
+			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
+
 			stopWatch.reset();
+
 			try {
 				logger.debug("Tracker sleeping");
 				TimeUnit.SECONDS.sleep(trackingPollingInterval);
@@ -80,6 +83,6 @@ public class Tracker extends Thread {
 				break;
 			}
 		}
-		
+
 	}
 }
