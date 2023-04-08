@@ -1,6 +1,7 @@
 package tourGuide.service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import org.springframework.stereotype.Service;
@@ -61,7 +62,7 @@ public class RewardsService {
 	}
 	
 	private int getRewardPoints(Attraction attraction, User user) {
-		return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
+		return CompletableFuture.supplyAsync(()->rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId())).join();
 	}
 	
 	public double getDistance(Location loc1, Location loc2) {
