@@ -64,7 +64,7 @@ public class Tracker extends Thread {
 				// return tourGuideService.trackUserLocation(u);
 				// }).collect(Collectors.toList());
 
-				users.forEach(u -> {
+				users.parallelStream().forEach(u -> {
 					logger.debug("\033[31m inside tracker: tourGuideService.trackUserLocation () {} in thread {}", u.getUserName(), Thread.currentThread().getName());
 					tourGuideService.trackUserLocation(u);
 					tourGuideService.usersCountDownLatch.countDown();
