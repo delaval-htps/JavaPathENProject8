@@ -64,15 +64,15 @@ public class Tracker extends Thread {
 				// return tourGuideService.trackUserLocation(u);
 				// }).collect(Collectors.toList());
 
-				users.parallelStream().forEach(u -> {
-					logger.info("\033[31m inside tracker: tourGuideService.trackUserLocation () {} in thread {}", u.getUserName(), Thread.currentThread().getName());
-					tourGuideService.trackUserLocation(u);
-					tourGuideService.usersCountDownLatch.countDown();
-				});
-			
+			users.parallelStream().forEach(u -> {
+				logger.info("\033[31m {}: tourGuideService.trackUserLocation ({})",this.getClass().getCanonicalName(), u.getUserName());
+				tourGuideService.trackUserLocation(u);
+				tourGuideService.usersCountDownLatch.countDown();
+			});
+
 			stopWatch.stop();
 
-			logger.debug("Tracker Time Elapsed: " + TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()) + " seconds.");
+			logger.debug("Tracker Time Elapsed: {} seconds" , TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
 			stopWatch.reset();
 

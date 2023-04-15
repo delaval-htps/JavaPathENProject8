@@ -26,20 +26,30 @@ public class GpsUtilService {
     this.gpsUtil = gpsUtil;
   }
 
-  public CompletableFuture<Void> getLocation(User user) {
-    return CompletableFuture.supplyAsync(() -> gpsUtil.getUserLocation(user.getUserId()))
-    .thenAccept(location -> {
-     logger.info(" add location {} to user {} ", location,user.getUserId());
-     user.addToVisitedLocations(location);
-     logger.info("call calculateReward for user {} ", user.getUserId());
-    //  rewardsService.calculateRewards(user);
-        });
+  public CompletableFuture<VisitedLocation> getLocation(User user) {
+
+    CompletableFuture<VisitedLocation> visitedLocationFuture = CompletableFuture.supplyAsync(() -> {
+      logger.info("\033[37m {}: gpstUtils.getUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
+      return gpsUtil.getUserLocation(user.getUserId());
+    }, gpsExecutorService);
+
+    visitedLocationFuture.thenAcceptAsync((location) -> {
+
+      logger.info("\033[33m {}:  {}.addVisitedLocation({}})", this.getClass().getCanonicalName(), user.getUserName(), location);
+      user.addToVisitedLocations(location);
+    }, gpsExecutorService);
+
+    return visitedLocationFuture;
   }
 
   public CompletableFuture<List<Attraction>> getAttractions() {
     return CompletableFuture.supplyAsync(() -> {
-			return  gpsUtil.getAttractions();
-		},gpsExecutorService);
+      return gpsUtil.getAttractions();
+    }, gpsExecutorService);
   }
- 
+
+  public void stopGpsExecutorService() {
+    gpsExecutorService.shutdown();
+  }
+
 }

@@ -20,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
@@ -34,18 +33,19 @@ import tripPricer.TripPricer;
 @Service
 public class TourGuideService {
 	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
-	private final GpsUtil gpsUtil;
+	public final GpsUtilService gpsUtilService;
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
 	public final Tracker tracker;
-	private final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
+	public final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
 
 	public CountDownLatch usersCountDownLatch;
 
 	boolean testMode = true;
 
-	public TourGuideService(GpsUtil gpsUtil, RewardsService rewardsService) {
-		this.gpsUtil = gpsUtil;
+	public TourGuideService(GpsUtilService gpsUtilService, RewardsService rewardsService) {
+
+		this.gpsUtilService = gpsUtilService;
 		this.rewardsService = rewardsService;
 
 		if (testMode) {
@@ -55,7 +55,7 @@ public class TourGuideService {
 			usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
 			logger.debug("Finished initializing users");
 		}
-		
+
 		tracker = new Tracker(this);
 		addShutDownHook();
 	}
@@ -92,44 +92,23 @@ public class TourGuideService {
 
 	public VisitedLocation trackUserLocation(User user) {
 
-		// user.addToVisitedLocations(visitedLocation);
-		// rewardsService.calculateRewards(user);
-		// return visitedLocation;
-
-		CompletableFuture<VisitedLocation> visitedLocationFuture = CompletableFuture.supplyAsync(() -> {
-			logger.info("\033[37m inside TrackerUSerLocation(): gpstUtils.getUserLocation() {} in thread {}", user.getUserName(), Thread.currentThread().getName());
-			return gpsUtil.getUserLocation(user.getUserId());
-		}, tourGuideServiceExecutor);
-
-		visitedLocationFuture.thenAcceptAsync((location) -> {
-
-			logger.info("\033[33m inside TrackerUSerLocation():  thenAccept add location {} to user {} in thread {}", location, user.getUserName(), Thread.currentThread().getName());
-			user.addToVisitedLocations(location);
-		}, tourGuideServiceExecutor);
-
-		visitedLocationFuture.thenRunAsync(() -> {
-			logger.info("\033[35m inside TrackerUSerLocation(): thenRunAsync calculateRewards for user {} in thread {}", user.getUserName(), Thread.currentThread().getName());
+		CompletableFuture<VisitedLocation> visitedLocation = gpsUtilService.getLocation(user);
+		visitedLocation.thenRunAsync(() -> {
+			logger.info("\033[35m {}}: rewardsService.calculateRewards({})", this.getClass().getCanonicalName(), user.getUserName());
 			rewardsService.calculateRewards(user);
 		}, tourGuideServiceExecutor);
 
-		return visitedLocationFuture.join();
+		return visitedLocation.join();
 	}
 
 	public void trackAllUserLocation() {
 		List<User> users = this.getAllUsers();
 		users.parallelStream().map(this::trackUserLocation).collect(Collectors.toList());
-		// users.forEach(u -> {
-		// CompletableFuture.runAsync(() -> {
-		// logger.info("\033[37m inside trackAllUserLocation user: {} in thread {}",
-		// u.getUserName(), Thread.currentThread().getName());
-		// this.trackUserLocation(u);
-		// }, tourGuideServiceExecutor).join();
-		// });
 	}
 
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
-		for (Attraction attraction : gpsUtil.getAttractions()) {
+		for (Attraction attraction : gpsUtilService.getAttractions().join()) {
 			if (rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
 				nearbyAttractions.add(attraction);
 			}
@@ -143,6 +122,7 @@ public class TourGuideService {
 			public void run() {
 				tracker.stopTracking();
 				tourGuideServiceExecutor.shutdown();
+				gpsUtilService.stopGpsExecutorService();
 			}
 		});
 	}
