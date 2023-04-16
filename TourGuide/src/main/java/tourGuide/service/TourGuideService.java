@@ -92,13 +92,18 @@ public class TourGuideService {
 
 	public VisitedLocation trackUserLocation(User user) {
 
-		CompletableFuture<VisitedLocation> visitedLocation = gpsUtilService.getLocation(user);
+		CompletableFuture<VisitedLocation> visitedLocation = gpsUtilService.getLocation(user, this);
 		visitedLocation.thenRunAsync(() -> {
 			logger.info("\033[35m {}}: rewardsService.calculateRewards({})", this.getClass().getCanonicalName(), user.getUserName());
 			rewardsService.calculateRewards(user);
 		}, tourGuideServiceExecutor);
 
 		return visitedLocation.join();
+	}
+
+	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
+		user.addToVisitedLocations(visitedLocation);
+		rewardsService.calculateRewards(user);
 	}
 
 	public void trackAllUserLocation() {
@@ -150,7 +155,7 @@ public class TourGuideService {
 
 			internalUserMap.put(userName, user);
 		});
-		logger.debug("Created " + InternalTestHelper.getInternalUserNumber() + " internal test users.");
+		logger.debug("Created {}  internal test users.", InternalTestHelper.getInternalUserNumber());
 	}
 
 	private void generateUserLocationHistory(User user) {

@@ -26,17 +26,16 @@ public class GpsUtilService {
     this.gpsUtil = gpsUtil;
   }
 
-  public CompletableFuture<VisitedLocation> getLocation(User user) {
+  public CompletableFuture<VisitedLocation> getLocation(User user, TourGuideService tourGuideService) {
 
-    CompletableFuture<VisitedLocation> visitedLocationFuture = CompletableFuture.supplyAsync(() -> {
+    CompletableFuture<VisitedLocation> visitedLocationFuture =CompletableFuture.supplyAsync(() -> {
       logger.info("\033[37m {}: gpstUtils.getUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
       return gpsUtil.getUserLocation(user.getUserId());
     }, gpsExecutorService);
 
     visitedLocationFuture.thenAcceptAsync((location) -> {
-
       logger.info("\033[33m {}:  {}.addVisitedLocation({}})", this.getClass().getCanonicalName(), user.getUserName(), location);
-      user.addToVisitedLocations(location);
+      tourGuideService.saveTrackedUserLocation(user,location);
     }, gpsExecutorService);
 
     return visitedLocationFuture;
