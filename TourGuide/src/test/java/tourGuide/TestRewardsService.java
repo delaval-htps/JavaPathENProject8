@@ -41,7 +41,7 @@ public class TestRewardsService {
 		//TODO change sleep by modification of return of tourGuideService.tackUserLocation()
 		
 		try {
-			TimeUnit.MILLISECONDS.sleep(1000);
+			TimeUnit.MILLISECONDS.sleep(500);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -49,7 +49,7 @@ public class TestRewardsService {
 		
 		List<UserReward> userRewards = user.getUserRewards();
 		tourGuideService.tracker.stopTracking();
-		assertTrue(userRewards.size() == 1);
+		assertTrue(userRewards.size() > 1);
 	}
 
 	@Test
