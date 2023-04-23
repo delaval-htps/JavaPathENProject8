@@ -1,0 +1,1009 @@
+[main             ] - INFO   - ----------------------HightVolumeTrackLocation with 100 users-----------------------
+[main             ] - INFO   - TestMode enabled
+[main             ] - DEBUG  - Initializing users
+[main             ] - DEBUG  - Created 100  internal test users.
+[main             ] - DEBUG  - Finished initializing users
+[pool-5-thread-1  ] - DEBUG  - Begin Tracker. Tracking 100 users. 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser78)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser77)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser79)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser74)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser73)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser76)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser75)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser70)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser72)
+[pool-4-thread-7  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser75) 
+[pool-4-thread-8  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser70) 
+[pool-4-thread-6  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser76) 
+[pool-4-thread-5  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser73) 
+[pool-4-thread-4  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser74) 
+[pool-4-thread-3  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser79) 
+[pool-4-thread-2  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser77) 
+[pool-4-thread-1  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser78) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser71)
+[pool-4-thread-9  ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser72) 
+[pool-4-thread-10 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser71) 
+[pool-2-thread-1  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser70) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser90)
+[pool-2-thread-5  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser79) completed 
+[pool-2-thread-6  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser71) completed 
+[pool-2-thread-9  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser72) completed 
+[pool-2-thread-7  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser77) completed 
+[pool-2-thread-8  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser75) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser89)
+[pool-4-thread-11 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser90) 
+[pool-2-thread-10 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser78) completed 
+[pool-2-thread-2  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser73) completed 
+[pool-2-thread-3  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser76) completed 
+[pool-2-thread-4  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser74) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser88)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser85)
+[pool-4-thread-13 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser88) 
+[pool-4-thread-12 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser89) 
+[pool-2-thread-11 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser90) completed 
+[pool-2-thread-12 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser88) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser84)
+[pool-4-thread-14 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser85) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser87)
+[pool-4-thread-15 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser84) 
+[pool-2-thread-13 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser85) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser86)
+[pool-4-thread-16 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser87) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser81)
+[pool-4-thread-17 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser86) 
+[pool-2-thread-14 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser84) completed 
+[pool-2-thread-15 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser89) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser80)
+[pool-2-thread-17 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser86) completed 
+[pool-2-thread-16 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser87) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser83)
+[pool-4-thread-19 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser80) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser82)
+[pool-4-thread-20 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser83) 
+[pool-4-thread-18 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser81) 
+[pool-2-thread-18 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser80) completed 
+[pool-2-thread-19 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser83) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser9)
+[pool-2-thread-20 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser81) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser8)
+[pool-4-thread-22 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser9) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser19)
+[pool-4-thread-21 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser82) 
+[pool-4-thread-23 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser8) 
+[pool-2-thread-21 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser9) completed 
+[pool-2-thread-23 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser8) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser16)
+[pool-2-thread-22 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser82) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser15)
+[pool-4-thread-24 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser19) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser18)
+[pool-4-thread-26 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser15) 
+[pool-4-thread-25 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser16) 
+[pool-2-thread-24 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser19) completed 
+[pool-2-thread-26 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser16) completed 
+[pool-2-thread-25 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser15) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser17)
+[pool-4-thread-27 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser18) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser12)
+[pool-2-thread-27 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser18) completed 
+[pool-4-thread-28 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser17) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser11)
+[pool-4-thread-29 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser12) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser99)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser14)
+[pool-2-thread-28 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser17) completed 
+[pool-4-thread-30 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser11) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser13)
+[pool-2-thread-29 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser12) completed 
+[pool-4-thread-32 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser14) 
+[pool-2-thread-30 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser11) completed 
+[pool-4-thread-31 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser99) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser3)
+[pool-2-thread-32 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser99) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser96)
+[pool-4-thread-33 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser13) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser2)
+[pool-4-thread-35 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser96) 
+[pool-2-thread-31 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser14) completed 
+[pool-4-thread-34 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser3) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser95)
+[pool-2-thread-33 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser13) completed 
+[pool-2-thread-35 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser3) completed 
+[pool-2-thread-34 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser96) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser10)
+[pool-4-thread-37 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser95) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser1)
+[pool-4-thread-38 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser10) 
+[pool-4-thread-36 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser2) 
+[pool-2-thread-36 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser95) completed 
+[pool-2-thread-37 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser10) completed 
+[pool-2-thread-38 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser2) completed 
+[pool-4-thread-39 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser1) 
+[pool-2-thread-39 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser1) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser98)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser0)
+[pool-4-thread-40 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser98) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser97)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser7)
+[pool-2-thread-40 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser98) completed 
+[pool-4-thread-42 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser97) 
+[pool-4-thread-41 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser0) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser92)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser6)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser91)
+[pool-4-thread-43 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser7) 
+[pool-4-thread-45 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser6) 
+[pool-4-thread-44 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser92) 
+[pool-2-thread-42 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser0) completed 
+[pool-2-thread-41 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser97) completed 
+[pool-2-thread-44 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser6) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser5)
+[pool-2-thread-43 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser7) completed 
+[pool-2-thread-45 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser92) completed 
+[pool-4-thread-46 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser91) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser94)
+[pool-2-thread-46 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser91) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser4)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser93)
+[pool-4-thread-48 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser94) 
+[pool-4-thread-49 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser4) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser27)
+[pool-4-thread-50 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser93) 
+[pool-4-thread-47 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser5) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser26)
+[pool-2-thread-47 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser94) completed 
+[pool-4-thread-51 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser27) 
+[pool-2-thread-48 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser4) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser29)
+[pool-2-thread-49 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser93) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser28)
+[pool-2-thread-50 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser27) completed 
+[pool-4-thread-52 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser26) 
+[pool-4-thread-53 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser29) 
+[pool-2-thread-51 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser5) completed 
+[pool-2-thread-53 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser29) completed 
+[pool-2-thread-52 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser26) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser23)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser22)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser25)
+[pool-4-thread-55 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser23) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser24)
+[pool-4-thread-56 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser22) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser21)
+[pool-4-thread-57 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser25) 
+[pool-4-thread-58 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser24) 
+[pool-2-thread-54 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser23) completed 
+[pool-4-thread-54 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser28) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser20)
+[pool-2-thread-3  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser76,gpsUtil.location.VisitedLocation@4744ed83)
+[pool-2-thread-3  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser76) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser38)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser37)
+[pool-4-thread-60 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser20) 
+[pool-4-thread-61 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser38) 
+[pool-2-thread-4  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser74,gpsUtil.location.VisitedLocation@51873941)
+[pool-2-thread-4  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser74) 
+[pool-4-thread-59 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser21) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser39)
+[pool-4-thread-62 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser37) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser34)
+[pool-4-thread-63 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser39) 
+[pool-2-thread-55 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser22) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser33)
+[pool-4-thread-64 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser34) 
+[pool-2-thread-62 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser37) completed 
+[pool-2-thread-18 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser80,gpsUtil.location.VisitedLocation@74a4da96)
+[pool-2-thread-18 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser80) 
+[pool-2-thread-60 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser38) completed 
+[pool-2-thread-61 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser21) completed 
+[pool-2-thread-23 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser8,gpsUtil.location.VisitedLocation@62afa5ea)
+[pool-2-thread-23 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser8) 
+[pool-2-thread-58 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser28) completed 
+[pool-2-thread-59 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser20) completed 
+[pool-2-thread-20 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser81,gpsUtil.location.VisitedLocation@136222af)
+[pool-2-thread-20 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser81) 
+[pool-2-thread-64 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser34) completed 
+[pool-2-thread-57 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser24) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser36)
+[pool-4-thread-65 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser33) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser35)
+[pool-2-thread-63 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser39) completed 
+[pool-4-thread-66 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser36) 
+[pool-2-thread-65 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser33) completed 
+[pool-2-thread-66 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser36) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser30)
+[pool-2-thread-56 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser25) completed 
+[pool-4-thread-67 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser35) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser32)
+[pool-4-thread-68 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser30) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser31)
+[pool-2-thread-17 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser86,gpsUtil.location.VisitedLocation@59ef2a06)
+[pool-2-thread-17 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser86) 
+[pool-4-thread-69 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser32) 
+[pool-2-thread-67 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser35) completed 
+[pool-2-thread-68 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser30) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser49)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser48)
+[pool-4-thread-70 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser31) 
+[pool-2-thread-69 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser32) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser45)
+[pool-4-thread-71 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser49) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser44)
+[pool-2-thread-70 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser31) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser47)
+[pool-4-thread-73 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser45) 
+[pool-4-thread-72 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser48) 
+[pool-4-thread-74 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser44) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser46)
+[pool-2-thread-71 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser49) completed 
+[pool-2-thread-74 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser44) completed 
+[pool-2-thread-72 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser45) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser41)
+[pool-4-thread-76 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser46) 
+[pool-4-thread-75 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser47) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser40)
+[pool-2-thread-26 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser16,gpsUtil.location.VisitedLocation@393494d)
+[pool-2-thread-73 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser48) completed 
+[pool-4-thread-77 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser41) 
+[pool-2-thread-26 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser16) 
+[pool-2-thread-29 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser12,gpsUtil.location.VisitedLocation@78132342)
+[pool-2-thread-29 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser12) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser43)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser42)
+[pool-2-thread-76 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser47) completed 
+[pool-4-thread-78 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser40) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser59)
+[pool-2-thread-36 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser95,gpsUtil.location.VisitedLocation@4fd016de)
+[pool-4-thread-79 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser43) 
+[pool-2-thread-36 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser95) 
+[pool-2-thread-1  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser70,gpsUtil.location.VisitedLocation@697dae45)
+[pool-2-thread-1  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser70) 
+[pool-4-thread-80 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser42) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser56)
+[pool-2-thread-42 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser0,gpsUtil.location.VisitedLocation@12a534d5)
+[pool-2-thread-42 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser0) 
+[pool-2-thread-44 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser6,gpsUtil.location.VisitedLocation@3196f800)
+[pool-2-thread-44 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser6) 
+[pool-2-thread-12 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser88,gpsUtil.location.VisitedLocation@deda38c)
+[pool-2-thread-12 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser88) 
+[pool-2-thread-80 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser42) completed 
+[pool-4-thread-81 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser59) 
+[pool-2-thread-75 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser46) completed 
+[pool-2-thread-79 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser43) completed 
+[pool-2-thread-38 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser2,gpsUtil.location.VisitedLocation@16faf3fa)
+[pool-2-thread-38 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser2) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser55)
+[pool-2-thread-78 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser40) completed 
+[pool-4-thread-82 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser56) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser58)
+[pool-2-thread-81 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser59) completed 
+[pool-2-thread-77 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser41) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser57)
+[pool-4-thread-84 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser58) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser52)
+[pool-2-thread-43 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser7,gpsUtil.location.VisitedLocation@52c38439)
+[pool-2-thread-43 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser7) 
+[pool-2-thread-83 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser58) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser51)
+[pool-2-thread-82 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser56) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser54)
+[pool-4-thread-85 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser57) 
+[pool-4-thread-86 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser52) 
+[pool-4-thread-88 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser54) 
+[pool-4-thread-83 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser55) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser53)
+[pool-4-thread-87 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser51) 
+[pool-2-thread-84 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser57) completed 
+[pool-2-thread-9  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser72,gpsUtil.location.VisitedLocation@5f21c7b9)
+[pool-2-thread-9  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser72) 
+[pool-2-thread-87 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser55) completed 
+[pool-2-thread-88 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser51) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser50)
+[pool-2-thread-86 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser54) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser67)
+[pool-2-thread-85 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser52) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser66)
+[pool-4-thread-91 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser67) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser69)
+[pool-4-thread-92 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser66) 
+[pool-2-thread-89 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser67) completed 
+[pool-4-thread-89 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser53) 
+[pool-4-thread-93 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser69) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser68)
+[pool-4-thread-90 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser50) 
+[pool-4-thread-94 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser68) 
+[pool-2-thread-90 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser66) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser63)
+[pool-2-thread-91 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser53) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser62)
+[pool-4-thread-95 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser63) 
+[pool-2-thread-92 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser69) completed 
+[pool-2-thread-13 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser85,gpsUtil.location.VisitedLocation@39a35b8)
+[pool-2-thread-13 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser85) 
+[pool-2-thread-94 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser68) completed 
+[pool-2-thread-93 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser50) completed 
+[pool-2-thread-8  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser75,gpsUtil.location.VisitedLocation@44aab7f6)
+[pool-2-thread-8  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser75) 
+[pool-2-thread-49 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser93,gpsUtil.location.VisitedLocation@592b36f4)
+[pool-2-thread-49 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser93) 
+[pool-2-thread-28 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser17,gpsUtil.location.VisitedLocation@4e5e17fa)
+[pool-2-thread-28 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser17) 
+[pool-2-thread-32 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser99,gpsUtil.location.VisitedLocation@29a84bdf)
+[pool-2-thread-32 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser99) 
+[pool-2-thread-15 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser89,gpsUtil.location.VisitedLocation@3d04c30a)
+[pool-2-thread-15 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser89) 
+[pool-2-thread-95 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser63) completed 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser65)
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser64)
+[pool-2-thread-24 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser19,gpsUtil.location.VisitedLocation@566371c4)
+[pool-4-thread-96 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser62) 
+[pool-2-thread-24 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser19) 
+[pool-2-thread-40 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser98,gpsUtil.location.VisitedLocation@6618071e)
+[pool-2-thread-40 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser98) 
+[pool-2-thread-27 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser18,gpsUtil.location.VisitedLocation@5656a8f)
+[pool-2-thread-27 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser18) 
+[pool-2-thread-6  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser71,gpsUtil.location.VisitedLocation@177e8d10)
+[pool-2-thread-6  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser71) 
+[pool-4-thread-97 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser65) 
+[pool-2-thread-19 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser83,gpsUtil.location.VisitedLocation@79823b68)
+[pool-2-thread-19 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser83) 
+[pool-2-thread-7  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser77,gpsUtil.location.VisitedLocation@efecc9)
+[pool-2-thread-7  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser77) 
+[pool-2-thread-10 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser78,gpsUtil.location.VisitedLocation@64719fa4)
+[pool-2-thread-10 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser78) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser61)
+[pool-2-thread-31 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser14,gpsUtil.location.VisitedLocation@4aca9c7f)
+[pool-2-thread-22 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser82,gpsUtil.location.VisitedLocation@33b55c8e)
+[pool-2-thread-31 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser14) 
+[pool-2-thread-22 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser82) 
+[pool-4-thread-98 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser64) 
+[pool-2-thread-25 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser15,gpsUtil.location.VisitedLocation@1e192b28)
+[pool-2-thread-25 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser15) 
+[pool-2-thread-61 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser21,gpsUtil.location.VisitedLocation@3fdf25b6)
+[pool-2-thread-61 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser21) 
+[pool-5-thread-1  ] - INFO   - [31m tourGuide.tracker.Tracker: 		 tourGuideService.trackUserLocation (internalUser60)
+[pool-4-thread-99 ] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser61) 
+[pool-2-thread-21 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser9,gpsUtil.location.VisitedLocation@518e6780)
+[pool-5-thread-1  ] - DEBUG  - Tracker Time Elapsed: 0 seconds
+[pool-2-thread-21 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser9) 
+[pool-5-thread-1  ] - DEBUG  - Tracker sleeping
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser78) 
+[pool-2-thread-45 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser92,gpsUtil.location.VisitedLocation@77a33ac3)
+[pool-2-thread-45 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser92) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser77) 
+[pool-2-thread-48 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser4,gpsUtil.location.VisitedLocation@3e915d93)
+[pool-2-thread-48 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser4) 
+[pool-2-thread-60 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser38,gpsUtil.location.VisitedLocation@4e0b11b7)
+[pool-2-thread-60 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser38) 
+[pool-4-thread-100] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser60) 
+[pool-2-thread-99 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser61) completed 
+[pool-4-thread-101] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser78) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser79) 
+[pool-4-thread-102] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser77) 
+[pool-2-thread-50 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser27,gpsUtil.location.VisitedLocation@738dd007)
+[pool-2-thread-35 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser3,gpsUtil.location.VisitedLocation@34b8d943)
+[pool-2-thread-50 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser27) 
+[pool-2-thread-35 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser3) 
+[pool-2-thread-5  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser79,gpsUtil.location.VisitedLocation@2dd5619c)
+[pool-2-thread-5  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser79) 
+[pool-2-thread-14 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser84,gpsUtil.location.VisitedLocation@7f6f73a7)
+[pool-2-thread-14 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser84) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser74) 
+[pool-2-thread-11 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser90,gpsUtil.location.VisitedLocation@55af3c5)
+[pool-2-thread-11 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser90) 
+[pool-4-thread-103] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser79) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser73) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser76) 
+[pool-4-thread-104] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser74) 
+[pool-2-thread-65 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser33,gpsUtil.location.VisitedLocation@22297f0)
+[pool-2-thread-65 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser33) 
+[pool-2-thread-62 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser37,gpsUtil.location.VisitedLocation@101ad7ea)
+[pool-2-thread-62 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser37) 
+[pool-4-thread-105] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser73) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser75) 
+[pool-4-thread-106] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser76) 
+[pool-2-thread-96 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser62) completed 
+[pool-2-thread-97 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser65) completed 
+[pool-2-thread-34 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser96,gpsUtil.location.VisitedLocation@15b3d8ca)
+[pool-2-thread-34 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser96) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser70) 
+[pool-4-thread-107] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser75) 
+[pool-2-thread-106] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser76) completed 
+[pool-2-thread-30 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser11,gpsUtil.location.VisitedLocation@26c2094)
+[pool-2-thread-46 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser91,gpsUtil.location.VisitedLocation@611477af)
+[pool-2-thread-30 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser11) 
+[pool-2-thread-46 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser91) 
+[pool-2-thread-76 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser47,gpsUtil.location.VisitedLocation@7b675b4d)
+[pool-2-thread-47 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser94,gpsUtil.location.VisitedLocation@21e38ad4)
+[pool-2-thread-76 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser47) 
+[pool-2-thread-47 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser94) 
+[pool-2-thread-105] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser73) completed 
+[pool-2-thread-104] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser74) completed 
+[pool-2-thread-103] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser79) completed 
+[pool-2-thread-2  ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser73,gpsUtil.location.VisitedLocation@43daf471)
+[pool-2-thread-2  ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser73) 
+[pool-2-thread-102] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser77) completed 
+[pool-2-thread-63 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser39,gpsUtil.location.VisitedLocation@5771cc50)
+[pool-2-thread-63 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser39) 
+[pool-2-thread-80 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser42,gpsUtil.location.VisitedLocation@2182ad4e)
+[pool-2-thread-80 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser42) 
+[pool-2-thread-82 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser56,gpsUtil.location.VisitedLocation@5a97bc0c)
+[pool-2-thread-82 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser56) 
+[pool-2-thread-55 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser22,gpsUtil.location.VisitedLocation@61973919)
+[pool-2-thread-55 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser22) 
+[pool-2-thread-16 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser87,gpsUtil.location.VisitedLocation@591724da)
+[pool-2-thread-16 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser87) 
+[pool-2-thread-101] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser78) completed 
+[pool-2-thread-100] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser60) completed 
+[pool-2-thread-41 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser97,gpsUtil.location.VisitedLocation@37cf3a3f)
+[pool-2-thread-41 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser97) 
+[pool-2-thread-98 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser64) completed 
+[pool-2-thread-107] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser75) completed 
+[pool-2-thread-33 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser13,gpsUtil.location.VisitedLocation@619986c3)
+[pool-2-thread-33 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser13) 
+[pool-2-thread-39 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser1,gpsUtil.location.VisitedLocation@31d4933a)
+[pool-2-thread-39 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser1) 
+[pool-2-thread-58 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser28,gpsUtil.location.VisitedLocation@7519c0ab)
+[pool-2-thread-58 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser28) 
+[pool-2-thread-54 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser23,gpsUtil.location.VisitedLocation@7318ee86)
+[pool-2-thread-54 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser23) 
+[pool-2-thread-66 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser36,gpsUtil.location.VisitedLocation@136ed20b)
+[pool-2-thread-66 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser36) 
+[pool-2-thread-57 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser24,gpsUtil.location.VisitedLocation@4e4f3614)
+[pool-2-thread-57 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser24) 
+[pool-2-thread-37 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser10,gpsUtil.location.VisitedLocation@533b1317)
+[pool-2-thread-37 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser10) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser72) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser71) 
+[pool-4-thread-109] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser72) 
+[pool-4-thread-108] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser70) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser90) 
+[pool-2-thread-84 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser57,gpsUtil.location.VisitedLocation@65c68abd)
+[pool-2-thread-84 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser57) 
+[pool-4-thread-110] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser71) 
+[pool-2-thread-83 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser58,gpsUtil.location.VisitedLocation@72f4593c)
+[pool-2-thread-83 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser58) 
+[pool-2-thread-90 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser66,gpsUtil.location.VisitedLocation@5b924b85)
+[pool-2-thread-90 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser66) 
+[pool-2-thread-51 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser5,gpsUtil.location.VisitedLocation@777d3fb5)
+[pool-2-thread-51 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser5) 
+[pool-2-thread-56 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser25,gpsUtil.location.VisitedLocation@38ef0c68)
+[pool-2-thread-56 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser25) 
+[pool-2-thread-109] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser70) completed 
+[pool-2-thread-108] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser72) completed 
+[pool-2-thread-68 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser30,gpsUtil.location.VisitedLocation@4d81a309)
+[pool-2-thread-68 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser30) 
+[pool-2-thread-110] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser71) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser89) 
+[pool-4-thread-111] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser90) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser88) 
+[pool-4-thread-112] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser89) 
+[pool-2-thread-112] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser89) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser85) 
+[pool-2-thread-111] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser90) completed 
+[pool-4-thread-113] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser88) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser84) 
+[pool-4-thread-114] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser85) 
+[pool-2-thread-75 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser46,gpsUtil.location.VisitedLocation@36e9aba)
+[pool-2-thread-75 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser46) 
+[pool-2-thread-52 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser26,gpsUtil.location.VisitedLocation@41b97292)
+[pool-2-thread-52 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser26) 
+[pool-2-thread-53 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser29,gpsUtil.location.VisitedLocation@367c57fb)
+[pool-2-thread-53 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser29) 
+[pool-2-thread-74 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser44,gpsUtil.location.VisitedLocation@430b68d2)
+[pool-2-thread-78 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser40,gpsUtil.location.VisitedLocation@a4f515f)
+[pool-2-thread-74 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser44) 
+[pool-2-thread-78 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser40) 
+[pool-2-thread-113] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser88) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser87) 
+[pool-2-thread-114] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser85) completed 
+[pool-4-thread-115] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser84) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser86) 
+[pool-4-thread-116] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser87) 
+[pool-2-thread-67 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser35,gpsUtil.location.VisitedLocation@c222e2a)
+[pool-2-thread-67 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser35) 
+[pool-2-thread-115] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser84) completed 
+[pool-2-thread-116] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser87) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser81) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser80) 
+[pool-4-thread-118] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser81) 
+[pool-4-thread-117] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser86) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser83) 
+[pool-2-thread-69 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser32,gpsUtil.location.VisitedLocation@1b46dc14)
+[pool-2-thread-69 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser32) 
+[pool-2-thread-118] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser86) completed 
+[pool-2-thread-91 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser53,gpsUtil.location.VisitedLocation@64e27f1e)
+[pool-2-thread-91 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser53) 
+[pool-2-thread-73 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser48,gpsUtil.location.VisitedLocation@14b214f9)
+[pool-2-thread-73 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser48) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser82) 
+[pool-2-thread-117] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser81) completed 
+[pool-4-thread-120] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser83) 
+[pool-2-thread-64 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser34,gpsUtil.location.VisitedLocation@5627bcda)
+[pool-2-thread-64 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser34) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser9) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser8) 
+[pool-4-thread-122] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser9) 
+[pool-4-thread-121] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser82) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser19) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser16) 
+[pool-4-thread-124] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser19) 
+[pool-4-thread-123] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser8) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser15) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser18) 
+[pool-4-thread-126] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser15) 
+[pool-4-thread-125] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser16) 
+[pool-2-thread-79 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser43,gpsUtil.location.VisitedLocation@801775c)
+[pool-2-thread-79 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser43) 
+[pool-2-thread-89 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser67,gpsUtil.location.VisitedLocation@1015a666)
+[pool-2-thread-89 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser67) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser17) 
+[pool-4-thread-127] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser18) 
+[pool-2-thread-97 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser65,gpsUtil.location.VisitedLocation@1c15ddb7)
+[pool-2-thread-97 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser65) 
+[pool-2-thread-103] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser79,gpsUtil.location.VisitedLocation@13b8b0ff)
+[pool-2-thread-70 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser31,gpsUtil.location.VisitedLocation@39bb56ac)
+[pool-2-thread-103] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser79) 
+[pool-2-thread-70 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser31) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser12) 
+[pool-4-thread-128] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser17) 
+[pool-2-thread-101] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser78,gpsUtil.location.VisitedLocation@7c473bb6)
+[pool-2-thread-101] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser78) 
+[pool-2-thread-81 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser59,gpsUtil.location.VisitedLocation@11272aed)
+[pool-2-thread-81 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser59) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser11) 
+[pool-4-thread-129] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser12) 
+[pool-2-thread-59 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser20,gpsUtil.location.VisitedLocation@792c5bd5)
+[pool-2-thread-59 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser20) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser99) 
+[pool-4-thread-130] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser11) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser14) 
+[pool-4-thread-131] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser99) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser13) 
+[pool-4-thread-132] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser14) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser3) 
+[pool-2-thread-92 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser69,gpsUtil.location.VisitedLocation@5db44f97)
+[pool-4-thread-133] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser13) 
+[pool-2-thread-92 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser69) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser96) 
+[pool-4-thread-134] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser3) 
+[pool-2-thread-85 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser52,gpsUtil.location.VisitedLocation@5100087b)
+[pool-2-thread-85 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser52) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser2) 
+[pool-4-thread-135] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser96) 
+[pool-4-thread-119] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser80) 
+[pool-2-thread-102] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser77,gpsUtil.location.VisitedLocation@503169a6)
+[pool-2-thread-102] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser77) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser95) 
+[pool-4-thread-136] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser2) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser10) 
+[pool-2-thread-71 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser49,gpsUtil.location.VisitedLocation@7326da2f)
+[pool-2-thread-95 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser63,gpsUtil.location.VisitedLocation@220627fe)
+[pool-2-thread-71 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser49) 
+[pool-2-thread-95 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser63) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser1) 
+[pool-2-thread-87 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser55,gpsUtil.location.VisitedLocation@20729058)
+[pool-2-thread-87 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser55) 
+[pool-2-thread-72 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser45,gpsUtil.location.VisitedLocation@22b7beef)
+[pool-2-thread-72 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser45) 
+[pool-2-thread-105] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser73,gpsUtil.location.VisitedLocation@69eb3c46)
+[pool-2-thread-105] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser73) 
+[pool-4-thread-137] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser95) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser98) 
+[pool-2-thread-119] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser83) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser0) 
+[pool-4-thread-139] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser1) 
+[pool-4-thread-138] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser10) 
+[pool-4-thread-140] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser98) 
+[pool-2-thread-137] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser95) completed 
+[pool-2-thread-136] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser2) completed 
+[pool-2-thread-135] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser80) completed 
+[pool-2-thread-134] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser96) completed 
+[pool-2-thread-110] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser71,gpsUtil.location.VisitedLocation@2176ba4e)
+[pool-2-thread-110] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser71) 
+[pool-2-thread-133] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser3) completed 
+[pool-2-thread-94 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser68,gpsUtil.location.VisitedLocation@1a1f6734)
+[pool-2-thread-94 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser68) 
+[pool-2-thread-132] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser13) completed 
+[pool-2-thread-104] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser74,gpsUtil.location.VisitedLocation@54bf9e46)
+[pool-2-thread-77 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser41,gpsUtil.location.VisitedLocation@72ce733)
+[pool-2-thread-104] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser74) 
+[pool-2-thread-77 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser41) 
+[pool-2-thread-96 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser62,gpsUtil.location.VisitedLocation@6451c8a1)
+[pool-2-thread-96 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser62) 
+[pool-2-thread-131] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser14) completed 
+[pool-2-thread-129] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser11) completed 
+[pool-2-thread-130] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser99) completed 
+[pool-2-thread-128] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser12) completed 
+[pool-2-thread-126] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser18) completed 
+[pool-2-thread-124] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser15) completed 
+[pool-2-thread-86 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser54,gpsUtil.location.VisitedLocation@68f784cc)
+[pool-2-thread-86 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser54) 
+[pool-2-thread-125] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser16) completed 
+[pool-2-thread-88 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser51,gpsUtil.location.VisitedLocation@2c239a60)
+[pool-2-thread-88 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser51) 
+[pool-2-thread-99 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser61,gpsUtil.location.VisitedLocation@462ee862)
+[pool-2-thread-99 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser61) 
+[pool-2-thread-123] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser8) completed 
+[pool-2-thread-121] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser82) completed 
+[pool-2-thread-122] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser19) completed 
+[pool-2-thread-140] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser98) completed 
+[pool-2-thread-139] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser10) completed 
+[pool-2-thread-138] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser1) completed 
+[pool-2-thread-127] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser17) completed 
+[pool-2-thread-120] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser9) completed 
+[pool-2-thread-93 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser50,gpsUtil.location.VisitedLocation@27b237b6)
+[pool-2-thread-93 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser50) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser97) 
+[pool-2-thread-117] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser81,gpsUtil.location.VisitedLocation@559bf448)
+[pool-2-thread-117] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser81) 
+[pool-2-thread-100] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser60,gpsUtil.location.VisitedLocation@7cacb164)
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser7) 
+[pool-2-thread-100] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser60) 
+[pool-4-thread-142] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser97) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser92) 
+[pool-4-thread-141] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser0) 
+[pool-4-thread-143] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser7) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser6) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser91) 
+[pool-4-thread-145] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser6) 
+[pool-4-thread-144] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser92) 
+[pool-2-thread-109] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser70,gpsUtil.location.VisitedLocation@24cb6ff0)
+[pool-2-thread-109] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser70) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser5) 
+[pool-4-thread-146] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser91) 
+[pool-2-thread-144] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser6) completed 
+[pool-4-thread-147] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser5) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser94) 
+[pool-2-thread-141] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser97) completed 
+[pool-2-thread-145] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser92) completed 
+[pool-2-thread-113] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser88,gpsUtil.location.VisitedLocation@1761d4d0)
+[pool-2-thread-113] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser88) 
+[pool-2-thread-142] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser0) completed 
+[pool-2-thread-143] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser7) completed 
+[pool-2-thread-147] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser5) completed 
+[pool-2-thread-107] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser75,gpsUtil.location.VisitedLocation@69172b2e)
+[pool-2-thread-107] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser75) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser4) 
+[pool-2-thread-146] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser91) completed 
+[pool-2-thread-108] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser72,gpsUtil.location.VisitedLocation@244e734a)
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser93) 
+[pool-2-thread-108] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser72) 
+[pool-2-thread-114] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser85,gpsUtil.location.VisitedLocation@1088419b)
+[pool-2-thread-114] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser85) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser27) 
+[pool-4-thread-150] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser93) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser26) 
+[pool-4-thread-149] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser4) 
+[pool-2-thread-111] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser90,gpsUtil.location.VisitedLocation@43f0c163)
+[pool-2-thread-111] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser90) 
+[pool-4-thread-151] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser27) 
+[pool-4-thread-148] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser94) 
+[pool-2-thread-150] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser27) completed 
+[pool-2-thread-148] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser93) completed 
+[pool-2-thread-106] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser76,gpsUtil.location.VisitedLocation@578e0bd9)
+[pool-2-thread-106] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser76) 
+[pool-2-thread-112] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser89,gpsUtil.location.VisitedLocation@345149da)
+[pool-2-thread-112] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser89) 
+[pool-2-thread-129] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser11,gpsUtil.location.VisitedLocation@105d2a6a)
+[pool-2-thread-129] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser11) 
+[pool-2-thread-151] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser94) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser29) 
+[pool-2-thread-98 ] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser64,gpsUtil.location.VisitedLocation@1f6cb3b8)
+[pool-2-thread-133] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser3,gpsUtil.location.VisitedLocation@21bb46de)
+[pool-2-thread-149] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser4) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser28) 
+[pool-2-thread-98 ] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser64) 
+[pool-2-thread-118] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser86,gpsUtil.location.VisitedLocation@31686339)
+[pool-2-thread-118] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser86) 
+[pool-4-thread-152] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser26) 
+[pool-2-thread-115] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser84,gpsUtil.location.VisitedLocation@6e81cbd8)
+[pool-2-thread-116] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser87,gpsUtil.location.VisitedLocation@7fb03def)
+[pool-2-thread-115] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser84) 
+[pool-2-thread-116] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser87) 
+[pool-2-thread-133] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser3) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser23) 
+[pool-2-thread-152] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser26) completed 
+[pool-4-thread-154] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser28) 
+[pool-2-thread-153] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser28) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser22) 
+[pool-4-thread-155] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser23) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser25) 
+[pool-4-thread-156] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser22) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser24) 
+[pool-4-thread-153] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser29) 
+[pool-4-thread-157] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser25) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser21) 
+[pool-4-thread-158] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser24) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser20) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser38) 
+[pool-4-thread-159] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser21) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser37) 
+[pool-4-thread-160] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser20) 
+[pool-2-thread-139] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser10,gpsUtil.location.VisitedLocation@675291e5)
+[pool-2-thread-139] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser10) 
+[pool-2-thread-132] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser13,gpsUtil.location.VisitedLocation@62f4cbe3)
+[pool-2-thread-132] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser13) 
+[pool-2-thread-136] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser2,gpsUtil.location.VisitedLocation@7aa0bcb6)
+[pool-2-thread-136] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser2) 
+[pool-2-thread-154] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser23) completed 
+[pool-2-thread-160] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser20) completed 
+[pool-4-thread-161] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser38) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser39) 
+[pool-4-thread-162] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser37) 
+[pool-2-thread-131] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser14,gpsUtil.location.VisitedLocation@1f228721)
+[pool-2-thread-131] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser14) 
+[pool-2-thread-159] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser21) completed 
+[pool-2-thread-158] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser24) completed 
+[pool-2-thread-157] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser25) completed 
+[pool-2-thread-155] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser22) completed 
+[pool-2-thread-156] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser29) completed 
+[pool-2-thread-161] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser38) completed 
+[pool-2-thread-162] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser37) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser34) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser33) 
+[pool-4-thread-164] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser34) 
+[pool-4-thread-163] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser39) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser36) 
+[pool-2-thread-164] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser39) completed 
+[pool-4-thread-165] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser33) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser35) 
+[pool-4-thread-166] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser36) 
+[pool-2-thread-165] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser33) completed 
+[pool-2-thread-163] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser34) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser30) 
+[pool-2-thread-166] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser36) completed 
+[pool-2-thread-130] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser99,gpsUtil.location.VisitedLocation@9ec8e11)
+[pool-4-thread-167] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser35) 
+[pool-2-thread-130] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser99) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser32) 
+[pool-4-thread-168] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser30) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser31) 
+[pool-4-thread-169] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser32) 
+[pool-2-thread-167] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser35) completed 
+[pool-2-thread-168] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser30) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser49) 
+[pool-4-thread-170] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser31) 
+[pool-2-thread-169] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser32) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser48) 
+[pool-4-thread-171] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser49) 
+[pool-2-thread-135] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser80,gpsUtil.location.VisitedLocation@1d086f46)
+[pool-2-thread-135] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser80) 
+[pool-2-thread-150] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser27,gpsUtil.location.VisitedLocation@1cae1564)
+[pool-2-thread-138] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser1,gpsUtil.location.VisitedLocation@1b0a7b5)
+[pool-2-thread-150] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser27) 
+[pool-2-thread-138] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser1) 
+[pool-2-thread-123] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser8,gpsUtil.location.VisitedLocation@3d2ddc54)
+[pool-2-thread-123] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser8) 
+[pool-2-thread-128] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser12,gpsUtil.location.VisitedLocation@329b0ee)
+[pool-2-thread-128] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser12) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser45) 
+[pool-4-thread-172] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser48) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser44) 
+[pool-4-thread-173] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser45) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser47) 
+[pool-4-thread-174] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser44) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser46) 
+[pool-4-thread-175] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser47) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser41) 
+[pool-2-thread-120] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser9,gpsUtil.location.VisitedLocation@546be926)
+[pool-2-thread-120] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser9) 
+[pool-4-thread-176] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser46) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser40) 
+[pool-4-thread-177] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser41) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser43) 
+[pool-4-thread-178] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser40) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser42) 
+[pool-4-thread-179] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser43) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser59) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser56) 
+[pool-4-thread-181] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser59) 
+[pool-4-thread-180] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser42) 
+[pool-2-thread-143] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser7,gpsUtil.location.VisitedLocation@1102a048)
+[pool-2-thread-143] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser7) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser55) 
+[pool-4-thread-182] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser56) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser58) 
+[pool-4-thread-183] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser55) 
+[pool-2-thread-170] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser31) completed 
+[pool-2-thread-183] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser55) completed 
+[pool-2-thread-182] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser56) completed 
+[pool-2-thread-140] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser98,gpsUtil.location.VisitedLocation@520ac1c6)
+[pool-2-thread-140] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser98) 
+[pool-2-thread-179] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser43) completed 
+[pool-2-thread-178] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser40) completed 
+[pool-2-thread-181] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser42) completed 
+[pool-2-thread-180] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser59) completed 
+[pool-2-thread-175] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser47) completed 
+[pool-2-thread-177] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser41) completed 
+[pool-2-thread-176] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser46) completed 
+[pool-2-thread-173] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser45) completed 
+[pool-2-thread-126] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser18,gpsUtil.location.VisitedLocation@2369f4b5)
+[pool-2-thread-126] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser18) 
+[pool-2-thread-172] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser48) completed 
+[pool-2-thread-174] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser44) completed 
+[pool-2-thread-171] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser49) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser57) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser52) 
+[pool-4-thread-185] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser57) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser51) 
+[pool-4-thread-184] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser58) 
+[pool-2-thread-137] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser95,gpsUtil.location.VisitedLocation@32b3d7e5)
+[pool-2-thread-137] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser95) 
+[pool-4-thread-186] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser52) 
+[pool-2-thread-134] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser96,gpsUtil.location.VisitedLocation@24385a20)
+[pool-2-thread-134] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser96) 
+[pool-2-thread-184] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser57) completed 
+[pool-4-thread-187] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser51) 
+[pool-2-thread-185] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser58) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser54) 
+[pool-2-thread-187] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser51) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser53) 
+[pool-2-thread-186] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser52) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser50) 
+[pool-4-thread-189] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser53) 
+[pool-4-thread-188] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser54) 
+[pool-2-thread-119] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser83,gpsUtil.location.VisitedLocation@59df1e08)
+[pool-2-thread-119] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser83) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser67) 
+[pool-4-thread-190] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser50) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser66) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser69) 
+[pool-4-thread-192] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser66) 
+[pool-4-thread-191] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser67) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser68) 
+[pool-4-thread-193] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser69) 
+[pool-2-thread-189] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser54) completed 
+[pool-2-thread-188] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser53) completed 
+[pool-2-thread-158] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser24,gpsUtil.location.VisitedLocation@5cd49570)
+[pool-2-thread-158] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser24) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser63) 
+[pool-4-thread-194] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser68) 
+[pool-2-thread-192] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser67) completed 
+[pool-2-thread-193] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser69) completed 
+[pool-2-thread-194] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser68) completed 
+[pool-2-thread-191] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser66) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser62) 
+[pool-2-thread-151] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser94,gpsUtil.location.VisitedLocation@674ce970)
+[pool-2-thread-151] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser94) 
+[pool-4-thread-195] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser63) 
+[pool-2-thread-168] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser30,gpsUtil.location.VisitedLocation@1be45c37)
+[pool-2-thread-168] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser30) 
+[pool-2-thread-190] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser50) completed 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser65) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser64) 
+[pool-4-thread-196] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser62) 
+[pool-4-thread-197] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser65) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser61) 
+[pool-2-thread-155] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser22,gpsUtil.location.VisitedLocation@746f2507)
+[pool-2-thread-155] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser22) 
+[pool-4-thread-198] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser64) 
+[pool-2-thread-144] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser6,gpsUtil.location.VisitedLocation@5f698762)
+[pool-2-thread-144] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser6) 
+[pool-2-thread-162] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser37,gpsUtil.location.VisitedLocation@1a26a348)
+[pool-2-thread-162] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser37) 
+[pool-2-thread-195] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser63) completed 
+[pool-2-thread-198] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser64) completed 
+[pool-2-thread-149] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser4,gpsUtil.location.VisitedLocation@6a0b0a84)
+[pool-2-thread-149] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser4) 
+[main             ] - INFO   - [36m tourGuide.TestPerformance: 		 tourGuideService.trackUserLocation(internalUser60) 
+[pool-4-thread-199] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser61) 
+[pool-2-thread-125] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser16,gpsUtil.location.VisitedLocation@27bc609a)
+[pool-2-thread-125] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser16) 
+[pool-2-thread-124] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser15,gpsUtil.location.VisitedLocation@51ed6212)
+[pool-2-thread-124] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser15) 
+[pool-2-thread-196] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser62) completed 
+[pool-2-thread-197] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser65) completed 
+[main             ] - INFO   - tourGuide.TestPerformance - highVolumeTrackLocation: Time Elapsed: 0 seconds
+[pool-4-thread-200] - INFO   - [32m tourGuide.service.TourGuideService: 	 trackUserLocation(internalUser60) 
+[pool-2-thread-199] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser61) completed 
+[pool-2-thread-200] - INFO   - [33m tourGuide.service.GpsUtilService: 	 gpstUtils.getUserLocation(internalUser60) completed 
+[pool-2-thread-122] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser19,gpsUtil.location.VisitedLocation@728ae641)
+[pool-2-thread-122] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser19) 
+[pool-2-thread-141] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser97,gpsUtil.location.VisitedLocation@6ce018f8)
+[pool-2-thread-141] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser97) 
+[pool-2-thread-167] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser35,gpsUtil.location.VisitedLocation@461302ec)
+[pool-2-thread-167] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser35) 
+[pool-2-thread-165] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser33,gpsUtil.location.VisitedLocation@3885e10b)
+[pool-2-thread-165] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser33) 
+[pool-2-thread-127] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser17,gpsUtil.location.VisitedLocation@51acd20f)
+[pool-2-thread-127] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser17) 
+[pool-2-thread-156] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser29,gpsUtil.location.VisitedLocation@7de257d4)
+[pool-2-thread-156] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser29) 
+[pool-2-thread-121] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser82,gpsUtil.location.VisitedLocation@6a0ea5cb)
+[pool-2-thread-121] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser82) 
+[pool-2-thread-154] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser23,gpsUtil.location.VisitedLocation@515b070f)
+[pool-2-thread-154] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser23) 
+[pool-2-thread-166] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser36,gpsUtil.location.VisitedLocation@329b37ba)
+[pool-2-thread-169] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser32,gpsUtil.location.VisitedLocation@58440801)
+[pool-2-thread-178] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser40,gpsUtil.location.VisitedLocation@18431c5b)
+[pool-2-thread-166] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser36) 
+[pool-2-thread-169] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser32) 
+[pool-2-thread-178] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser40) 
+[pool-2-thread-147] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser5,gpsUtil.location.VisitedLocation@7627a012)
+[pool-2-thread-147] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser5) 
+[pool-2-thread-175] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser47,gpsUtil.location.VisitedLocation@198d8bcd)
+[pool-2-thread-175] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser47) 
+[pool-2-thread-146] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser91,gpsUtil.location.VisitedLocation@24b04ce1)
+[pool-2-thread-146] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser91) 
+[pool-2-thread-145] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser92,gpsUtil.location.VisitedLocation@33b4c44b)
+[pool-2-thread-145] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser92) 
+[pool-2-thread-164] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser39,gpsUtil.location.VisitedLocation@45437664)
+[pool-2-thread-164] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser39) 
+[pool-2-thread-152] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser26,gpsUtil.location.VisitedLocation@2b9d029a)
+[pool-2-thread-152] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser26) 
+[pool-2-thread-177] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser41,gpsUtil.location.VisitedLocation@5171237b)
+[pool-2-thread-177] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser41) 
+[pool-2-thread-186] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser52,gpsUtil.location.VisitedLocation@6a1b684e)
+[pool-2-thread-186] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser52) 
+[pool-2-thread-142] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser0,gpsUtil.location.VisitedLocation@73a1288d)
+[pool-2-thread-142] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser0) 
+[pool-2-thread-157] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser25,gpsUtil.location.VisitedLocation@6ca166ff)
+[pool-2-thread-157] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser25) 
+[pool-2-thread-182] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser56,gpsUtil.location.VisitedLocation@70801b0)
+[pool-2-thread-182] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser56) 
+[pool-2-thread-148] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser93,gpsUtil.location.VisitedLocation@3ece2ce6)
+[pool-2-thread-148] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser93) 
+[pool-2-thread-187] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser51,gpsUtil.location.VisitedLocation@4af2a8c4)
+[pool-2-thread-187] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser51) 
+[pool-2-thread-191] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser66,gpsUtil.location.VisitedLocation@6e68a639)
+[pool-2-thread-191] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser66) 
+[pool-2-thread-170] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser31,gpsUtil.location.VisitedLocation@23f735d7)
+[pool-2-thread-170] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser31) 
+[pool-2-thread-160] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser20,gpsUtil.location.VisitedLocation@291ea63e)
+[pool-2-thread-160] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser20) 
+[pool-2-thread-161] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser38,gpsUtil.location.VisitedLocation@ad89c2d)
+[pool-2-thread-161] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser38) 
+[pool-2-thread-173] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser45,gpsUtil.location.VisitedLocation@66552d09)
+[pool-2-thread-173] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser45) 
+[pool-2-thread-185] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser58,gpsUtil.location.VisitedLocation@7bb533fe)
+[pool-2-thread-185] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser58) 
+[pool-2-thread-171] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser49,gpsUtil.location.VisitedLocation@68568cb)
+[pool-2-thread-153] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser28,gpsUtil.location.VisitedLocation@4c8593bd)
+[pool-2-thread-171] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser49) 
+[pool-2-thread-153] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser28) 
+[pool-2-thread-195] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser63,gpsUtil.location.VisitedLocation@40742089)
+[pool-2-thread-195] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser63) 
+[pool-2-thread-197] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser65,gpsUtil.location.VisitedLocation@22d86f2d)
+[pool-2-thread-197] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser65) 
+[pool-2-thread-190] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser50,gpsUtil.location.VisitedLocation@2b100eb1)
+[pool-2-thread-190] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser50) 
+[pool-2-thread-192] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser67,gpsUtil.location.VisitedLocation@11db3e47)
+[pool-2-thread-192] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser67) 
+[pool-2-thread-184] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser57,gpsUtil.location.VisitedLocation@cd80a03)
+[pool-2-thread-184] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser57) 
+[pool-2-thread-176] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser46,gpsUtil.location.VisitedLocation@2f9855bd)
+[pool-2-thread-176] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser46) 
+[pool-2-thread-163] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser34,gpsUtil.location.VisitedLocation@56eea10a)
+[pool-2-thread-163] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser34) 
+[pool-2-thread-193] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser69,gpsUtil.location.VisitedLocation@2808b767)
+[pool-2-thread-193] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser69) 
+[pool-2-thread-199] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser61,gpsUtil.location.VisitedLocation@18a8c36c)
+[pool-2-thread-199] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser61) 
+[pool-2-thread-159] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser21,gpsUtil.location.VisitedLocation@4ccd10e)
+[pool-2-thread-159] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser21) 
+[pool-2-thread-181] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser42,gpsUtil.location.VisitedLocation@32204d86)
+[pool-2-thread-181] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser42) 
+[pool-2-thread-180] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser59,gpsUtil.location.VisitedLocation@8beffea)
+[pool-2-thread-180] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser59) 
+[pool-2-thread-174] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser44,gpsUtil.location.VisitedLocation@1da934e7)
+[pool-2-thread-174] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser44) 
+[pool-2-thread-189] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser54,gpsUtil.location.VisitedLocation@351207f8)
+[pool-2-thread-189] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser54) 
+[pool-2-thread-183] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser55,gpsUtil.location.VisitedLocation@28d80584)
+[pool-2-thread-183] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser55) 
+[pool-2-thread-172] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser48,gpsUtil.location.VisitedLocation@9e778bc)
+[pool-2-thread-172] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser48) 
+[pool-2-thread-179] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser43,gpsUtil.location.VisitedLocation@933120)
+[pool-2-thread-179] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser43) 
+[pool-2-thread-188] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser53,gpsUtil.location.VisitedLocation@4a5b4953)
+[pool-2-thread-188] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser53) 
+[pool-2-thread-198] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser64,gpsUtil.location.VisitedLocation@f92c114)
+[pool-2-thread-198] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser64) 
+[pool-2-thread-194] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser68,gpsUtil.location.VisitedLocation@3ad02a64)
+[pool-2-thread-194] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser68) 
+[pool-2-thread-200] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser60,gpsUtil.location.VisitedLocation@24f5ece7)
+[pool-2-thread-200] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser60) 
+[pool-2-thread-196] - INFO   - [33m tourGuide.service.GpsUtilService: 	 tourGuideService.saveTrackedUserLocation(internalUser62,gpsUtil.location.VisitedLocation@1ad54a88)
+[pool-2-thread-196] - INFO   - [37m tourGuide.service.RewardsService:  	 calculateRewards(internalUser62) 

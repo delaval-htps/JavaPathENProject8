@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import org.apache.logging.log4j.LogManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,8 @@ import tripPricer.TripPricer;
 
 @Service
 public class TourGuideService {
-	private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
+	// private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
+	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TourGuideService.class);
 	public final GpsUtilService gpsUtilService;
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
@@ -66,7 +68,9 @@ public class TourGuideService {
 	}
 
 	public VisitedLocation getUserLocation(User user) {
-		return (user.getVisitedLocations().size() > 0) ? user.getLastVisitedLocation() : trackUserLocation(user);
+		return user.getLastVisitedLocation();
+		// return (user.getVisitedLocations().size() > 0) ?
+		// user.getLastVisitedLocation() : trackUserLocation(user);
 	}
 
 	public User getUser(String userName) {
@@ -91,15 +95,21 @@ public class TourGuideService {
 		return providers;
 	}
 
-	public VisitedLocation trackUserLocation(User user) {
+	public void trackUserLocation(User user) {
 
-		CompletableFuture<VisitedLocation> visitedLocation = gpsUtilService.getLocation(user, this);
-		visitedLocation.thenRunAsync(() -> {
-			logger.info("\033[35m {}}: rewardsService.calculateRewards({})", this.getClass().getCanonicalName(), user.getUserName());
-			rewardsService.calculateRewards(user);
-		}, tourGuideServiceExecutor);
-
-		return visitedLocation.join();
+		// CompletableFuture.runAsync(() -> {
+		// logger.info("\033[32m {} : trackUserLocation({}) ",
+		// this.getClass().getCanonicalName(), user.getUserName());
+		// gpsUtilService.getLocation(user, this);
+		// }, tourGuideServiceExecutor);
+		try {
+			tourGuideServiceExecutor.submit(() -> {
+				logger.info("\033[32m {}: \t trackUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
+				gpsUtilService.getLocation(user, this);
+			});
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
@@ -109,12 +119,16 @@ public class TourGuideService {
 
 	public void trackAllUserLocation() {
 		List<User> users = this.getAllUsers();
-		users.parallelStream().map(this::trackUserLocation).collect(Collectors.toList());
+		users.parallelStream().forEach(u -> {
+
+			trackUserLocation(u);
+
+		});
 	}
 
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
-		for (Attraction attraction : gpsUtilService.getAttractions().join()) {
+		for (Attraction attraction : gpsUtilService.getAttractions()) {
 			if (rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
 				nearbyAttractions.add(attraction);
 			}
@@ -123,12 +137,14 @@ public class TourGuideService {
 		return nearbyAttractions;
 	}
 
-	private void addShutDownHook() {
+	public void addShutDownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				tracker.stopTracking();
 				tourGuideServiceExecutor.shutdown();
 				gpsUtilService.stopGpsExecutorService();
+				rewardsService.rewardsExecutorService.shutdown();
+				
 			}
 		});
 	}

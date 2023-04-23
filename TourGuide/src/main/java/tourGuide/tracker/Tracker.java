@@ -18,14 +18,12 @@ public class Tracker extends Thread {
 	private static final long TRACKINGPOLLINGINTERVAL = TimeUnit.MINUTES.toSeconds(15);
 
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
-	private final ExecutorService trackerService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
 
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;
 
 	public Tracker(TourGuideService tourGuideService) {
 		this.tourGuideService = tourGuideService;
-
 		executorService.submit(this);
 	}
 
@@ -35,7 +33,6 @@ public class Tracker extends Thread {
 	public void stopTracking() {
 		stop = true;
 		executorService.shutdownNow();
-		trackerService.shutdown();
 
 	}
 
@@ -55,11 +52,17 @@ public class Tracker extends Thread {
 
 			stopWatch.start();
 
-			users.parallelStream().forEach(u -> {
-				logger.info("\033[31m {}: tourGuideService.trackUserLocation ({})", this.getClass().getCanonicalName(), u.getUserName());
+			// users.parallelStream().forEach(u -> {
+			// logger.info("\033[31m {}: tourGuideService.trackUserLocation ({})",
+			// this.getClass().getCanonicalName(), u.getUserName());
+			// tourGuideService.trackUserLocation(u);
+			// tourGuideService.usersCountDownLatch.countDown();
+			// });
+			users.forEach(u -> {
+				logger.info("\033[31m {}: \t\t tourGuideService.trackUserLocation ({})",this.getClass().getCanonicalName(), u.getUserName());
 				tourGuideService.trackUserLocation(u);
 				tourGuideService.usersCountDownLatch.countDown();
-			});
+			} );
 
 			stopWatch.stop();
 

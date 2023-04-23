@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,35 +21,55 @@ public class GpsUtilService {
   private GpsUtil gpsUtil;
   private Logger logger = LoggerFactory.getLogger(GpsUtilService.class);
 
-  public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+  public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(10000);
 
   public GpsUtilService(GpsUtil gpsUtil) {
     this.gpsUtil = gpsUtil;
   }
 
-  public CompletableFuture<VisitedLocation> getLocation(User user, TourGuideService tourGuideService) {
+  public void getLocation(User user, TourGuideService tourGuideService) {
 
-    CompletableFuture<VisitedLocation> visitedLocationFuture =CompletableFuture.supplyAsync(() -> {
-      logger.info("\033[37m {}: gpstUtils.getUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
+     CompletableFuture.supplyAsync(() -> {
+      logger.info("\033[33m {}: \t gpstUtils.getUserLocation({}) completed ", this.getClass().getCanonicalName(), user.getUserName());
       return gpsUtil.getUserLocation(user.getUserId());
-    }, gpsExecutorService);
+    }, gpsExecutorService).thenAccept(location ->{
+      logger.info("\033[33m {}: \t tourGuideService.saveTrackedUserLocation({},{})", this.getClass().getCanonicalName(), user.getUserName(), location);
+       tourGuideService.saveTrackedUserLocation(user, location);
+     });
 
-    visitedLocationFuture.thenAcceptAsync((location) -> {
-      logger.info("\033[33m {}:  {}.addVisitedLocation({}})", this.getClass().getCanonicalName(), user.getUserName(), location);
-      tourGuideService.saveTrackedUserLocation(user,location);
-    }, gpsExecutorService);
+    // getUserLocationSupplyAsync.whenComplete((result, ex) -> {
+    //   if (ex != null) {
+    //     logger.error("getUSerLocation failed", ex);
+    //   } else {
+      
+    //   }
+    // });
 
-    return visitedLocationFuture;
+    // getUserLocationthenAcceptAsync.whenComplete((result, ex) -> {
+    //   if (ex != null) {
+    //     logger.error("getUSerLocation failed", ex);
+    //   } else {
+    //     logger.info("\033[35m {}: tourGuideService.saveTrackedUserLocation({},{})", this.getClass().getCanonicalName(), user.getUserName(), result);
+    //   }
+    // });
   }
 
-  public CompletableFuture<List<Attraction>> getAttractions() {
-    return CompletableFuture.supplyAsync(() -> {
-      return gpsUtil.getAttractions();
-    }, gpsExecutorService);
+  public List<Attraction> getAttractions() {
+    // return CompletableFuture.supplyAsync(() -> {
+    //   return gpsUtil.getAttractions();
+    // }, gpsExecutorService).join();
+    return gpsUtil.getAttractions();
   }
 
   public void stopGpsExecutorService() {
     gpsExecutorService.shutdown();
+    try {
+      gpsExecutorService.awaitTermination(10, TimeUnit.MINUTES);
+    } catch (InterruptedException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    
+    }
   }
 
 }
