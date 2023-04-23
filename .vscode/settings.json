@@ -1,5 +1,5 @@
 {
-    "java.server.launchMode": "LightWeight",
+    "java.server.launchMode": "Standard",
     "java.compile.nullAnalysis.mode": "automatic",
     "java.format.settings.url": ".vscode/java-formatter.xml",
     "java.configuration.updateBuildConfiguration": "automatic",
