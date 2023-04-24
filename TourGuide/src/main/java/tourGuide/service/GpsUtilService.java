@@ -30,10 +30,10 @@ public class GpsUtilService {
   public void getLocation(User user, TourGuideService tourGuideService) {
 
      CompletableFuture.supplyAsync(() -> {
-      logger.info("\033[33m {}: \t gpstUtils.getUserLocation({}) completed ", this.getClass().getCanonicalName(), user.getUserName());
+      logger.debug("\033[33m {}: \t gpstUtils.getUserLocation({}) completed ", this.getClass().getCanonicalName(), user.getUserName());
       return gpsUtil.getUserLocation(user.getUserId());
     }, gpsExecutorService).thenAccept(location ->{
-      logger.info("\033[33m {}: \t tourGuideService.saveTrackedUserLocation({},{})", this.getClass().getCanonicalName(), user.getUserName(), location);
+      logger.debug("\033[33m {}: \t tourGuideService.saveTrackedUserLocation({},{})", this.getClass().getCanonicalName(), user.getUserName(), location);
        tourGuideService.saveTrackedUserLocation(user, location);
      });
 
@@ -49,7 +49,7 @@ public class GpsUtilService {
     //   if (ex != null) {
     //     logger.error("getUSerLocation failed", ex);
     //   } else {
-    //     logger.info("\033[35m {}: tourGuideService.saveTrackedUserLocation({},{})", this.getClass().getCanonicalName(), user.getUserName(), result);
+    //     logger.debug("\033[35m {}: tourGuideService.saveTrackedUserLocation({},{})", this.getClass().getCanonicalName(), user.getUserName(), result);
     //   }
     // });
   }

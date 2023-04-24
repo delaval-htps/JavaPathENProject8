@@ -48,30 +48,30 @@ public class Tracker extends Thread {
 
 			List<User> users = tourGuideService.getAllUsers();
 
-			logger.debug("Begin Tracker. Tracking {} users. ", users.size());
+			logger.info("Begin Tracker. Tracking {} users. ", users.size());
 
 			stopWatch.start();
 
 			// users.parallelStream().forEach(u -> {
-			// logger.info("\033[31m {}: tourGuideService.trackUserLocation ({})",
+			// logger.debug("\033[31m {}: tourGuideService.trackUserLocation ({})",
 			// this.getClass().getCanonicalName(), u.getUserName());
 			// tourGuideService.trackUserLocation(u);
 			// tourGuideService.usersCountDownLatch.countDown();
 			// });
 			users.forEach(u -> {
-				logger.info("\033[31m {}: \t\t tourGuideService.trackUserLocation ({})",this.getClass().getCanonicalName(), u.getUserName());
+				logger.debug("\033[31m {}: \t\t tourGuideService.trackUserLocation ({})",this.getClass().getCanonicalName(), u.getUserName());
 				tourGuideService.trackUserLocation(u);
 				tourGuideService.usersCountDownLatch.countDown();
 			} );
 
 			stopWatch.stop();
 
-			logger.debug("Tracker Time Elapsed: {} seconds", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+			logger.info("Tracker Time Elapsed: {} seconds", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
 			stopWatch.reset();
 
 			try {
-				logger.debug("Tracker sleeping");
+				logger.info("Tracker sleeping");
 				TimeUnit.SECONDS.sleep(TRACKINGPOLLINGINTERVAL);
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

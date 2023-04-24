@@ -58,14 +58,14 @@ public class TestPerformance {
 
 	@Test
 	public void highVolumeTrackLocation() throws InterruptedException {
-		ThreadContext.put("filename", "filename");
+		
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		// Users should be incremented up to 100,000, and test finishes within 15
 		// minutes
-		InternalTestHelper.setInternalUserNumber(100);
-		logger.info("----------------------HightVolumeTrackLocation with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+		InternalTestHelper.setInternalUserNumber(1000);
+		logger.info("\t----------------------HightVolumeTrackLocation with {} users-----------------------\t",InternalTestHelper.getInternalUserNumber());
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 	
 		tourGuideService.usersCountDownLatch.await();
@@ -77,7 +77,7 @@ public class TestPerformance {
 		// allUsers.forEach(u -> assertTrue(u.getVisitedLocations().size() == 4));
 
 		for (User user : allUsers) {
-			logger.info("\033[36m {}: \t\t tourGuideService.trackUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
+			logger.debug("\033[36m {}: \t\t tourGuideService.trackUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
 			tourGuideService.trackUserLocation(user);
 		}
 		for (User user : allUsers) {
@@ -94,7 +94,7 @@ public class TestPerformance {
 
 		logger.info("{} - highVolumeTrackLocation: Time Elapsed: {} seconds", this.getClass().getCanonicalName(), TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
-
+	
 		
 	}
 
@@ -110,7 +110,8 @@ public class TestPerformance {
 
 		// Users should be incremented up to 100,000, and test finishes within 20
 		// minutes
-		InternalTestHelper.setInternalUserNumber(1000);
+		InternalTestHelper.setInternalUserNumber(100);
+		logger.info("----------------------highVolumeGetRewards with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
@@ -129,6 +130,7 @@ public class TestPerformance {
 		tourGuideService.tracker.stopTracking();
 		logger.info("{} - highVolumeGetRewards: Time Elapsed: {} seconds", this.getClass().getCanonicalName(), TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+		
 	}
 
 }

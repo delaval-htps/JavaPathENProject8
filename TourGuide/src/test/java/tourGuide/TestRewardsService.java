@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.logging.log4j.LogManager;
 import org.junit.Ignore;
 import org.junit.Test;
 import rewardCentral.RewardCentral;
@@ -21,6 +23,8 @@ import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
 public class TestRewardsService {
+  private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TestRewardsService.class);
+
 
   @Test
   public void userGetRewards() {
@@ -29,6 +33,8 @@ public class TestRewardsService {
     RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 
     InternalTestHelper.setInternalUserNumber(0);
+    logger.info("----------------------Test : userGetRewards with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
     TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
     User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -54,6 +60,7 @@ public class TestRewardsService {
     GpsUtil gpsUtil = new GpsUtil();
     GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
     RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
+    logger.info("---------------------- Test : isWithinAttractionProximity -----------------------");
     Attraction attraction = gpsUtil.getAttractions().get(0);
     assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
   }
@@ -67,6 +74,8 @@ public class TestRewardsService {
     rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
     InternalTestHelper.setInternalUserNumber(1);
+    logger.info("----------------------Test :  nearAllAttractions with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
     TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
     rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));

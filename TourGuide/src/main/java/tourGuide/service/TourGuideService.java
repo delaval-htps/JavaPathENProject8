@@ -36,6 +36,7 @@ import tripPricer.TripPricer;
 public class TourGuideService {
 	// private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
 	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TourGuideService.class);
+	
 	public final GpsUtilService gpsUtilService;
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
@@ -53,10 +54,10 @@ public class TourGuideService {
 
 		if (testMode) {
 			logger.info("TestMode enabled");
-			logger.debug("Initializing users");
+			logger.info("Initializing users");
 			initializeInternalUsers();
 			usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
-			logger.debug("Finished initializing users");
+			logger.info("Finished initializing users");
 		}
 
 		tracker = new Tracker(this);
@@ -96,15 +97,9 @@ public class TourGuideService {
 	}
 
 	public void trackUserLocation(User user) {
-
-		// CompletableFuture.runAsync(() -> {
-		// logger.info("\033[32m {} : trackUserLocation({}) ",
-		// this.getClass().getCanonicalName(), user.getUserName());
-		// gpsUtilService.getLocation(user, this);
-		// }, tourGuideServiceExecutor);
 		try {
 			tourGuideServiceExecutor.submit(() -> {
-				logger.info("\033[32m {}: \t trackUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
+				logger.debug("\033[32m {}: \t trackUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
 				gpsUtilService.getLocation(user, this);
 			});
 		} catch (Exception e) {

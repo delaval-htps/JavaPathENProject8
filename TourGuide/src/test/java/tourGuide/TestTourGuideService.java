@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.logging.log4j.LogManager;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -21,6 +22,8 @@ import tourGuide.user.User;
 import tripPricer.Provider;
 
 public class TestTourGuideService {
+	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TestTourGuideService.class);
+
 
 	@Test
 	public void getUserLocation() throws InterruptedException {
@@ -28,6 +31,8 @@ public class TestTourGuideService {
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
+		logger.info("----------------------Test :  getUserLocation with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -48,6 +53,8 @@ public class TestTourGuideService {
 
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
+		logger.info("----------------------Test :  addUser with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -71,6 +78,8 @@ public class TestTourGuideService {
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
+		logger.info("----------------------Test :  getAllUsers with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -93,6 +102,9 @@ public class TestTourGuideService {
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
+
+		logger.info("----------------------Test :  trackUser with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -119,6 +131,9 @@ public class TestTourGuideService {
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
+
+		logger.info("----------------------Test :  getNearbyAttractions with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
@@ -136,6 +151,8 @@ public class TestTourGuideService {
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
+		logger.info("----------------------Test :  getTripDeals with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");

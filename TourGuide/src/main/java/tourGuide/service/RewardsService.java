@@ -47,7 +47,7 @@ public class RewardsService {
 	}
 
 	public void calculateRewards(User user) {
-		logger.info("\033[37m {}:  \t calculateRewards({}) ", this.getClass().getCanonicalName(), user.getUserName());
+		logger.debug("\033[37m {}:  \t calculateRewards({}) ", this.getClass().getCanonicalName(), user.getUserName());
 		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>(user.getVisitedLocations());
 		List<Attraction> attractions = gpsUtilService.getAttractions();
 
@@ -55,7 +55,7 @@ public class RewardsService {
 			for (Attraction attraction : attractions) {
 				if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					if (nearAttraction(visitedLocation, attraction)) {
-						logger.info("\033[35m {}:  \t setUserRewards({},{},{}) ", this.getClass().getCanonicalName(), attraction,visitedLocation,user.getUserName());
+						logger.debug("\033[35m {}:  \t setUserRewards({},{},{}) ", this.getClass().getCanonicalName(), attraction,visitedLocation,user.getUserName());
 						setUserRewards(attraction, visitedLocation, user);
 					}
 				}
@@ -65,10 +65,10 @@ public class RewardsService {
 
 	private void setUserRewards(Attraction attraction, VisitedLocation visitedLocation, User user) {
 		CompletableFuture.supplyAsync(() -> {
-			logger.info("\033[35m {}:  getRewardPoints({}, {}) ", this.getClass().getCanonicalName(), attraction, user.getUserName());
+			logger.debug("\033[35m {}:  getRewardPoints({}, {}) ", this.getClass().getCanonicalName(), attraction, user.getUserName());
 			return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 		}, rewardsExecutorService).thenAcceptAsync(rewardsPoint -> {
-			logger.info("\033[35m {}:  {}.addUserReward({}, {}, {}) ", this.getClass().getCanonicalName(), user.getUserName(), visitedLocation, attraction, rewardsPoint);
+			logger.debug("\033[35m {}:  {}.addUserReward({}, {}, {}) ", this.getClass().getCanonicalName(), user.getUserName(), visitedLocation, attraction, rewardsPoint);
 			user.addUserReward(new UserReward(visitedLocation, attraction, rewardsPoint));
 		}, rewardsExecutorService);
 	}
