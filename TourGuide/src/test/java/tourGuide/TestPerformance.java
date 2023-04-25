@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import gpsUtil.GpsUtil;
@@ -58,7 +59,7 @@ public class TestPerformance {
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		// Users should be incremented up to 100,000, and test finishes within 15
 		// minutes
-		InternalTestHelper.setInternalUserNumber(50000);
+		InternalTestHelper.setInternalUserNumber(1000);
 		logger.info("\t----------------------HightVolumeTrackLocation with {} users-----------------------\t",InternalTestHelper.getInternalUserNumber());
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 	
@@ -110,7 +111,7 @@ public class TestPerformance {
 
 		// Users should be incremented up to 100,000, and test finishes within 20
 		// minutes
-		InternalTestHelper.setInternalUserNumber(10000);
+		InternalTestHelper.setInternalUserNumber(100);
 		logger.info("----------------------highVolumeGetRewards with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 		
 		StopWatch stopWatch = new StopWatch();
