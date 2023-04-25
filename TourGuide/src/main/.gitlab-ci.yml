@@ -1,5 +1,5 @@
 run_test:
-  image: gradle:jdk8
+  image: gradle:jdk11
   script:
     - cd TourGuide/
     - ./gradlew test

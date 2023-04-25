@@ -1,0 +1,44 @@
+[main             ] - INFO   - ----------------------Test :  getUserLocation with 0 users-----------------------
+[main             ] - INFO   - TestMode enabled
+[main             ] - INFO   - Initializing users
+[main             ] - INFO   - Finished initializing users
+[pool-5-thread-1  ] - INFO   - Begin Tracker. Tracking 0 users. 
+[pool-5-thread-1  ] - INFO   - Tracker Time Elapsed: 0 seconds
+[pool-5-thread-1  ] - INFO   - Tracker sleeping
+[main             ] - INFO   - ----------------------Test :  addUser with 0 users-----------------------
+[main             ] - INFO   - TestMode enabled
+[main             ] - INFO   - Initializing users
+[main             ] - INFO   - Finished initializing users
+[pool-9-thread-1  ] - INFO   - Begin Tracker. Tracking 0 users. 
+[pool-9-thread-1  ] - INFO   - Tracker Time Elapsed: 0 seconds
+[pool-9-thread-1  ] - INFO   - Tracker sleeping
+[main             ] - INFO   - ----------------------Test :  getAllUsers with 0 users-----------------------
+[main             ] - INFO   - TestMode enabled
+[main             ] - INFO   - Initializing users
+[main             ] - INFO   - Finished initializing users
+[pool-13-thread-1 ] - INFO   - Begin Tracker. Tracking 0 users. 
+[pool-13-thread-1 ] - INFO   - Tracker Time Elapsed: 0 seconds
+[pool-13-thread-1 ] - INFO   - Tracker sleeping
+[main             ] - INFO   - ----------------------Test :  trackUser with 0 users-----------------------
+[main             ] - INFO   - TestMode enabled
+[main             ] - INFO   - Initializing users
+[main             ] - INFO   - Finished initializing users
+[pool-17-thread-1 ] - INFO   - Begin Tracker. Tracking 0 users. 
+[pool-17-thread-1 ] - INFO   - Tracker Time Elapsed: 0 seconds
+[pool-17-thread-1 ] - INFO   - Tracker sleeping
+[main             ] - INFO   - 	----------------------HightVolumeTrackLocation with 1000 users-----------------------	
+[main             ] - INFO   - TestMode enabled
+[main             ] - INFO   - Initializing users
+[main             ] - INFO   - Finished initializing users
+[pool-21-thread-1 ] - INFO   - Begin Tracker. Tracking 1000 users. 
+[pool-21-thread-1 ] - INFO   - Tracker Time Elapsed: 0 seconds
+[pool-21-thread-1 ] - INFO   - Tracker sleeping
+[main             ] - INFO   - tourGuide.TestPerformance - highVolumeTrackLocation: Time Elapsed: 0 seconds
+[main             ] - INFO   - ----------------------Test : userGetRewards with 0 users-----------------------
+[main             ] - INFO   - TestMode enabled
+[main             ] - INFO   - Initializing users
+[main             ] - INFO   - Finished initializing users
+[pool-25-thread-1 ] - INFO   - Begin Tracker. Tracking 0 users. 
+[pool-25-thread-1 ] - INFO   - Tracker Time Elapsed: 0 seconds
+[pool-25-thread-1 ] - INFO   - Tracker sleeping
+[main             ] - INFO   - ---------------------- Test : isWithinAttractionProximity -----------------------
