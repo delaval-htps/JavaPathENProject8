@@ -4,12 +4,10 @@ import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -18,8 +16,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.LogManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import gpsUtil.location.Attraction;
@@ -34,9 +30,8 @@ import tripPricer.TripPricer;
 
 @Service
 public class TourGuideService {
-	// private Logger logger = LoggerFactory.getLogger(TourGuideService.class);
 	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TourGuideService.class);
-	
+
 	public final GpsUtilService gpsUtilService;
 	private final RewardsService rewardsService;
 	private final TripPricer tripPricer = new TripPricer();
@@ -136,10 +131,10 @@ public class TourGuideService {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			public void run() {
 				tracker.stopTracking();
-				tourGuideServiceExecutor.shutdown();
-				gpsUtilService.stopGpsExecutorService();
-				rewardsService.rewardsExecutorService.shutdown();
-				
+				tourGuideServiceExecutor.shutdownNow();
+				gpsUtilService.gpsExecutorService.shutdownNow();
+				rewardsService.rewardsExecutorService.shutdownNow();
+
 			}
 		});
 	}
