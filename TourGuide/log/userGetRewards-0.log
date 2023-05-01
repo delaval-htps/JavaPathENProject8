@@ -1,0 +1,16 @@
+[37m[main                ] - INFO  - tourGuide.TestRewardsService       - ----------------------Test : userGetRewards with 0 users-----------------------
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - TestMode enabled
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Initializing users
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Created 0  internal test users.
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Finished initializing users
+[m[37m[pool-13-thread-1    ] - INFO  - tourGuide.tracker.Tracker          - Begin Tracker. Tracking 0 users. 
+[m[37m[pool-13-thread-1    ] - INFO  - tourGuide.tracker.Tracker          - Tracker Time Elapsed: 0 seconds
+[m[37m[pool-13-thread-1    ] - INFO  - tourGuide.tracker.Tracker          - Tracker sleeping
+[m[36m[pool-12-thread-1    ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(jon)[0m
+[m[36m[pool-10-thread-1    ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(jon)
+[m[36m[pool-10-thread-1    ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(jon,gpsUtil.location.VisitedLocation@44be181c)
+[m[36m[pool-10-thread-1    ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(jon) 
+[m[36m[pool-10-thread-1    ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@4a79fefb,gpsUtil.location.VisitedLocation@4e46736c,jon) 
+[m[36m[pool-11-thread-1    ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@4a79fefb, jon) 
+[m[36m[pool-11-thread-1    ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@4e46736c, gpsUtil.location.Attraction@4a79fefb, 519) 
+[m

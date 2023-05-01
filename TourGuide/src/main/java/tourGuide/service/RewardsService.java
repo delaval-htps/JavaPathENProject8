@@ -6,8 +6,8 @@ import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import gpsUtil.location.Attraction;
@@ -20,6 +20,7 @@ import tourGuide.user.UserReward;
 @Service
 public class RewardsService {
 	private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
+	private static Logger rootLogger = LogManager.getRootLogger();
 
 	// proximity in miles
 	private int defaultProximityBuffer = 10;
@@ -27,7 +28,7 @@ public class RewardsService {
 	private int attractionProximityRange = 200;
 	private final GpsUtilService gpsUtilService;
 	private final RewardCentral rewardsCentral;
-	private final Logger logger = LoggerFactory.getLogger(RewardsService.class);
+	private final org.apache.logging.log4j.Logger logger = LogManager.getLogger("testPerformance");
 
 	public final ExecutorService rewardsExecutorService = Executors.newFixedThreadPool(1000);
 
@@ -44,8 +45,12 @@ public class RewardsService {
 		proximityBuffer = defaultProximityBuffer;
 	}
 
+	public void calculateReward(User user) {
+		rewardsExecutorService.submit(() -> calculateRewards(user));
+	}
+
 	public void calculateRewards(User user) {
-		logger.debug("\033[37m {}:  \t calculateRewards({}) ", this.getClass().getCanonicalName(), user.getUserName());
+		logger.debug("\033[35m - calculateRewards({}) ", user.getUserName());
 		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>(user.getVisitedLocations());
 		List<Attraction> attractions = gpsUtilService.getAttractions();
 
@@ -53,7 +58,7 @@ public class RewardsService {
 			for (Attraction attraction : attractions) {
 				if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					if (nearAttraction(visitedLocation, attraction)) {
-						logger.debug("\033[35m {}:  \t setUserRewards({},{},{}) ", this.getClass().getCanonicalName(), attraction,visitedLocation,user.getUserName());
+						logger.debug("\033[35m - setUserRewards({},{},{}) ", attraction,visitedLocation,user.getUserName());
 						setUserRewards(attraction, visitedLocation, user);
 					}
 				}
@@ -63,12 +68,12 @@ public class RewardsService {
 
 	private void setUserRewards(Attraction attraction, VisitedLocation visitedLocation, User user) {
 		CompletableFuture.supplyAsync(() -> {
-			logger.debug("\033[35m {}:  getRewardPoints({}, {}) ", this.getClass().getCanonicalName(), attraction, user.getUserName());
+			logger.debug("\033[35m - getRewardPoints({}, {}) ",  attraction, user.getUserName());
 			return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
-		}, rewardsExecutorService).thenAcceptAsync(rewardsPoint -> {
-			logger.debug("\033[35m {}:  {}.addUserReward({}, {}, {}) ", this.getClass().getCanonicalName(), user.getUserName(), visitedLocation, attraction, rewardsPoint);
+		}, rewardsExecutorService).thenAccept(rewardsPoint -> {
+			logger.debug("\033[35m - addUserReward({}, {}, {}) ",  visitedLocation, attraction, rewardsPoint);
 			user.addUserReward(new UserReward(visitedLocation, attraction, rewardsPoint));
-		}, rewardsExecutorService);
+		});
 	}
 
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {

@@ -6,22 +6,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
-import gpsUtil.location.VisitedLocation;
 import tourGuide.user.User;
 
 @Service
 public class GpsUtilService {
 
   private GpsUtil gpsUtil;
-  private Logger logger = LoggerFactory.getLogger(GpsUtilService.class);
+  private org.apache.logging.log4j.Logger logger = LogManager.getLogger("testPerformance");
+	private static Logger rootLogger = LogManager.getRootLogger();
 
-  public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(10000);
+  public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(6006);
 
   public GpsUtilService(GpsUtil gpsUtil) {
     this.gpsUtil = gpsUtil;
@@ -30,10 +30,10 @@ public class GpsUtilService {
   public void getLocation(User user, TourGuideService tourGuideService) {
 
      CompletableFuture.supplyAsync(() -> {
-      logger.debug("\033[33m {}: \t gpstUtils.getUserLocation({}) completed ", this.getClass().getCanonicalName(), user.getUserName());
+      logger.debug("\033[33m - gpstUtils.getUserLocation({})", user.getUserName());
       return gpsUtil.getUserLocation(user.getUserId());
     }, gpsExecutorService).thenAccept(location ->{
-      logger.debug("\033[33m {}: \t tourGuideService.saveTrackedUserLocation({},{})", this.getClass().getCanonicalName(), user.getUserName(), location);
+      logger.debug("\033[33m - tourGuideService.saveTrackedUserLocation({},{})",  user.getUserName(), location);
        tourGuideService.saveTrackedUserLocation(user, location);
      });
 

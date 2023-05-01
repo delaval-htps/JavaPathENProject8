@@ -1,0 +1,100 @@
+[37m[main                ] - INFO  - tourGuide.TestPerformance          - ----------------------highVolumeGetRewards with 10 users-----------------------
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - TestMode enabled
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Initializing users
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Created 10  internal test users.
+[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Finished initializing users
+[m[37m[pool-9-thread-1     ] - INFO  - tourGuide.tracker.Tracker          - Begin Tracker. Tracking 10 users. 
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser9)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser8)
+[m[36m[pool-8-thread-1     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser9)[0m
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser3)
+[m[36m[pool-8-thread-2     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser8)[0m
+[m[36m[pool-6-thread-1     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser9)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser2)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser1)
+[m[36m[pool-8-thread-4     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser2)[0m
+[m[36m[pool-8-thread-3     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser3)[0m
+[m[36m[pool-6-thread-2     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser8)
+[m[36m[pool-6-thread-3     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser2)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser0)
+[m[36m[pool-8-thread-5     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser1)[0m
+[m[36m[pool-6-thread-4     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser3)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser7)
+[m[36m[pool-8-thread-6     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser0)[0m
+[m[36m[pool-6-thread-5     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser1)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser6)
+[m[36m[pool-8-thread-7     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser7)[0m
+[m[36m[pool-6-thread-6     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser0)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser5)
+[m[36m[pool-6-thread-7     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser7)
+[m[36m[pool-9-thread-1     ] - DEBUG - tourGuide.tracker.Tracker          - [31m - tourGuideService.trackUserLocation (internalUser4)
+[m[36m[pool-8-thread-9     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser5)[0m
+[m[36m[pool-8-thread-8     ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser6)[0m
+[m[37m[pool-9-thread-1     ] - INFO  - tourGuide.tracker.Tracker          - Tracker Time Elapsed: 0 seconds
+[m[36m[pool-8-thread-10    ] - DEBUG - tourGuide.service.TourGuideService - [32m - [3mtrackUserLocation(internalUser4)[0m
+[m[36m[pool-6-thread-8     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser5)
+[m[37m[pool-9-thread-1     ] - INFO  - tourGuide.tracker.Tracker          - Tracker sleeping
+[m[36m[pool-6-thread-9     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser4)
+[m[36m[pool-6-thread-10    ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(internalUser6)
+[m[36m[pool-6-thread-8     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser5,gpsUtil.location.VisitedLocation@139e4a7e)
+[m[36m[pool-6-thread-8     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser5) 
+[m[36m[pool-6-thread-9     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser4,gpsUtil.location.VisitedLocation@41b5b14e)
+[m[36m[pool-6-thread-9     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser4) 
+[m[36m[pool-6-thread-8     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@1d59b67d,gpsUtil.location.VisitedLocation@1966210e,internalUser5) 
+[m[36m[pool-7-thread-1     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@1d59b67d, internalUser5) 
+[m[36m[pool-6-thread-9     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@4f724708,gpsUtil.location.VisitedLocation@4b4dda3e,internalUser4) 
+[m[36m[pool-7-thread-2     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@4f724708, internalUser4) 
+[m[36m[pool-6-thread-4     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser3,gpsUtil.location.VisitedLocation@38669410)
+[m[36m[pool-6-thread-4     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser3) 
+[m[36m[pool-6-thread-7     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser7,gpsUtil.location.VisitedLocation@1dd2ea28)
+[m[36m[pool-6-thread-7     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser7) 
+[m[36m[pool-6-thread-5     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser1,gpsUtil.location.VisitedLocation@6fe1002e)
+[m[36m[pool-6-thread-5     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser1) 
+[m[36m[pool-6-thread-4     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@36a17d6c,gpsUtil.location.VisitedLocation@329eff60,internalUser3) 
+[m[36m[pool-7-thread-3     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@36a17d6c, internalUser3) 
+[m[36m[pool-6-thread-2     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser8,gpsUtil.location.VisitedLocation@660967d1)
+[m[36m[pool-6-thread-2     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser8) 
+[m[36m[pool-6-thread-7     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@131507e2,gpsUtil.location.VisitedLocation@172a8158,internalUser7) 
+[m[36m[pool-7-thread-4     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@131507e2, internalUser7) 
+[m[36m[pool-6-thread-5     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@6126f3a2,gpsUtil.location.VisitedLocation@65196b5e,internalUser1) 
+[m[36m[pool-7-thread-5     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@6126f3a2, internalUser1) 
+[m[36m[pool-6-thread-1     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser9,gpsUtil.location.VisitedLocation@766a130e)
+[m[36m[pool-6-thread-1     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser9) 
+[m[36m[pool-6-thread-2     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@68ce8560,gpsUtil.location.VisitedLocation@6cf10ca1,internalUser8) 
+[m[36m[pool-7-thread-6     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@68ce8560, internalUser8) 
+[m[36m[pool-6-thread-3     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser2,gpsUtil.location.VisitedLocation@7fd50996)
+[m[36m[pool-6-thread-3     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser2) 
+[m[36m[pool-6-thread-1     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@78adf3b3,gpsUtil.location.VisitedLocation@7c92787e,internalUser9) 
+[m[36m[pool-7-thread-7     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@78adf3b3, internalUser9) 
+[m[36m[pool-6-thread-10    ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser6,gpsUtil.location.VisitedLocation@5d400e5d)
+[m[36m[pool-6-thread-10    ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser6) 
+[m[36m[pool-6-thread-3     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@7112f81c,gpsUtil.location.VisitedLocation@752d62e6,internalUser2) 
+[m[36m[pool-7-thread-8     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@7112f81c, internalUser2) 
+[m[36m[pool-6-thread-6     ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(internalUser0,gpsUtil.location.VisitedLocation@169e2664)
+[m[36m[pool-6-thread-6     ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser0) 
+[m[36m[pool-6-thread-10    ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@5387eb85,gpsUtil.location.VisitedLocation@57b8652d,internalUser6) 
+[m[36m[pool-7-thread-9     ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@5387eb85, internalUser6) 
+[m[36m[pool-6-thread-6     ] - DEBUG - tourGuide.service.RewardsService   - [35m - setUserRewards(gpsUtil.location.Attraction@1859dac7,gpsUtil.location.VisitedLocation@1c664d14,internalUser0) 
+[m[36m[pool-7-thread-10    ] - DEBUG - tourGuide.service.RewardsService   - [35m - getRewardPoints(gpsUtil.location.Attraction@1859dac7, internalUser0) 
+[m[36m[pool-7-thread-8     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@752d62e6, gpsUtil.location.Attraction@7112f81c, 845) 
+[m[36m[pool-7-thread-6     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@6cf10ca1, gpsUtil.location.Attraction@68ce8560, 210) 
+[m[36m[pool-7-thread-2     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@4b4dda3e, gpsUtil.location.Attraction@4f724708, 916) 
+[m[36m[pool-7-thread-1     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@1966210e, gpsUtil.location.Attraction@1d59b67d, 575) 
+[m[36m[pool-7-thread-9     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@57b8652d, gpsUtil.location.Attraction@5387eb85, 188) 
+[m[36m[pool-7-thread-5     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@65196b5e, gpsUtil.location.Attraction@6126f3a2, 79) 
+[m[36m[pool-7-thread-7     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@7c92787e, gpsUtil.location.Attraction@78adf3b3, 518) 
+[m[36m[pool-7-thread-3     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@329eff60, gpsUtil.location.Attraction@36a17d6c, 189) 
+[m[36m[pool-7-thread-10    ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@1c664d14, gpsUtil.location.Attraction@1859dac7, 871) 
+[m[36m[pool-7-thread-4     ] - DEBUG - tourGuide.service.RewardsService   - [35m - addUserReward(gpsUtil.location.VisitedLocation@172a8158, gpsUtil.location.Attraction@131507e2, 142) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser9) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser8) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser3) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser2) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser1) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser0) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser7) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser6) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser5) 
+[m[36m[main                ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(internalUser4) 
+[m[37m[main                ] - INFO  - tourGuide.TestPerformance          - highVolumeGetRewards: Time Elapsed: 1 seconds
+[m
