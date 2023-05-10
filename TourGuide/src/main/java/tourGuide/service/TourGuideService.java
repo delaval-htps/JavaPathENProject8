@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import gpsUtil.location.Attraction;
@@ -30,7 +31,8 @@ import tripPricer.TripPricer;
 
 @Service
 public class TourGuideService {
-	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TourGuideService.class);
+	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger("testPerformance");
+	private static Logger rootLogger = LogManager.getRootLogger();
 
 	public final GpsUtilService gpsUtilService;
 	private final RewardsService rewardsService;
@@ -48,11 +50,11 @@ public class TourGuideService {
 		this.rewardsService = rewardsService;
 
 		if (testMode) {
-			logger.info("TestMode enabled");
-			logger.info("Initializing users");
+			rootLogger.info("TestMode enabled");
+			rootLogger.info("Initializing users");
 			initializeInternalUsers();
 			usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
-			logger.info("Finished initializing users");
+			rootLogger.info("Finished initializing users");
 		}
 
 		tracker = new Tracker(this);
@@ -94,7 +96,7 @@ public class TourGuideService {
 	public void trackUserLocation(User user) {
 		try {
 			tourGuideServiceExecutor.submit(() -> {
-				logger.debug("\033[32m {}: \t trackUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
+				logger.debug("\033[32m - \033[3mtrackUserLocation({})\033[0m",  user.getUserName());
 				gpsUtilService.getLocation(user, this);
 			});
 		} catch (Exception e) {
@@ -105,15 +107,6 @@ public class TourGuideService {
 	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);
-	}
-
-	public void trackAllUserLocation() {
-		List<User> users = this.getAllUsers();
-		users.parallelStream().forEach(u -> {
-
-			trackUserLocation(u);
-
-		});
 	}
 
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
@@ -162,7 +155,7 @@ public class TourGuideService {
 
 			internalUserMap.put(userName, user);
 		});
-		logger.debug("Created {}  internal test users.", InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("Created {}  internal test users.", InternalTestHelper.getInternalUserNumber());
 	}
 
 	private void generateUserLocationHistory(User user) {

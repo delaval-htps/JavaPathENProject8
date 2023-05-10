@@ -2,14 +2,14 @@ package tourGuide;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
-import org.junit.Ignore;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.junit.Test;
 
 import gpsUtil.GpsUtil;
@@ -24,9 +24,7 @@ import tourGuide.user.User;
 
 public class TestPerformance {
 
-	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TestPerformance.class);
 	private final static int INITIAL_NUMBER_OF_VISITED_LOCATIONS = 4;
-	
 
 	/*
 	 * A note on performance improvements:
@@ -52,17 +50,27 @@ public class TestPerformance {
 	 */
 
 	@Test
-	public void highVolumeTrackLocation()  {
+	public void highVolumeTrackLocation() {
+
+		// Users should be incremented up to 100,000, and test finishes within 15
+		// minutes
+		InternalTestHelper.setInternalUserNumber(5);
 		
+		System.setProperty("logFileName", "highVolumeTrackLocation-" + InternalTestHelper.getInternalUserNumber());
+		
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+		
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
+
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-		// Users should be incremented up to 100,000, and test finishes within 15
-		// minutes
-		InternalTestHelper.setInternalUserNumber(1000);
-		logger.info("\t----------------------HightVolumeTrackLocation with {} users-----------------------\t",InternalTestHelper.getInternalUserNumber());
+
+		rootLogger.info("----------------------HightVolumeTrackLocation with {} users-----------------------\t", InternalTestHelper.getInternalUserNumber());
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
-	
+
 		try {
 			tourGuideService.usersCountDownLatch.await();
 		} catch (InterruptedException e) {
@@ -77,7 +85,7 @@ public class TestPerformance {
 		// allUsers.forEach(u -> assertTrue(u.getVisitedLocations().size() == 4));
 
 		for (User user : allUsers) {
-			logger.debug("\033[36m {}: \t\t tourGuideService.trackUserLocation({}) ", this.getClass().getCanonicalName(), user.getUserName());
+			logger.debug("\033[36m - tourGuideService.trackUserLocation({}) ", user.getUserName());
 			tourGuideService.trackUserLocation(user);
 		}
 		for (User user : allUsers) {
@@ -93,40 +101,62 @@ public class TestPerformance {
 
 		stopWatch.stop();
 		// tourGuideService.tracker.stopTracking();
-		 tourGuideService.addShutDownHook();
+		tourGuideService.addShutDownHook();
 
-		logger.info("{} - highVolumeTrackLocation: Time Elapsed: {} seconds", this.getClass().getCanonicalName(), TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+		rootLogger.info("highVolumeTrackLocation: Time Elapsed: {} seconds", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
-	
-		
-	}
 
+		System.clearProperty("logFileName");
+	}
 
 	@Test
 	public void highVolumeGetRewards() {
+
+		// Users should be incremented up to 100,000, and test finishes within 20
+		// minutes
+		InternalTestHelper.setInternalUserNumber(10);
+		
+		System.setProperty("logFileName", "highVolumeGetRewards-" + InternalTestHelper.getInternalUserNumber());
+		
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+		
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
 
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 
-		// Users should be incremented up to 100,000, and test finishes within 20
-		// minutes
-		InternalTestHelper.setInternalUserNumber(100);
-		logger.info("----------------------highVolumeGetRewards with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
-		
-		StopWatch stopWatch = new StopWatch();
-		stopWatch.start();
+		rootLogger.info("----------------------highVolumeGetRewards with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
+		// try {
+		// 	tourGuideService.usersCountDownLatch.await();
+		// } catch (InterruptedException e) {
+		// 	e.printStackTrace();
+		// }
+
+		StopWatch stopWatch = new StopWatch();
+		stopWatch.start();
+
 		Attraction attraction = gpsUtil.getAttractions().get(0);
-		List<User> allUsers = new ArrayList<>();
-		allUsers = tourGuideService.getAllUsers();
+		List<User> allUsers = tourGuideService.getAllUsers();
 
-		allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
+		allUsers.forEach(u -> {
+			VisitedLocation firstAttraction = new VisitedLocation(u.getUserId(), attraction, new Date());
+			logger.debug("\033[36m - addToVisitedLocations({}) to user: {} ",  firstAttraction, u.getUserName());
+			u.getVisitedLocations().clear();
+			u.addToVisitedLocations(firstAttraction);
+		});
 
+		
+		
+		// allUsers.forEach(u -> rewardsService.calculateReward(u));
+		
 		for (User user : allUsers) {
-			while (user.getVisitedLocations().size() < (INITIAL_NUMBER_OF_VISITED_LOCATIONS +1)) {
+			while (user.getUserRewards().isEmpty()) {
 				try {
 					TimeUnit.MILLISECONDS.sleep(100);
 				} catch (InterruptedException e) {
@@ -136,17 +166,17 @@ public class TestPerformance {
 			}
 		}
 
-		allUsers.forEach(u -> rewardsService.calculateRewards(u));
-
 		for (User user : allUsers) {
 			assertTrue(user.getUserRewards().size() > 0);
 		}
 		stopWatch.stop();
-		// tourGuideService.tracker.stopTracking();
+
 		tourGuideService.addShutDownHook();
-		logger.info("{} - highVolumeGetRewards: Time Elapsed: {} seconds", this.getClass().getCanonicalName(), TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+
+		rootLogger.info("highVolumeGetRewards: Time Elapsed: {} seconds", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
-		
+
+		System.clearProperty("logFileName");
 	}
 
 }

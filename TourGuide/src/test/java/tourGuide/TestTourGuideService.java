@@ -8,6 +8,8 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.core.LoggerContext;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -22,16 +24,25 @@ import tourGuide.user.User;
 import tripPricer.Provider;
 
 public class TestTourGuideService {
-	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger(TestTourGuideService.class);
-
 
 	@Test
 	public void getUserLocation() throws InterruptedException {
+
+		InternalTestHelper.setInternalUserNumber(0);
+
+		System.setProperty("logFileName", "getUserLocation-" + InternalTestHelper.getInternalUserNumber());
+
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
+
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-		InternalTestHelper.setInternalUserNumber(0);
-		logger.info("----------------------Test :  getUserLocation with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
+		rootLogger.info("----------------------Test :  getUserLocation with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -44,16 +55,29 @@ public class TestTourGuideService {
 
 		tourGuideService.tracker.stopTracking();
 		assertTrue(tourGuideService.getUserLocation(user).userId.equals(user.getUserId()));
+
+		System.clearProperty("logFileName");
 	}
 
 	@Test
 	public void addUser() {
+
+		InternalTestHelper.setInternalUserNumber(0);
+
+		System.setProperty("logFileName", "addUser-" + InternalTestHelper.getInternalUserNumber());
+
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
+
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-		InternalTestHelper.setInternalUserNumber(0);
-		logger.info("----------------------Test :  addUser with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+
+		rootLogger.info("----------------------Test :  addUser with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -70,15 +94,29 @@ public class TestTourGuideService {
 
 		assertEquals(user, retrivedUser);
 		assertEquals(user2, retrivedUser2);
+
+		System.clearProperty("logFileName");
+
 	}
 
 	@Test
 	public void getAllUsers() {
+		
+		InternalTestHelper.setInternalUserNumber(0);
+		System.setProperty("logFileName", "getAllUsers-" + InternalTestHelper.getInternalUserNumber());
+
+		
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
+
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-		InternalTestHelper.setInternalUserNumber(0);
-		logger.info("----------------------Test :  getAllUsers with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+		
+		rootLogger.info("----------------------Test :  getAllUsers with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -94,16 +132,29 @@ public class TestTourGuideService {
 
 		assertTrue(allUsers.contains(user));
 		assertTrue(allUsers.contains(user2));
+
+		System.clearProperty("logFileName");
+
 	}
 
 	@Test
 	public void trackUser() {
+		
+		InternalTestHelper.setInternalUserNumber(0);
+		System.setProperty("logFileName", "trackUser-" + InternalTestHelper.getInternalUserNumber());
+		
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
+
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-		InternalTestHelper.setInternalUserNumber(0);
+		
 
-		logger.info("----------------------Test :  trackUser with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("----------------------Test :  trackUser with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -122,17 +173,31 @@ public class TestTourGuideService {
 		tourGuideService.tracker.stopTracking();
 
 		assertEquals(user.getUserId(), tourGuideService.getUserLocation(user).userId);
+
+		System.clearProperty("logFileName");
+
 	}
 
 	@Ignore // Not yet implemented
 	@Test
 	public void getNearbyAttractions() {
+
+		InternalTestHelper.setInternalUserNumber(0);
+		System.setProperty("logFileName", "getNearbyAttractions-"+InternalTestHelper.getInternalUserNumber());
+		
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
+
+
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-		InternalTestHelper.setInternalUserNumber(0);
+	
 
-		logger.info("----------------------Test :  getNearbyAttractions with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("----------------------Test :  getNearbyAttractions with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -144,14 +209,25 @@ public class TestTourGuideService {
 		tourGuideService.tracker.stopTracking();
 
 		assertEquals(5, attractions.size());
+		System.clearProperty("logFileName");
+
 	}
 
 	public void getTripDeals() {
+
+		InternalTestHelper.setInternalUserNumber(0);
+		System.setProperty("logFileName", "getTripDeals-"+InternalTestHelper.getInternalUserNumber());
+		
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+
+		Logger logger = LogManager.getLogger("testPerformance");
+		Logger rootLogger = LogManager.getRootLogger();
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		InternalTestHelper.setInternalUserNumber(0);
-		logger.info("----------------------Test :  getTripDeals with {} users-----------------------",InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("----------------------Test :  getTripDeals with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -162,5 +238,7 @@ public class TestTourGuideService {
 		tourGuideService.tracker.stopTracking();
 
 		assertEquals(10, providers.size());
+		System.clearProperty("logFileName");
+
 	}
 }

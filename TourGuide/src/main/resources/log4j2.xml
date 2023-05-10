@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configuration status="WARN">
+<Configuration>
+ 
   <Appenders>
     <Console name="console" target="SYSTEM_OUT">
-      <PatternLayout pattern="[%-17t] - %-5level  - %msg%n"/>
+      <PatternLayout pattern="%highlight{[%-20t] - %-5level - %-34C - %msg%n%throwable}{INFO=white}"/>
     </Console>
-    <File name="FileAppender"  fileName="log/lastest-test.log" append="false" >
-          <PatternLayout pattern="[%-17t] - %-5level  - %msg%n"/>
+    <File name="FileAppender"  fileName="logs/${sys:logFileName}.log" append="false" >
+          <PatternLayout pattern="%highlight{[%-20t] - %-5level - %-34C - %msg%n%throwable}{INFO=white}"/>
     </File>   
   </Appenders>
-  <Loggers>
-     <Root level="INFO" >
-           <appender-ref ref="console" />
-          <appender-ref ref="FileAppender" />
-    </Root>
 
+  <Loggers>
+    <Root level="info" >
+      <appender-ref ref="console" />
+      <appender-ref ref="FileAppender"/>
+    </Root>
+    
+    <Logger name="testPerformance" level="debug" additivity="false">
+      <appender-ref ref="FileAppender"/>
+    </Logger>
   </Loggers>
 </Configuration>
