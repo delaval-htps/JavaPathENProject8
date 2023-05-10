@@ -1,9 +1,0 @@
-[37m[main                ] - INFO  - tourGuide.TestTourGuideService     - ----------------------Test :  addUser with 0 users-----------------------
-[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - TestMode enabled
-[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Initializing users
-[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Created 0  internal test users.
-[m[37m[main                ] - INFO  - tourGuide.service.TourGuideService - Finished initializing users
-[m[37m[pool-23-thread-1    ] - INFO  - tourGuide.tracker.Tracker          - Begin Tracker. Tracking 0 users. 
-[m[37m[pool-23-thread-1    ] - INFO  - tourGuide.tracker.Tracker          - Tracker Time Elapsed: 0 seconds
-[m[37m[pool-23-thread-1    ] - INFO  - tourGuide.tracker.Tracker          - Tracker sleeping
-[m

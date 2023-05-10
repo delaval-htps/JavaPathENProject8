@@ -5,7 +5,7 @@
     <Console name="console" target="SYSTEM_OUT">
       <PatternLayout pattern="%highlight{[%-20t] - %-5level - %-34C - %msg%n%throwable}{INFO=white}"/>
     </Console>
-    <File name="FileAppender"  fileName="log/${sys:logFileName}.log" append="false" >
+    <File name="FileAppender"  fileName="logs/${sys:logFileName}.log" append="false" >
           <PatternLayout pattern="%highlight{[%-20t] - %-5level - %-34C - %msg%n%throwable}{INFO=white}"/>
     </File>   
   </Appenders>
