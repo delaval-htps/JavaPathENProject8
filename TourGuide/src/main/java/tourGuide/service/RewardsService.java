@@ -20,8 +20,7 @@ import tourGuide.user.UserReward;
 @Service
 public class RewardsService {
 	private static final double STATUTE_MILES_PER_NAUTICAL_MILE = 1.15077945;
-	private static Logger rootLogger = LogManager.getRootLogger();
-
+	
 	// proximity in miles
 	private int defaultProximityBuffer = 10;
 	private int proximityBuffer = defaultProximityBuffer;

@@ -54,7 +54,7 @@ public class TestPerformance {
 
 		// Users should be incremented up to 100,000, and test finishes within 15
 		// minutes
-		InternalTestHelper.setInternalUserNumber(10);
+		InternalTestHelper.setInternalUserNumber(5);
 		
 		System.setProperty("logFileName", "highVolumeTrackLocation-" + InternalTestHelper.getInternalUserNumber());
 		
@@ -130,27 +130,31 @@ public class TestPerformance {
 
 		rootLogger.info("----------------------highVolumeGetRewards with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
+
+		// try {
+		// 	tourGuideService.usersCountDownLatch.await();
+		// } catch (InterruptedException e) {
+		// 	e.printStackTrace();
+		// }
+
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
-
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		Attraction attraction = gpsUtil.getAttractions().get(0);
 		List<User> allUsers = tourGuideService.getAllUsers();
 
-		allUsers.forEach(u -> u.addToVisitedLocations(new VisitedLocation(u.getUserId(), attraction, new Date())));
+		allUsers.forEach(u -> {
+			VisitedLocation firstAttraction = new VisitedLocation(u.getUserId(), attraction, new Date());
+			logger.debug("\033[36m - addToVisitedLocations({}) to user: {} ",  firstAttraction, u.getUserName());
+			u.getVisitedLocations().clear();
+			u.addToVisitedLocations(firstAttraction);
+		});
 
-		for (User user : allUsers) {
-			while (user.getVisitedLocations().size() < (INITIAL_NUMBER_OF_VISITED_LOCATIONS + 1)) {
-				try {
-					TimeUnit.MILLISECONDS.sleep(1000);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		}
-		allUsers.forEach(u -> rewardsService.calculateRewards(u));
+		
+		
+		// allUsers.forEach(u -> rewardsService.calculateReward(u));
+		
 		for (User user : allUsers) {
 			while (user.getUserRewards().isEmpty()) {
 				try {

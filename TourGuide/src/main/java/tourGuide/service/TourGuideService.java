@@ -109,15 +109,6 @@ public class TourGuideService {
 		rewardsService.calculateRewards(user);
 	}
 
-	public void trackAllUserLocation() {
-		List<User> users = this.getAllUsers();
-		users.parallelStream().forEach(u -> {
-
-			trackUserLocation(u);
-
-		});
-	}
-
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 		List<Attraction> nearbyAttractions = new ArrayList<>();
 		for (Attraction attraction : gpsUtilService.getAttractions()) {
