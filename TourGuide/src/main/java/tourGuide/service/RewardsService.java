@@ -27,7 +27,7 @@ public class RewardsService {
 	private int attractionProximityRange = 200;
 	private final GpsUtilService gpsUtilService;
 	private final RewardCentral rewardsCentral;
-	private final org.apache.logging.log4j.Logger logger = LogManager.getLogger("testPerformance");
+	private final Logger logger = LogManager.getLogger("testPerformance");
 
 	public final ExecutorService rewardsExecutorService = Executors.newFixedThreadPool(1000);
 

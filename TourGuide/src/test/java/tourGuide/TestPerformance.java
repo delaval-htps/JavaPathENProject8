@@ -124,11 +124,6 @@ public class TestPerformance {
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
-		// try {
-		// 	tourGuideService.usersCountDownLatch.await();
-		// } catch (InterruptedException e) {
-		// 	e.printStackTrace();
-		// }
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
