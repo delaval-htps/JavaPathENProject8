@@ -57,7 +57,7 @@ public class RewardsService {
 			for (Attraction attraction : attractions) {
 				if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					if (nearAttraction(visitedLocation, attraction)) {
-						logger.debug("\033[35m - setUserRewards({},{},{}) ", attraction,visitedLocation,user.getUserName());
+						logger.debug("\033[35m - setUserRewards({}, {}, {}) ", attraction.attractionName,visitedLocation,user.getUserName());
 						setUserRewards(attraction, visitedLocation, user);
 					}
 				}
@@ -67,10 +67,10 @@ public class RewardsService {
 
 	private void setUserRewards(Attraction attraction, VisitedLocation visitedLocation, User user) {
 		CompletableFuture.supplyAsync(() -> {
-			logger.debug("\033[35m - getRewardPoints({}, {}) ",  attraction, user.getUserName());
+			logger.debug("\033[35m - getRewardPoints({}, {}) ",  attraction.attractionName, user.getUserName());
 			return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 		}, rewardsExecutorService).thenAccept(rewardsPoint -> {
-			logger.debug("\033[35m - addUserReward({}, {}, {}) ",  visitedLocation, attraction, rewardsPoint);
+			logger.debug("\033[35m - addUserReward({}, {}, {}, {}) ", user.getUserName(), visitedLocation, attraction.attractionName, rewardsPoint);
 			user.addUserReward(new UserReward(visitedLocation, attraction, rewardsPoint));
 		});
 	}
@@ -82,11 +82,6 @@ public class RewardsService {
 	private boolean nearAttraction(VisitedLocation visitedLocation, Attraction attraction) {
 		return (getDistance(attraction, visitedLocation.location) >= proximityBuffer ? false : true);
 	}
-
-	// private int getRewardPoints(Attraction attraction, User user) {
-
-	// 	return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
-	// }
 
 	public double getDistance(Location loc1, Location loc2) {
 		double lat1 = Math.toRadians(loc1.latitude);

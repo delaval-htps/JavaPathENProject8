@@ -54,7 +54,7 @@ public class TestPerformance {
 
 		// Users should be incremented up to 100,000, and test finishes within 15
 		// minutes
-		InternalTestHelper.setInternalUserNumber(5);
+		InternalTestHelper.setInternalUserNumber(10);
 		
 		System.setProperty("logFileName", "highVolumeTrackLocation-" + InternalTestHelper.getInternalUserNumber());
 		
@@ -71,18 +71,10 @@ public class TestPerformance {
 		rootLogger.info("----------------------HightVolumeTrackLocation with {} users-----------------------\t", InternalTestHelper.getInternalUserNumber());
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
-		try {
-			tourGuideService.usersCountDownLatch.await();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 
 		List<User> allUsers = tourGuideService.getAllUsers();
-		// allUsers.forEach(u -> assertTrue(u.getVisitedLocations().size() == 4));
 
 		for (User user : allUsers) {
 			logger.debug("\033[36m - tourGuideService.trackUserLocation({}) ", user.getUserName());
@@ -146,7 +138,7 @@ public class TestPerformance {
 
 		allUsers.forEach(u -> {
 			VisitedLocation firstAttraction = new VisitedLocation(u.getUserId(), attraction, new Date());
-			logger.debug("\033[36m - addToVisitedLocations({}) to user: {} ",  firstAttraction, u.getUserName());
+			logger.debug("\033[36m - addToVisitedLocations({}) to user: {} ",  attraction.attractionName, u.getUserName());
 			u.getVisitedLocations().clear();
 			u.addToVisitedLocations(firstAttraction);
 		});

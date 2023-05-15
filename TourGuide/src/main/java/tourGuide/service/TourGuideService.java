@@ -40,7 +40,7 @@ public class TourGuideService {
 	public final Tracker tracker;
 	public final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
 
-	public CountDownLatch usersCountDownLatch;
+	// public CountDownLatch usersCountDownLatch;
 
 	boolean testMode = true;
 
@@ -53,7 +53,7 @@ public class TourGuideService {
 			rootLogger.info("TestMode enabled");
 			rootLogger.info("Initializing users");
 			initializeInternalUsers();
-			usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
+			// usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
 			rootLogger.info("Finished initializing users");
 		}
 
@@ -107,6 +107,7 @@ public class TourGuideService {
 	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);
+		tracker.updateUserTrackingProgress(user);
 	}
 
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
