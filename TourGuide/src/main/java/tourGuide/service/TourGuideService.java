@@ -2,14 +2,12 @@ package tourGuide.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -40,8 +38,6 @@ public class TourGuideService {
 	public final Tracker tracker;
 	public final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
 
-	// public CountDownLatch usersCountDownLatch;
-
 	boolean testMode = true;
 
 	public TourGuideService(GpsUtilService gpsUtilService, RewardsService rewardsService) {
@@ -67,8 +63,6 @@ public class TourGuideService {
 
 	public VisitedLocation getUserLocation(User user) {
 		return user.getLastVisitedLocation();
-		// return (user.getVisitedLocations().size() > 0) ?
-		// user.getLastVisitedLocation() : trackUserLocation(user);
 	}
 
 	public User getUser(String userName) {
@@ -96,7 +90,7 @@ public class TourGuideService {
 	public void trackUserLocation(User user) {
 		try {
 			tourGuideServiceExecutor.submit(() -> {
-				logger.debug("\033[32m - \033[3mtrackUserLocation({})\033[0m",  user.getUserName());
+				logger.debug("\033[32m - trackUserLocation({})", user.getUserName());
 				gpsUtilService.getLocation(user, this);
 			});
 		} catch (Exception e) {
@@ -110,15 +104,15 @@ public class TourGuideService {
 		tracker.updateUserTrackingProgress(user);
 	}
 
+	/*	
+	 * return the list of 5 nearest attractions from location of user
+	 */
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
-		List<Attraction> nearbyAttractions = new ArrayList<>();
-		for (Attraction attraction : gpsUtilService.getAttractions()) {
-			if (rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
-				nearbyAttractions.add(attraction);
-			}
-		}
-
-		return nearbyAttractions;
+	
+		return gpsUtilService.getAttractions().stream().sorted((a1, a2) -> 
+		Double.compare(rewardsService.getDistance(a1,visitedLocation.location), rewardsService.getDistance(a2,visitedLocation.location))
+		).limit(5).collect(Collectors.toList());
+		
 	}
 
 	public void addShutDownHook() {

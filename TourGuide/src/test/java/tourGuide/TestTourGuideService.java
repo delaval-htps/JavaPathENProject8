@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
+import org.awaitility.Awaitility;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -178,7 +179,6 @@ public class TestTourGuideService {
 
 	}
 
-	@Ignore // Not yet implemented
 	@Test
 	public void getNearbyAttractions() {
 
@@ -203,8 +203,15 @@ public class TestTourGuideService {
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		tourGuideService.trackUserLocation(user);
-
+		
+		Awaitility.await().timeout(200, TimeUnit.MILLISECONDS).untilTrue(tourGuideService.tracker.SLEEPINGTRACKER);
+	
 		List<Attraction> attractions = tourGuideService.getNearByAttractions(tourGuideService.getUserLocation(user));
+		rootLogger.info("************* list of nearest attraction *************");
+		
+		for (Attraction attraction : attractions) {
+			rootLogger.info(" {} at {} miles", String.format("%-45s",attraction.attractionName), String.format("%.2f", rewardsService.getDistance(attraction, user.getLastVisitedLocation().location)));
+		}
 
 		tourGuideService.tracker.stopTracking();
 
