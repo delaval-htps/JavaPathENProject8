@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.junit.Ignore;
+import org.awaitility.Awaitility;
 import org.junit.Test;
 
 import gpsUtil.GpsUtil;
@@ -30,30 +30,32 @@ public class TestTourGuideService {
 
 		InternalTestHelper.setInternalUserNumber(0);
 
-		System.setProperty("logFileName", "getUserLocation-" + InternalTestHelper.getInternalUserNumber());
+		System.setProperty("logFileName", "getUserLocation");
 
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
 
-		Logger logger = LogManager.getLogger("testPerformance");
 		Logger rootLogger = LogManager.getRootLogger();
 
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 
-		rootLogger.info("----------------------Test :  getUserLocation with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("---------------------- Test :  getUserLocation -----------------------");
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		tourGuideService.trackUserLocation(user);
 
-		while (user.getLastVisitedLocation() == null) {
-			TimeUnit.MILLISECONDS.sleep(100);
-		}
+		// while (user.getLastVisitedLocation() == null) {
+		// 	TimeUnit.MILLISECONDS.sleep(100);
+		// }
 
-		tourGuideService.tracker.stopTracking();
+		Awaitility.await().until(() -> user.getLastVisitedLocation() != null);
+
+		tourGuideService.addShutDownHook();
+
 		assertTrue(tourGuideService.getUserLocation(user).userId.equals(user.getUserId()));
 
 		System.clearProperty("logFileName");
@@ -64,12 +66,11 @@ public class TestTourGuideService {
 
 		InternalTestHelper.setInternalUserNumber(0);
 
-		System.setProperty("logFileName", "addUser-" + InternalTestHelper.getInternalUserNumber());
+		System.setProperty("logFileName", "addUser");
 
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
 
-		Logger logger = LogManager.getLogger("testPerformance");
 		Logger rootLogger = LogManager.getRootLogger();
 
 		GpsUtil gpsUtil = new GpsUtil();
@@ -77,7 +78,7 @@ public class TestTourGuideService {
 
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 
-		rootLogger.info("----------------------Test :  addUser with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("---------------------- Test :  addUser -----------------------");
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -90,7 +91,8 @@ public class TestTourGuideService {
 		User retrivedUser = tourGuideService.getUser(user.getUserName());
 		User retrivedUser2 = tourGuideService.getUser(user2.getUserName());
 
-		tourGuideService.tracker.stopTracking();
+		// tourGuideService.tracker.stopTracking();
+		tourGuideService.addShutDownHook();
 
 		assertEquals(user, retrivedUser);
 		assertEquals(user2, retrivedUser2);
@@ -103,20 +105,19 @@ public class TestTourGuideService {
 	public void getAllUsers() {
 		
 		InternalTestHelper.setInternalUserNumber(0);
-		System.setProperty("logFileName", "getAllUsers-" + InternalTestHelper.getInternalUserNumber());
+		System.setProperty("logFileName", "getAllUsers");
 
 		
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
 
-		Logger logger = LogManager.getLogger("testPerformance");
 		Logger rootLogger = LogManager.getRootLogger();
 
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		
-		rootLogger.info("----------------------Test :  getAllUsers with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("---------------------- Test :  getAllUsers -----------------------");
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
@@ -128,8 +129,9 @@ public class TestTourGuideService {
 
 		List<User> allUsers = tourGuideService.getAllUsers();
 
-		tourGuideService.tracker.stopTracking();
-
+		// tourGuideService.tracker.stopTracking();
+		tourGuideService.addShutDownHook();
+		
 		assertTrue(allUsers.contains(user));
 		assertTrue(allUsers.contains(user2));
 
@@ -141,12 +143,11 @@ public class TestTourGuideService {
 	public void trackUser() {
 		
 		InternalTestHelper.setInternalUserNumber(0);
-		System.setProperty("logFileName", "trackUser-" + InternalTestHelper.getInternalUserNumber());
+		System.setProperty("logFileName", "trackUser");
 		
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
 
-		Logger logger = LogManager.getLogger("testPerformance");
 		Logger rootLogger = LogManager.getRootLogger();
 
 		GpsUtil gpsUtil = new GpsUtil();
@@ -154,23 +155,24 @@ public class TestTourGuideService {
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
 		
 
-		rootLogger.info("----------------------Test :  trackUser with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("---------------------- Test :  trackUser -----------------------");
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		tourGuideService.trackUserLocation(user);
-		// TODO change sleep by modification of return of
-		// tourGuideService.tackUserLocation()
 
-		try {
-			TimeUnit.MILLISECONDS.sleep(1000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// try {
+		// 	TimeUnit.MILLISECONDS.sleep(1000);
+		// } catch (InterruptedException e) {
+		// 	// TODO Auto-generated catch block
+		// 	e.printStackTrace();
+		// }
 
-		tourGuideService.tracker.stopTracking();
+		Awaitility.await().until(() -> !user.getVisitedLocations().isEmpty());
+
+		// tourGuideService.tracker.stopTracking();
+		tourGuideService.addShutDownHook();
 
 		assertEquals(user.getUserId(), tourGuideService.getUserLocation(user).userId);
 
@@ -178,35 +180,41 @@ public class TestTourGuideService {
 
 	}
 
-	@Ignore // Not yet implemented
 	@Test
 	public void getNearbyAttractions() {
 
 		InternalTestHelper.setInternalUserNumber(0);
-		System.setProperty("logFileName", "getNearbyAttractions-"+InternalTestHelper.getInternalUserNumber());
+		System.setProperty("logFileName", "getNearbyAttractions");
 		
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
 
-		Logger logger = LogManager.getLogger("testPerformance");
 		Logger rootLogger = LogManager.getRootLogger();
-
 
 		GpsUtil gpsUtil = new GpsUtil();
 		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-	
 
-		rootLogger.info("----------------------Test :  getNearbyAttractions with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
+		rootLogger.info("---------------------- Test :  getNearbyAttractions -----------------------");
 
 		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		tourGuideService.trackUserLocation(user);
-
+		
+		// we await that tracker is finish 
+		Awaitility.await().untilTrue(tourGuideService.tracker.SLEEPINGTRACKER);
+	
 		List<Attraction> attractions = tourGuideService.getNearByAttractions(tourGuideService.getUserLocation(user));
+		
+		rootLogger.info("************* list of nearest attraction *************");
+		
+		for (Attraction attraction : attractions) {
+			rootLogger.info(" {} at {} miles", String.format("%-45s",attraction.attractionName), String.format("%.2f", rewardsService.getDistance(attraction, user.getLastVisitedLocation().location)));
+		}
 
-		tourGuideService.tracker.stopTracking();
+		// tourGuideService.tracker.stopTracking();
+		tourGuideService.addShutDownHook();
 
 		assertEquals(5, attractions.size());
 		System.clearProperty("logFileName");
@@ -235,7 +243,8 @@ public class TestTourGuideService {
 
 		List<Provider> providers = tourGuideService.getTripDeals(user);
 
-		tourGuideService.tracker.stopTracking();
+		// tourGuideService.tracker.stopTracking();
+		tourGuideService.addShutDownHook();
 
 		assertEquals(10, providers.size());
 		System.clearProperty("logFileName");

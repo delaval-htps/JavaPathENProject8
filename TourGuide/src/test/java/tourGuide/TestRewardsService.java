@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.junit.Ignore;
+import org.awaitility.Awaitility;
 import org.junit.Test;
 
 import gpsUtil.GpsUtil;
@@ -26,7 +26,7 @@ import tourGuide.user.User;
 import tourGuide.user.UserReward;
 
 public class TestRewardsService {
- 
+
 
   @Test
   public void userGetRewards() {
@@ -54,17 +54,23 @@ public class TestRewardsService {
     user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
     tourGuideService.trackUserLocation(user);
 
-    // TODO change sleep by modification of return of
-    try {
-      TimeUnit.MILLISECONDS.sleep(2000);
-    } catch (InterruptedException e) {
-      // TODO Auto-generated catch block
-      e.printStackTrace();
-    }
+    // // TODO change sleep by modification of return of
+    // try {
+    //   TimeUnit.MILLISECONDS.sleep(1100);
+    // } catch (InterruptedException e) {
+    //   // TODO Auto-generated catch block
+    //   e.printStackTrace();
+    // }
+
+    Awaitility.await().until(() -> !user.getUserRewards().isEmpty());
 
     List<UserReward> userRewards = user.getUserRewards();
-    tourGuideService.tracker.stopTracking();
+    // tourGuideService.tracker.stopTracking();
+    
+    tourGuideService.addShutDownHook();
+    
     assertTrue(userRewards.size() >= 1);
+    
     System.clearProperty("logFileName");
   }
 
@@ -82,19 +88,23 @@ public class TestRewardsService {
     GpsUtil gpsUtil = new GpsUtil();
     GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
     RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
+    
     rootLogger.info("---------------------- Test : isWithinAttractionProximity -----------------------");
+   
     Attraction attraction = gpsUtil.getAttractions().get(0);
+   
     assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
+   
     System.clearProperty("logFileName");
 
   }
 
-  @Ignore // Needs fixed - can throw ConcurrentModificationException
+
   @Test
   public void nearAllAttractions() {
 
     InternalTestHelper.setInternalUserNumber(1);
-    System.setProperty("logFileName", "nearAllAttractions-"+InternalTestHelper.getInternalUserNumber());
+    System.setProperty("logFileName", "nearAllAttractions-" + InternalTestHelper.getInternalUserNumber());
 
     LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
     ctx.reconfigure();
@@ -105,18 +115,37 @@ public class TestRewardsService {
     GpsUtil gpsUtil = new GpsUtil();
     GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
     RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-    rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
-  
     rootLogger.info("----------------------Test :  nearAllAttractions with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
+
+    //Allow to have all attraction near of user's location
+    rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
     TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
 
-    rewardsService.calculateRewards(tourGuideService.getAllUsers().get(0));
-    List<UserReward> userRewards = tourGuideService.getUserRewards(tourGuideService.getAllUsers().get(0));
-    tourGuideService.tracker.stopTracking();
+    User uniqUser = tourGuideService.getAllUsers().get(0);
+
+    // clear all visitedLocations defined by initialisation for just have one location
+    uniqUser.clearVisitedLocations();
+
+    // while (tourGuideService.tracker.isFinishedTrackingProgress() == false) {
+    //   try {
+    //     TimeUnit.MILLISECONDS.sleep(1100);
+    //   } catch (InterruptedException e) {
+    //     // TODO Auto-generated catch block
+    //     e.printStackTrace();
+    //   }
+    // }
+
+    //wait for tracker is finished and plus 1100 millisecond to be sur that all 26 rewards for all attraction are added to user
+    Awaitility.await().during(1100, TimeUnit.MILLISECONDS).untilTrue(tourGuideService.tracker.SLEEPINGTRACKER);
+
+    List<UserReward> userRewards = tourGuideService.getUserRewards(uniqUser);
+
+    tourGuideService.addShutDownHook();
 
     assertEquals(gpsUtil.getAttractions().size(), userRewards.size());
+
     System.clearProperty("logFileName");
 
   }

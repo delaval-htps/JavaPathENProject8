@@ -22,7 +22,7 @@ public class User {
 	private List<Provider> tripDeals = new ArrayList<>();
 
 	private Lock userVisitedLocations = new ReentrantLock();
-	
+
 	public User(UUID userId, String userName, String phoneNumber, String emailAddress) {
 		this.userId = userId;
 		this.userName = userName;
@@ -63,22 +63,31 @@ public class User {
 	}
 
 	public void addToVisitedLocations(VisitedLocation visitedLocation) {
-		// userVisitedLocations.lock();
-		visitedLocations.add(visitedLocation);
-		// userVisitedLocations.unlock();
+		userVisitedLocations.lock();
+		try {
+			visitedLocations.add(visitedLocation);
+		} finally {
+			userVisitedLocations.unlock();
+		}
 	}
 
 	public List<VisitedLocation> getVisitedLocations() {
-		// userVisitedLocations.lock();
-		try{
+		userVisitedLocations.lock();
+		try {
 			return visitedLocations;
 		} finally {
-			// userVisitedLocations.unlock();
+			userVisitedLocations.unlock();
 		}
 	}
 
 	public void clearVisitedLocations() {
-		visitedLocations.clear();
+		userVisitedLocations.lock();
+		try {
+			visitedLocations.clear();
+		} finally {
+			userVisitedLocations.unlock();
+		}
+
 	}
 
 	// condition was not necessary
@@ -104,7 +113,7 @@ public class User {
 		} else {
 			return null;
 		}
-		
+
 	}
 
 	public void setTripDeals(List<Provider> tripDeals) {

@@ -2,14 +2,12 @@ package tourGuide.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
@@ -40,8 +38,6 @@ public class TourGuideService {
 	public final Tracker tracker;
 	public final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
 
-	public CountDownLatch usersCountDownLatch;
-
 	boolean testMode = true;
 
 	public TourGuideService(GpsUtilService gpsUtilService, RewardsService rewardsService) {
@@ -53,7 +49,7 @@ public class TourGuideService {
 			rootLogger.info("TestMode enabled");
 			rootLogger.info("Initializing users");
 			initializeInternalUsers();
-			usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
+			// usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
 			rootLogger.info("Finished initializing users");
 		}
 
@@ -67,8 +63,6 @@ public class TourGuideService {
 
 	public VisitedLocation getUserLocation(User user) {
 		return user.getLastVisitedLocation();
-		// return (user.getVisitedLocations().size() > 0) ?
-		// user.getLastVisitedLocation() : trackUserLocation(user);
 	}
 
 	public User getUser(String userName) {
@@ -96,7 +90,7 @@ public class TourGuideService {
 	public void trackUserLocation(User user) {
 		try {
 			tourGuideServiceExecutor.submit(() -> {
-				logger.debug("\033[32m - \033[3mtrackUserLocation({})\033[0m",  user.getUserName());
+				logger.debug("\033[32m - trackUserLocation({})", user.getUserName());
 				gpsUtilService.getLocation(user, this);
 			});
 		} catch (Exception e) {
@@ -107,17 +101,18 @@ public class TourGuideService {
 	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);
+		tracker.updateUserTrackingProgress(user);
 	}
 
+	/*	
+	 * return the list of 5 nearest attractions from location of user
+	 */
 	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
-		List<Attraction> nearbyAttractions = new ArrayList<>();
-		for (Attraction attraction : gpsUtilService.getAttractions()) {
-			if (rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
-				nearbyAttractions.add(attraction);
-			}
-		}
-
-		return nearbyAttractions;
+	
+		return gpsUtilService.getAttractions().stream().sorted((a1, a2) -> 
+		Double.compare(rewardsService.getDistance(a1,visitedLocation.location), rewardsService.getDistance(a2,visitedLocation.location))
+		).limit(5).collect(Collectors.toList());
+		
 	}
 
 	public void addShutDownHook() {
@@ -141,6 +136,7 @@ public class TourGuideService {
 	// Database connection will be used for external users, but for testing purposes
 	// internal users are provided and stored in memory
 	private final ConcurrentHashMap<String, User> internalUserMap = new ConcurrentHashMap<>();
+	public static final int INITIAL_NUMBER_OF_VISITED_LOCATIONS = 4;
 
 	private void initializeInternalUsers() {
 		// Set the user locale to english to not have NumberFormatException with visited
@@ -159,7 +155,7 @@ public class TourGuideService {
 	}
 
 	private void generateUserLocationHistory(User user) {
-		IntStream.range(0, 3).forEach(i -> {
+		IntStream.range(0, (INITIAL_NUMBER_OF_VISITED_LOCATIONS-1)).forEach(i -> {
 			user.addToVisitedLocations(new VisitedLocation(user.getUserId(), new Location(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));
 		});
 	}

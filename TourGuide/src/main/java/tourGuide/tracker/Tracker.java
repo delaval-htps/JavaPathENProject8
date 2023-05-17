@@ -1,9 +1,12 @@
 package tourGuide.tracker;
 
+import java.util.FormatFlagsConversionMismatchException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
@@ -20,8 +23,19 @@ public class Tracker extends Thread {
 
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
+	private HashMap<User, Boolean> trackingUsersProgress = new HashMap();
+
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;
+	private boolean finishedTrackingProgress;
+	public AtomicBoolean SLEEPINGTRACKER = new AtomicBoolean();
+
+	/**
+	 * @return the finishedTrackingProgress
+	 */
+	public boolean isFinishedTrackingProgress() {
+		return finishedTrackingProgress;
+	}
 
 	public Tracker(TourGuideService tourGuideService) {
 		this.tourGuideService = tourGuideService;
@@ -40,6 +54,8 @@ public class Tracker extends Thread {
 	@Override
 	public void run() {
 
+		SLEEPINGTRACKER.set(false);
+
 		StopWatch stopWatch = new StopWatch();
 		while (true) {
 			if (Thread.currentThread().isInterrupted() || stop) {
@@ -49,6 +65,10 @@ public class Tracker extends Thread {
 
 			List<User> users = tourGuideService.getAllUsers();
 
+			for (User user : users) {
+				trackingUsersProgress.put(user, false);
+			}
+
 			rootLogger.info("Begin Tracker. Tracking {} users. ", users.size());
 
 			stopWatch.start();
@@ -56,19 +76,32 @@ public class Tracker extends Thread {
 			users.forEach(u -> {
 				logger.debug("\033[31m - tourGuideService.trackUserLocation ({})", u.getUserName());
 				tourGuideService.trackUserLocation(u);
-				tourGuideService.usersCountDownLatch.countDown();
-			} );
+			});
 
+			finishedTrackingProgress = false;
+
+			while (!finishedTrackingProgress) {
+				try {
+					TimeUnit.MILLISECONDS.sleep(10);
+				} catch (InterruptedException e) {
+					logger.debug("\033[31m -tracker sleeping InterruptedException");
+				}
+
+				if (!trackingUsersProgress.containsValue(false)) {
+					finishedTrackingProgress = true;
+				}
+			}
 			stopWatch.stop();
-
+			trackingUsersProgress.clear();
 			rootLogger.info("Tracker Time Elapsed: {} seconds", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
 			stopWatch.reset();
 
 			try {
+				SLEEPINGTRACKER.set(true);
 				rootLogger.info("Tracker sleeping");
 				TimeUnit.SECONDS.sleep(TRACKINGPOLLINGINTERVAL);
-				// this.tourGuideService.usersCountDownLatch = new CountDownLatch(tourGuideService.getAllUsers().size());
+			
 			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				break;
@@ -76,4 +109,10 @@ public class Tracker extends Thread {
 		}
 
 	}
+	
+	public synchronized void updateUserTrackingProgress(User user) {
+		this.trackingUsersProgress.put(user, true);
+	}
+
+	
 }
