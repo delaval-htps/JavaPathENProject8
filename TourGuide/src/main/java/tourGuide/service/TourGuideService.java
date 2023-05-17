@@ -136,6 +136,7 @@ public class TourGuideService {
 	// Database connection will be used for external users, but for testing purposes
 	// internal users are provided and stored in memory
 	private final ConcurrentHashMap<String, User> internalUserMap = new ConcurrentHashMap<>();
+	public static final int INITIAL_NUMBER_OF_VISITED_LOCATIONS = 4;
 
 	private void initializeInternalUsers() {
 		// Set the user locale to english to not have NumberFormatException with visited
@@ -154,7 +155,7 @@ public class TourGuideService {
 	}
 
 	private void generateUserLocationHistory(User user) {
-		IntStream.range(0, 3).forEach(i -> {
+		IntStream.range(0, (INITIAL_NUMBER_OF_VISITED_LOCATIONS-1)).forEach(i -> {
 			user.addToVisitedLocations(new VisitedLocation(user.getUserId(), new Location(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));
 		});
 	}
