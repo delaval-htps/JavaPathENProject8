@@ -3,9 +3,11 @@ package tourGuide.service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -49,7 +51,6 @@ public class TourGuideService {
 			rootLogger.info("TestMode enabled");
 			rootLogger.info("Initializing users");
 			initializeInternalUsers();
-			// usersCountDownLatch = new CountDownLatch(this.getAllUsers().size());
 			rootLogger.info("Finished initializing users");
 		}
 
@@ -103,16 +104,60 @@ public class TourGuideService {
 		rewardsService.calculateRewards(user);
 		tracker.updateUserTrackingProgress(user);
 	}
-
-	/*	
-	 * return the list of 5 nearest attractions from location of user
-	 */
-	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
 	
-		return gpsUtilService.getAttractions().stream().sorted((a1, a2) -> 
-		Double.compare(rewardsService.getDistance(a1,visitedLocation.location), rewardsService.getDistance(a2,visitedLocation.location))
-		).limit(5).collect(Collectors.toList());
-		
+	/**
+	 * return the list of 5 nearest attractions from location of user
+	 * @param visitedLocation the visited location of user
+	 * @return the list of 5 nearest attractions from location of user
+	 */
+	public List<LinkedHashMap<String, String>> getNearByAttractions(VisitedLocation visitedLocation) {
+
+		return gpsUtilService.getAttractions().stream().map(attraction -> nearAttractionToMap(attraction, visitedLocation)).sorted(this::compareAttractionMapbyDistance).limit(5).collect(Collectors.toList());
+	}
+
+	/**
+	 * custom method to return a hashMap representing an attraction near the last
+	 * user's visitedLocation
+	 * 
+	 * @param attraction      the attraction to transform into a Map
+	 * @param visitedLocation the last visited location of user
+	 * @return a HashMap as asked for front end that collect information of attraction : 
+	 * Name of Tourist attraction,
+	 * Tourist attractions lat/long,
+	 * The user's location lat/long,
+	 * The distance in miles between attraction and the user's location,
+	 * The reward points for visiting this Attraction.
+	 * 
+	 */
+	private LinkedHashMap<String, String> nearAttractionToMap(Attraction attraction, VisitedLocation visitedLocation) {
+		LinkedHashMap<String, String> map = new LinkedHashMap<>();
+		map.put("name", attraction.attractionName);
+		map.put("touristAttraction lat/long", String.format("%f/%f", attraction.latitude, attraction.longitude));
+		map.put("userLocation lat/long", String.format("%f/%f", visitedLocation.location.latitude, visitedLocation.location.longitude));
+		map.put("distance", String.format("%f", rewardsService.getDistance(attraction, visitedLocation.location)));
+		map.put("rewardPoints", String.format("%d",rewardsService.getNearestAttractionRewardPoints(attraction.attractionId,visitedLocation.userId)));
+
+		return map;
+	}
+
+	/**
+	 * custom comparator just to compare a list of attraction by distance from last
+	 * user visitedLocation
+	 * 
+	 * @param h1 the hashmap that represents the first attraction
+	 * @param h2 the hashmap that represents the second attraction
+	 * @return a int to compare them By distance from user location
+	 */
+	private int compareAttractionMapbyDistance(LinkedHashMap<String, String> h1, LinkedHashMap<String, String> h2) {
+		if (h1.get("distance").equals(h2.get("distance"))) {
+			return 0;
+		} else {
+			if (Double.valueOf(h1.get("distance")) > Double.valueOf(h2.get("distance"))) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
 	}
 
 	public void addShutDownHook() {
@@ -155,7 +200,7 @@ public class TourGuideService {
 	}
 
 	private void generateUserLocationHistory(User user) {
-		IntStream.range(0, (INITIAL_NUMBER_OF_VISITED_LOCATIONS-1)).forEach(i -> {
+		IntStream.range(0, (INITIAL_NUMBER_OF_VISITED_LOCATIONS - 1)).forEach(i -> {
 			user.addToVisitedLocations(new VisitedLocation(user.getUserId(), new Location(generateRandomLatitude(), generateRandomLongitude()), getRandomTime()));
 		});
 	}

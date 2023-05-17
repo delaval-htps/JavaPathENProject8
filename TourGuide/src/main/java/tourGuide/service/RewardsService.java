@@ -1,6 +1,7 @@
 package tourGuide.service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
@@ -67,12 +68,22 @@ public class RewardsService {
 
 	private void setUserRewards(Attraction attraction, VisitedLocation visitedLocation, User user) {
 		CompletableFuture.supplyAsync(() -> {
-			logger.debug("\033[35m - getRewardPoints({}, {}) ",  attraction.attractionName, user.getUserName());
+			logger.debug("\033[35m - getRewardPoints({}, {}) ", attraction.attractionName, user.getUserName());
 			return rewardsCentral.getAttractionRewardPoints(attraction.attractionId, user.getUserId());
 		}, rewardsExecutorService).thenAccept(rewardsPoint -> {
 			logger.debug("\033[35m - addUserReward({}, {}, {}, {}) ", user.getUserName(), visitedLocation, attraction.attractionName, rewardsPoint);
 			user.addUserReward(new UserReward(visitedLocation, attraction, rewardsPoint));
 		});
+	}
+	
+	/**
+	 * mmethod just to calculate rewardPoints for attraction near a visited location
+	 * @param attractionId id of attraction
+	 * @param userId id of user to give him reward points
+	 * @return reward  point for this attraction
+	 */
+	public int getNearestAttractionRewardPoints(UUID attractionId, UUID userId) {
+		return rewardsCentral.getAttractionRewardPoints(attractionId, userId);
 	}
 
 	public boolean isWithinAttractionProximity(Attraction attraction, Location location) {

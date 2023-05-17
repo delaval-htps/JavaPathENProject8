@@ -3,7 +3,9 @@ package tourGuide;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +14,8 @@ import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.awaitility.Awaitility;
 import org.junit.Test;
+
+import com.jsoniter.output.JsonStream;
 
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
@@ -204,13 +208,15 @@ public class TestTourGuideService {
 		
 		// we await that tracker is finish 
 		Awaitility.await().untilTrue(tourGuideService.tracker.SLEEPINGTRACKER);
-	
-		List<Attraction> attractions = tourGuideService.getNearByAttractions(tourGuideService.getUserLocation(user));
-		
+			
 		rootLogger.info("************* list of nearest attraction *************");
-		
-		for (Attraction attraction : attractions) {
-			rootLogger.info(" {} at {} miles", String.format("%-45s",attraction.attractionName), String.format("%.2f", rewardsService.getDistance(attraction, user.getLastVisitedLocation().location)));
+		rootLogger.info("waiting to collect data...");
+
+		List<LinkedHashMap<String, String>> attractions = tourGuideService.getNearByAttractions(tourGuideService.getUserLocation(user));
+
+		for (LinkedHashMap<String,String> attraction : attractions) {
+			// rootLogger.info(" {} at {} miles", String.format("%-45s",attraction.attractionName), String.format("%.2f", rewardsService.getDistance(attraction, user.getLastVisitedLocation().location)));
+			rootLogger.info("nearest attraction: {}", JsonStream.serialize(attraction));
 		}
 
 		// tourGuideService.tracker.stopTracking();
