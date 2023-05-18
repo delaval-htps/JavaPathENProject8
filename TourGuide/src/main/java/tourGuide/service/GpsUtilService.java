@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.LogManager;         
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +17,8 @@ import tourGuide.user.User;
 public class GpsUtilService {
 
   private GpsUtil gpsUtil;
-  private org.apache.logging.log4j.Logger logger = LogManager.getLogger("testPerformance");
-  private static Logger rootLogger = LogManager.getRootLogger();
+  
+  private Logger logger = LogManager.getLogger("testPerformance");
 
   public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(6006);
 

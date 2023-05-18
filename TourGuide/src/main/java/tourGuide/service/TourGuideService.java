@@ -3,11 +3,10 @@ package tourGuide.service;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Random;
-import java.util.LinkedHashMap;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ExecutorService;
@@ -27,25 +26,27 @@ import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
-import tripPricer.TripPricer;
 
 @Service
 public class TourGuideService {
-	private static org.apache.logging.log4j.Logger logger = LogManager.getLogger("testPerformance");
+
+	private static Logger logger = LogManager.getLogger("testPerformance");
 	private static Logger rootLogger = LogManager.getRootLogger();
 
 	public final GpsUtilService gpsUtilService;
 	private final RewardsService rewardsService;
-	private final TripPricer tripPricer = new TripPricer();
+	private final TripPricerService tripPricerService;
 	public final Tracker tracker;
+
 	public final ExecutorService tourGuideServiceExecutor = Executors.newFixedThreadPool(10000);
 
 	boolean testMode = true;
 
-	public TourGuideService(GpsUtilService gpsUtilService, RewardsService rewardsService) {
+	public TourGuideService(GpsUtilService gpsUtilService, RewardsService rewardsService, TripPricerService tripPricerService) {
 
 		this.gpsUtilService = gpsUtilService;
 		this.rewardsService = rewardsService;
+		this.tripPricerService = tripPricerService;
 
 		if (testMode) {
 			rootLogger.info("TestMode enabled");
@@ -80,12 +81,25 @@ public class TourGuideService {
 		}
 	}
 
+	/**
+	 * return the tripdeals for user
+	 * 
+	 * @param user the user
+	 * @return retunr a list of tripdeals for the user
+	 */
 	public List<Provider> getTripDeals(User user) {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List<Provider> providers = tripPricer.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),
-				cumulatativeRewardPoints);
+		List<Provider> providers = tripPricerService.getPrice(
+			tripPricerApiKey,
+			user.getUserId(), 
+			user.getUserPreferences().getNumberOfAdults(), 
+			user.getUserPreferences().getNumberOfChildren(), 
+			user.getUserPreferences().getTripDuration(), 
+			cumulatativeRewardPoints);
+		
 		user.setTripDeals(providers);
-		return providers;
+
+		return user.getTripDeals();
 	}
 
 	public void trackUserLocation(User user) {
@@ -104,9 +118,10 @@ public class TourGuideService {
 		rewardsService.calculateRewards(user);
 		tracker.updateUserTrackingProgress(user);
 	}
-	
+
 	/**
 	 * return the list of 5 nearest attractions from location of user
+	 * 
 	 * @param visitedLocation the visited location of user
 	 * @return the list of 5 nearest attractions from location of user
 	 */
@@ -121,12 +136,11 @@ public class TourGuideService {
 	 * 
 	 * @param attraction      the attraction to transform into a Map
 	 * @param visitedLocation the last visited location of user
-	 * @return a HashMap as asked for front end that collect information of attraction : 
-	 * Name of Tourist attraction,
-	 * Tourist attractions lat/long,
-	 * The user's location lat/long,
-	 * The distance in miles between attraction and the user's location,
-	 * The reward points for visiting this Attraction.
+	 * @return a HashMap as asked for front end that collect information of
+	 *         attraction : Name of Tourist attraction, Tourist attractions
+	 *         lat/long, The user's location lat/long, The distance in miles between
+	 *         attraction and the user's location, The reward points for visiting
+	 *         this Attraction.
 	 * 
 	 */
 	private LinkedHashMap<String, String> nearAttractionToMap(Attraction attraction, VisitedLocation visitedLocation) {
@@ -135,7 +149,7 @@ public class TourGuideService {
 		map.put("touristAttraction lat/long", String.format("%f/%f", attraction.latitude, attraction.longitude));
 		map.put("userLocation lat/long", String.format("%f/%f", visitedLocation.location.latitude, visitedLocation.location.longitude));
 		map.put("distance", String.format("%f", rewardsService.getDistance(attraction, visitedLocation.location)));
-		map.put("rewardPoints", String.format("%d",rewardsService.getNearestAttractionRewardPoints(attraction.attractionId,visitedLocation.userId)));
+		map.put("rewardPoints", String.format("%d", rewardsService.getNearestAttractionRewardPoints(attraction.attractionId, visitedLocation.userId)));
 
 		return map;
 	}
@@ -162,6 +176,7 @@ public class TourGuideService {
 
 	public void addShutDownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
 			public void run() {
 				tracker.stopTracking();
 				tourGuideServiceExecutor.shutdownNow();

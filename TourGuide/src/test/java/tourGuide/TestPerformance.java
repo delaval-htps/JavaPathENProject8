@@ -20,7 +20,9 @@ import tourGuide.helper.InternalTestHelper;
 import tourGuide.service.GpsUtilService;
 import tourGuide.service.RewardsService;
 import tourGuide.service.TourGuideService;
+import tourGuide.service.TripPricerService;
 import tourGuide.user.User;
+import tripPricer.TripPricer;
 
 public class TestPerformance {
 
@@ -57,20 +59,18 @@ public class TestPerformance {
 		InternalTestHelper.setInternalUserNumber(1000);
 		
 		System.setProperty("logFileName", "highVolumeTrackLocation-" + InternalTestHelper.getInternalUserNumber());
-		
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
-		
 		Logger logger = LogManager.getLogger("testPerformance");
 		Logger rootLogger = LogManager.getRootLogger();
 
-		GpsUtil gpsUtil = new GpsUtil();
-		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
+		GpsUtilService gpsUtilService = new GpsUtilService(new GpsUtil());
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
+		TripPricerService tripPricerService = new TripPricerService(new TripPricer());
 
 		rootLogger.info("----------------------HightVolumeTrackLocation with {} users-----------------------\t", InternalTestHelper.getInternalUserNumber());
 		
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService,tripPricerService);
 
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
@@ -90,15 +90,13 @@ public class TestPerformance {
 				}
 			}
 		}
-		// for (User user : allUsers) {
-		// 	Awaitility.await().atMost(100,TimeUnit.MILLISECONDS).until(() -> user.getVisitedLocations().size() >= tourGuideService.INITIAL_NUMBER_OF_VISITED_LOCATIONS);
-		// }
 
 		stopWatch.stop();
 		
 		tourGuideService.addShutDownHook();
 
 		rootLogger.info("highVolumeTrackLocation: Time Elapsed: {} seconds", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+
 		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
 		System.clearProperty("logFileName");
@@ -112,25 +110,23 @@ public class TestPerformance {
 		InternalTestHelper.setInternalUserNumber(1000);
 		
 		System.setProperty("logFileName", "highVolumeGetRewards-" + InternalTestHelper.getInternalUserNumber());
-		
 		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
 		ctx.reconfigure();
-		
 		Logger logger = LogManager.getLogger("testPerformance");
 		Logger rootLogger = LogManager.getRootLogger();
 
-		GpsUtil gpsUtil = new GpsUtil();
-		GpsUtilService gpsUtilService = new GpsUtilService(gpsUtil);
+		GpsUtilService gpsUtilService = new GpsUtilService(new GpsUtil());
 		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
+		TripPricerService tripPricerService = new TripPricerService(new TripPricer());
 
 		rootLogger.info("----------------------highVolumeGetRewards with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 		
 		StopWatch stopWatch = new StopWatch();
 		stopWatch.start();
 
-		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService);
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService,tripPricerService);
 
-		Attraction attraction = gpsUtil.getAttractions().get(0);
+		Attraction attraction = gpsUtilService.getAttractions().get(0);
 		List<User> allUsers = tourGuideService.getAllUsers();
 
 		allUsers.forEach(u -> {
@@ -150,18 +146,16 @@ public class TestPerformance {
 			}
 		}
 
-		// for (User user : allUsers) {
-		// 	Awaitility.await().until(() -> !user.getUserRewards().isEmpty());
-		// }
-
 		for (User user : allUsers) {
 			assertTrue(user.getUserRewards().size() > 0);
 		}
+
 		stopWatch.stop();
 
 		tourGuideService.addShutDownHook();
 
 		rootLogger.info("highVolumeGetRewards: Time Elapsed: {} seconds", TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
+
 		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
 		System.clearProperty("logFileName");
