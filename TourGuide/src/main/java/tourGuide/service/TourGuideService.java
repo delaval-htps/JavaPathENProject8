@@ -14,6 +14,8 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import javax.validation.Valid;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,7 @@ import gpsUtil.location.VisitedLocation;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
+import tourGuide.user.UserPreferences;
 import tourGuide.user.UserReward;
 import tripPricer.Provider;
 
@@ -82,6 +85,20 @@ public class TourGuideService {
 	}
 
 	/**
+	 * Save preferences for a user
+	 * 
+	 * @param userPreferences preferences of user
+	 * @param user            user which we have to save preference
+	 */
+	public void saveUserPreferences(UserPreferences userPreferences, User user) {
+		if (userPreferences != null && user != null) {
+			user.setUserPreferences(userPreferences);
+		} else {
+			throw new RuntimeException("A problem occurs with setting user preferences");
+		}
+	}
+
+	/**
 	 * return the tripdeals for user
 	 * 
 	 * @param user the user
@@ -89,14 +106,9 @@ public class TourGuideService {
 	 */
 	public List<Provider> getTripDeals(User user) {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List<Provider> providers = tripPricerService.getPrice(
-			tripPricerApiKey,
-			user.getUserId(), 
-			user.getUserPreferences().getNumberOfAdults(), 
-			user.getUserPreferences().getNumberOfChildren(), 
-			user.getUserPreferences().getTripDuration(), 
-			cumulatativeRewardPoints);
-		
+		List<Provider> providers = tripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),
+				cumulatativeRewardPoints);
+
 		user.setTripDeals(providers);
 
 		return user.getTripDeals();
@@ -127,7 +139,10 @@ public class TourGuideService {
 	 */
 	public List<LinkedHashMap<String, String>> getNearByAttractions(VisitedLocation visitedLocation) {
 
-		return gpsUtilService.getAttractions().stream().map(attraction -> nearAttractionToMap(attraction, visitedLocation)).sorted(this::compareAttractionMapbyDistance).limit(5).collect(Collectors.toList());
+		return gpsUtilService.getAttractions().stream()
+				.map(attraction -> nearAttractionToMap(attraction, visitedLocation))
+				.sorted(this::compareAttractionMapbyDistance)
+				.limit(5).collect(Collectors.toList());
 	}
 
 	/**
