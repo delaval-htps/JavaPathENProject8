@@ -14,8 +14,6 @@ import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.validation.Valid;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -23,6 +21,7 @@ import org.springframework.stereotype.Service;
 import gpsUtil.location.Attraction;
 import gpsUtil.location.Location;
 import gpsUtil.location.VisitedLocation;
+import tourGuide.exception.UserPreferencesException;
 import tourGuide.helper.InternalTestHelper;
 import tourGuide.tracker.Tracker;
 import tourGuide.user.User;
@@ -94,7 +93,7 @@ public class TourGuideService {
 		if (userPreferences != null && user != null) {
 			user.setUserPreferences(userPreferences);
 		} else {
-			throw new RuntimeException("A problem occurs with setting user preferences");
+			throw new UserPreferencesException("A problem occurs with setting user preferences");
 		}
 	}
 
@@ -106,8 +105,7 @@ public class TourGuideService {
 	 */
 	public List<Provider> getTripDeals(User user) {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List<Provider> providers = tripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),
-				cumulatativeRewardPoints);
+		List<Provider> providers = tripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),cumulatativeRewardPoints);
 
 		user.setTripDeals(providers);
 

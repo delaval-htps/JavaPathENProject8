@@ -5,9 +5,11 @@ import java.util.List;
 import javax.naming.NameNotFoundException;
 import javax.validation.Valid;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.jsoniter.output.JsonStream;
 
 import gpsUtil.location.VisitedLocation;
+import tourGuide.exception.UserNotFoundException;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
 import tourGuide.user.UserPreferences;
@@ -83,6 +86,13 @@ public class TourGuideController {
         return JsonStream.serialize(providers);
     }
 
+    @GetMapping("/getUserPreferences")
+    public String getUserPreferences(@RequestParam(value = "userName") String userName) {
+        UserPreferences userPreferences = tourGuideService.getUser(userName).getUserPreferences();
+        System.out.println("userPreferences;"+userPreferences);
+        return JsonStream.serialize(userPreferences);
+    }
+
     /**
      * post mapping to save or update user preferences
      * 
@@ -100,7 +110,7 @@ public class TourGuideController {
             tourGuideService.saveUserPreferences(userPreferences, user);
             return new ResponseEntity<>("Your preferences are correctly saved!", HttpStatus.CREATED);
         } else {
-            throw new RuntimeException("UserName doesnt exist!");
+            throw new UserNotFoundException("UserName doesnt exist!");
         }
 
     }
