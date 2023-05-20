@@ -2,10 +2,9 @@ package tourGuide;
 
 import java.util.List;
 
-import javax.naming.NameNotFoundException;
 import javax.validation.Valid;
 
-
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
 import com.jsoniter.output.JsonStream;
 
 import gpsUtil.location.VisitedLocation;
+import tourGuide.dto.UserPreferencesDTO;
 import tourGuide.exception.UserNotFoundException;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -28,7 +29,10 @@ import tripPricer.Provider;
 public class TourGuideController {
 
     @Autowired
-    TourGuideService tourGuideService;
+    private TourGuideService tourGuideService;
+
+    @Autowired
+    private ModelMapper modelMapper;
 
     @RequestMapping("/")
     public String index() {
@@ -89,8 +93,8 @@ public class TourGuideController {
     @GetMapping("/getUserPreferences")
     public String getUserPreferences(@RequestParam(value = "userName") String userName) {
         UserPreferences userPreferences = tourGuideService.getUser(userName).getUserPreferences();
-        System.out.println("userPreferences;"+userPreferences);
-        return JsonStream.serialize(userPreferences);
+        System.out.println("userPreferences;"+userPreferences.toString());
+        return JsonStream.serialize(userPreferences.toString());
     }
 
     /**
@@ -99,16 +103,19 @@ public class TourGuideController {
      * @param userName        the user that we want to modify preferences
      * @param userPreferences the requestbody with user preferences
      * @return responseEntity with httpsStatus.CREATED if user existing
-     * @throws NameNotFoundException if user was not found
+     * @throws UserNotFoundException if user was not found
      */
     @PostMapping("/setUserPreferences")
-    public ResponseEntity<String> setUserPreferences(@RequestParam(value = "userName") String userName, @Valid @RequestBody UserPreferences userPreferences) throws NameNotFoundException {
+    public ResponseEntity<String> setUserPreferences(@RequestParam(value = "userName") String userName, @Valid @RequestBody UserPreferencesDTO userPreferencesDTO) throws UserNotFoundException {
 
         User user = tourGuideService.getUser(userName);
 
         if (user != null) {
+
+            UserPreferences userPreferences = modelMapper.map(userPreferencesDTO, UserPreferences.class);
             tourGuideService.saveUserPreferences(userPreferences, user);
             return new ResponseEntity<>("Your preferences are correctly saved!", HttpStatus.CREATED);
+            
         } else {
             throw new UserNotFoundException("UserName doesnt exist!");
         }
