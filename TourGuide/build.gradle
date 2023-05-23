@@ -43,6 +43,7 @@ dependencies {
 
     implementation group: 'org.javamoney', name: 'moneta', version: '1.3'
 	implementation group: 'com.jsoniter', name: 'jsoniter', version: '0.9.23'
+    implementation 'com.google.code.gson:gson:2.8.9'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.8'
     implementation group: 'org.modelmapper', name: 'modelmapper', version: '3.1.1'
 

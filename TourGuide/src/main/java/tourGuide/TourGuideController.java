@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.jsoniter.output.JsonStream;
+import com.google.gson.Gson;
 
 import gpsUtil.location.VisitedLocation;
 import tourGuide.dto.UserPreferencesDTO;
@@ -34,6 +34,8 @@ public class TourGuideController {
     @Autowired
     private ModelMapper modelMapper;
 
+    private Gson gson = new Gson();
+
     @RequestMapping("/")
     public String index() {
         return "Greetings from TourGuide!";
@@ -42,7 +44,7 @@ public class TourGuideController {
     @RequestMapping("/getLocation")
     public String getLocation(@RequestParam String userName) {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-        return JsonStream.serialize(visitedLocation.location);
+        return gson.toJson(visitedLocation.location);
     }
 
     // Instead: Get the closest five tourist attractions to the user - no matter how
@@ -58,12 +60,12 @@ public class TourGuideController {
     @RequestMapping("/getNearbyAttractions")
     public String getNearbyAttractions(@RequestParam String userName) {
         VisitedLocation visitedLocation = tourGuideService.getUserLocation(getUser(userName));
-        return JsonStream.serialize(tourGuideService.getNearByAttractions(visitedLocation));
+        return gson.toJson(tourGuideService.getNearByAttractions(visitedLocation));
     }
 
     @RequestMapping("/getRewards")
     public String getRewards(@RequestParam String userName) {
-        return JsonStream.serialize(tourGuideService.getUserRewards(getUser(userName)));
+        return gson.toJson(tourGuideService.getUserRewards(getUser(userName)));
     }
 
     @RequestMapping("/getAllCurrentLocations")
@@ -81,13 +83,13 @@ public class TourGuideController {
         // ...
         // }
 
-        return JsonStream.serialize("");
+        return gson.toJson("");
     }
 
     @RequestMapping("/getTripDeals")
     public String getTripDeals(@RequestParam String userName) {
         List<Provider> providers = tourGuideService.getTripDeals(getUser(userName));
-        return JsonStream.serialize(providers);
+        return gson.toJson(providers);
     }
 
     /**
@@ -102,7 +104,7 @@ public class TourGuideController {
         UserPreferences userPreferences = tourGuideService.getUser(userName).getUserPreferences();
         
         if (userPreferences != null) {
-            return JsonStream.serialize(modelMapper.map(userPreferences, UserPreferencesDTO.class));
+            return gson.toJson(modelMapper.map(userPreferences, UserPreferencesDTO.class));
         } else {
             throw new UserNotFoundException("UserName doesn't exist!");
         }
