@@ -1,6 +1,5 @@
 package tourGuide.tracker;
 
-import java.util.FormatFlagsConversionMismatchException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -23,7 +22,7 @@ public class Tracker extends Thread {
 
 	private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-	private HashMap<User, Boolean> trackingUsersProgress = new HashMap();
+	private HashMap<User, Boolean> trackingUsersProgress = new HashMap<>();
 
 	private final TourGuideService tourGuideService;
 	private boolean stop = false;

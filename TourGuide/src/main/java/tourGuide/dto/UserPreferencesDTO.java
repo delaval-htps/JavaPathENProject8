@@ -1,8 +1,5 @@
 package tourGuide.dto;
 
-import java.util.Currency;
-
-import javax.money.Monetary;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
@@ -13,7 +10,7 @@ public class UserPreferencesDTO {
     @Digits(integer = 4, fraction = 0, message = "the distance must be a positive integer strictly inferior to 10000 miles")
     private Integer attractionProximity;
 
-    @NotBlank(message="the currencyUnit must be not null or blank")
+    @NotBlank(message = "the currencyUnit must be not null or blank")
     private String currencyUnit;
 
     @PositiveOrZero(message = "the lowerPricePoint must be a positive positive")
@@ -33,7 +30,7 @@ public class UserPreferencesDTO {
     private int ticketQuantity = 1;
 
     @PositiveOrZero(message = "the numberOfAdults must be a positive positive")
-    @Digits(integer = 4, fraction = 0, message = "the numberOfAdults must be a positive integer strictly inferior to 10000 miles") 
+    @Digits(integer = 4, fraction = 0, message = "the numberOfAdults must be a positive integer strictly inferior to 10000 miles")
     private Integer numberOfAdults;
 
     @PositiveOrZero(message = "the numberOfChildren must be a positive positive")
@@ -62,9 +59,6 @@ public class UserPreferencesDTO {
         this.numberOfChildren = numberOfChildren;
     }
 
-    /**
-     * 
-     */
     public UserPreferencesDTO() {
     }
 

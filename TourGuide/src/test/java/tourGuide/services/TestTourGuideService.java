@@ -158,13 +158,6 @@ public class TestTourGuideService {
 		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
 		tourGuideService.trackUserLocation(user);
 
-		// try {
-		// 	TimeUnit.MILLISECONDS.sleep(1000);
-		// } catch (InterruptedException e) {
-		// 	// TODO Auto-generated catch block
-		// 	e.printStackTrace();
-		// }
-
 		Awaitility.await().until(() -> !user.getVisitedLocations().isEmpty());
 
 		// tourGuideService.tracker.stopTracking();
