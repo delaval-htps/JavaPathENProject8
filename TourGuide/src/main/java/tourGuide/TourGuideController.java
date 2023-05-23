@@ -5,6 +5,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.Converters.Converter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -90,11 +91,23 @@ public class TourGuideController {
         return JsonStream.serialize(providers);
     }
 
+    /**
+     * endPoint to retrieve userPreferences in json format
+     * 
+     * @param userName the userName of user
+     * @return a serialization of userPreferences in json format
+     */
     @GetMapping("/getUserPreferences")
     public String getUserPreferences(@RequestParam(value = "userName") String userName) {
+
         UserPreferences userPreferences = tourGuideService.getUser(userName).getUserPreferences();
-        System.out.println("userPreferences;"+userPreferences.toString());
-        return JsonStream.serialize(userPreferences.toString());
+        
+        if (userPreferences != null) {
+            return JsonStream.serialize(modelMapper.map(userPreferences, UserPreferencesDTO.class));
+        } else {
+            throw new UserNotFoundException("UserName doesn't exist!");
+        }
+
     }
 
     /**
@@ -115,7 +128,7 @@ public class TourGuideController {
             UserPreferences userPreferences = modelMapper.map(userPreferencesDTO, UserPreferences.class);
             tourGuideService.saveUserPreferences(userPreferences, user);
             return new ResponseEntity<>("Your preferences are correctly saved!", HttpStatus.CREATED);
-            
+
         } else {
             throw new UserNotFoundException("UserName doesnt exist!");
         }

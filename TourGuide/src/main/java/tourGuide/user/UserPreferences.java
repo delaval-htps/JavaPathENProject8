@@ -82,4 +82,18 @@ public class UserPreferences {
 				+ ticketQuantity + ", numberOfAdults=" + numberOfAdults + ", numberOfChildren=" + numberOfChildren + "]";
 	}
 
+	/**
+	 * @return the currency
+	 */
+	public CurrencyUnit getCurrency() {
+		return currency;
+	}
+
+	/**
+	 * @param currency the currency to set
+	 */
+	public void setCurrency(CurrencyUnit currency) {
+		this.currency = currency;
+	}
+
 }

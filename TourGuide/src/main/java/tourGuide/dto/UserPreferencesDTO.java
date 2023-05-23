@@ -180,4 +180,10 @@ public class UserPreferencesDTO {
         this.numberOfChildren = numberOfChildren;
     }
 
+    @Override
+    public String toString() {
+        return "UserPreferencesDTO [attractionProximity=" + attractionProximity + ", currencyUnit=" + currencyUnit + ", lowerPricePoint=" + lowerPricePoint + ", highPricePoint=" + highPricePoint + ", tripDuration=" + tripDuration
+                + ", ticketQuantity=" + ticketQuantity + ", numberOfAdults=" + numberOfAdults + ", numberOfChildren=" + numberOfChildren + "]";
+    }
+
 }
