@@ -1,6 +1,7 @@
 package tourGuide;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -18,7 +19,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 
 import gpsUtil.location.VisitedLocation;
+import tourGuide.dto.UserCurrentLocationDTO;
+import tourGuide.dto.UserLocationHistoryDTO;
 import tourGuide.dto.UserPreferencesDTO;
+import tourGuide.dto.UserCurrentLocationDTO;
 import tourGuide.exception.UserNotFoundException;
 import tourGuide.service.TourGuideService;
 import tourGuide.user.User;
@@ -70,11 +74,11 @@ public class TourGuideController {
 
     @RequestMapping("/getAllCurrentLocations")
     public String getAllCurrentLocations() {
-        // TODO: Get a list of every user's most recent location as JSON
+        // Get a list of every user's most recent location as JSON
         // - Note: does not use gpsUtil to query for their current location,
         // but rather gathers the user's current location from their stored location
         // history.
-        //
+
         // Return object should be the just a JSON mapping of userId to Locations
         // similar to:
         // {
@@ -83,8 +87,18 @@ public class TourGuideController {
         // ...
         // }
 
-        return gson.toJson("");
+        List<UserCurrentLocationDTO> allUserCurrentLocations = tourGuideService.getAllCurrentLocations().stream().map(v -> modelMapper.map(v, UserCurrentLocationDTO.class)).collect(Collectors.toList());
+        return gson.toJson(allUserCurrentLocations);
     }
+
+    // @RequestMapping("/getAllUserLocations")
+    // public String getAllUserLocations() {
+    // List<UserLocationHistoryDTO> userLocationsHistory =
+    // tourGuideService.getAllUserLocationHistories().stream().map(v ->
+    // modelMapper.map(v ->
+    // UserLocationHistoryDTO.class)).collect(Collectors.toList());
+    // return gson.toJson(userLocationsHistory);
+    // }
 
     @RequestMapping("/getTripDeals")
     public String getTripDeals(@RequestParam String userName) {
@@ -102,7 +116,7 @@ public class TourGuideController {
     public String getUserPreferences(@RequestParam(value = "userName") String userName) {
 
         UserPreferences userPreferences = tourGuideService.getUser(userName).getUserPreferences();
-        
+
         if (userPreferences != null) {
             return gson.toJson(modelMapper.map(userPreferences, UserPreferencesDTO.class));
         } else {

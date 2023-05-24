@@ -99,19 +99,23 @@ public class TourGuideService {
 
 	/**
 	 * return the tripdeals for user
-	 * 
 	 * @param user the user
 	 * @return retunr a list of tripdeals for the user
 	 */
 	public List<Provider> getTripDeals(User user) {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List<Provider> providers = tripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),cumulatativeRewardPoints);
+		List<Provider> providers = tripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),
+				cumulatativeRewardPoints);
 
 		user.setTripDeals(providers);
 
 		return user.getTripDeals();
 	}
 
+	/**
+	 * Track the location of a user
+	 * @param user user to be tracking
+	 */
 	public void trackUserLocation(User user) {
 		try {
 			tourGuideServiceExecutor.submit(() -> {
@@ -123,6 +127,13 @@ public class TourGuideService {
 		}
 	}
 
+	/**
+	 * Add the last Tracked location to user's list of visited Locations,
+	 * Calulate the rewards for user visited location and add it ( point & informations) to his userRewards
+	 * update the map UserTrackingProgress to informe the tracker of asynchronous progression of tracking 
+	 * @param user the user to be tracking
+	 * @param visitedLocation it's last visited location
+	 */
 	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
 		user.addToVisitedLocations(visitedLocation);
 		rewardsService.calculateRewards(user);
@@ -131,7 +142,6 @@ public class TourGuideService {
 
 	/**
 	 * return the list of 5 nearest attractions from location of user
-	 * 
 	 * @param visitedLocation the visited location of user
 	 * @return the list of 5 nearest attractions from location of user
 	 */
@@ -139,7 +149,7 @@ public class TourGuideService {
 
 		return gpsUtilService.getAttractions().stream()
 				.map(attraction -> nearAttractionToMap(attraction, visitedLocation))
-				.sorted(this::compareAttractionMapbyDistance)
+				.sorted(this::compareAttractionMapByDistance)
 				.limit(5).collect(Collectors.toList());
 	}
 
@@ -175,7 +185,7 @@ public class TourGuideService {
 	 * @param h2 the hashmap that represents the second attraction
 	 * @return a int to compare them By distance from user location
 	 */
-	private int compareAttractionMapbyDistance(LinkedHashMap<String, String> h1, LinkedHashMap<String, String> h2) {
+	private int compareAttractionMapByDistance(LinkedHashMap<String, String> h1, LinkedHashMap<String, String> h2) {
 		if (h1.get("distance").equals(h2.get("distance"))) {
 			return 0;
 		} else {
@@ -187,6 +197,12 @@ public class TourGuideService {
 		}
 	}
 
+	public List<VisitedLocation> getAllCurrentLocations() {
+		return this.getAllUsers().parallelStream().map(u -> u.getLastVisitedLocation()).collect(Collectors.toList());
+	}
+	/**
+	 * Method to shutdown all used executorService of application
+	 */
 	public void addShutDownHook() {
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			@Override
