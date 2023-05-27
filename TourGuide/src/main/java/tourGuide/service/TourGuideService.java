@@ -2,6 +2,8 @@ package tourGuide.service;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -13,6 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -99,6 +102,7 @@ public class TourGuideService {
 
 	/**
 	 * return the tripdeals for user
+	 * 
 	 * @param user the user
 	 * @return retunr a list of tripdeals for the user
 	 */
@@ -114,6 +118,7 @@ public class TourGuideService {
 
 	/**
 	 * Track the location of a user
+	 * 
 	 * @param user user to be tracking
 	 */
 	public void trackUserLocation(User user) {
@@ -128,10 +133,12 @@ public class TourGuideService {
 	}
 
 	/**
-	 * Add the last Tracked location to user's list of visited Locations,
-	 * Calulate the rewards for user visited location and add it ( point & informations) to his userRewards
-	 * update the map UserTrackingProgress to informe the tracker of asynchronous progression of tracking 
-	 * @param user the user to be tracking
+	 * Add the last Tracked location to user's list of visited Locations, Calulate
+	 * the rewards for user visited location and add it ( point & informations) to
+	 * his userRewards update the map UserTrackingProgress to informe the tracker of
+	 * asynchronous progression of tracking
+	 * 
+	 * @param user            the user to be tracking
 	 * @param visitedLocation it's last visited location
 	 */
 	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
@@ -142,15 +149,13 @@ public class TourGuideService {
 
 	/**
 	 * return the list of 5 nearest attractions from location of user
+	 * 
 	 * @param visitedLocation the visited location of user
 	 * @return the list of 5 nearest attractions from location of user
 	 */
 	public List<LinkedHashMap<String, String>> getNearByAttractions(VisitedLocation visitedLocation) {
 
-		return gpsUtilService.getAttractions().stream()
-				.map(attraction -> nearAttractionToMap(attraction, visitedLocation))
-				.sorted(this::compareAttractionMapByDistance)
-				.limit(5).collect(Collectors.toList());
+		return gpsUtilService.getAttractions().stream().map(attraction -> nearAttractionToMap(attraction, visitedLocation)).sorted(this::compareAttractionMapByDistance).limit(5).collect(Collectors.toList());
 	}
 
 	/**
@@ -197,9 +202,45 @@ public class TourGuideService {
 		}
 	}
 
-	public List<VisitedLocation> getAllCurrentLocations() {
-		return this.getAllUsers().parallelStream().map(u -> u.getLastVisitedLocation()).collect(Collectors.toList());
+	/**
+	 * method getAllUserCurrentLocations() 
+	 * 
+	 * @return a List of all current locations of all users
+	 */
+	public List<VisitedLocation> getAllUserCurrentLocations() {
+		return this.getAllUsers().parallelStream().map(User::getLastVisitedLocation).collect(Collectors.toList());
 	}
+
+	/**
+	 * method getAllUserLocations()
+	 * 
+	 * @return List of all visited locations of all users sorted first by there
+	 *         userId and then by date of visited locations
+	 */
+	public List<VisitedLocation> getAllUserLocations() {
+
+		Comparator<VisitedLocation> comparator = Comparator.comparing(v -> v.userId);
+		Comparator<VisitedLocation> comparatorByDate = Comparator.comparing(v -> v.timeVisited);
+		comparator = comparator.thenComparing(comparatorByDate);
+
+		List<VisitedLocation> visitedLocations = flattenListOfListsStream(this.getAllUsers().parallelStream().map(User::getVisitedLocations).collect(Collectors.toList()));
+
+		return visitedLocations.stream().sorted(comparator).collect(Collectors.toList());
+
+	}
+
+	/**
+	 * private method to regroup all Objects in a same list from a
+	 * List<List<Object>>
+	 * 
+	 * @param <T>  the generic object
+	 * @param list the List<List<Object>>
+	 * @return a unique List of all Objects
+	 */
+	private <T> List<T> flattenListOfListsStream(List<List<T>> list) {
+		return list.stream().flatMap(Collection::stream).collect(Collectors.toList());
+	}
+
 	/**
 	 * Method to shutdown all used executorService of application
 	 */

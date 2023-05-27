@@ -2,6 +2,9 @@ package tourGuide.dto;
 
 import java.util.UUID;
 
+/**
+ * DTO to represente the last visited location for a user
+ */
 public class UserCurrentLocationDTO {
     private UUID userUuid;
     private double longitude;
@@ -15,6 +18,7 @@ public class UserCurrentLocationDTO {
 
     /**
      * AllArgumentConstructor
+     * 
      * @param userUuid  the id of user
      * @param longitude the longitude of last visited location of user
      * @param latitude  the latitude of last visited location of user

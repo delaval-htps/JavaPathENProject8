@@ -41,7 +41,7 @@ public class ModelMapperConfig {
     };
 
     /**
-     * PropertyMap to convert a UserPreferences to UserPreferencesDTO 
+     * PropertyMap to convert a UserPreferences to UserPreferencesDTO
      */
     PropertyMap<UserPreferences, UserPreferencesDTO> moneyMapDTO = new PropertyMap<UserPreferences, UserPreferencesDTO>() {
         @Override
@@ -53,20 +53,20 @@ public class ModelMapperConfig {
         }
     };
 
-     /**
+    /**
      * PropertyMap to convert a VisitedLocation to UserCurrentLocationDTO
      */
-    PropertyMap<VisitedLocation,UserCurrentLocationDTO> userCurrentVisitedLocationMap = new PropertyMap<VisitedLocation,UserCurrentLocationDTO>() {
+    PropertyMap<VisitedLocation, UserCurrentLocationDTO> userCurrentVisitedLocationMap = new PropertyMap<VisitedLocation, UserCurrentLocationDTO>() {
 
         @Override
         protected void configure() {
-            
-            map( source.location.longitude,destination.getLongitude());
+
+            map(source.location.longitude, destination.getLongitude());
             map(source.location.latitude, destination.getLatitude());
             map(source.userId, destination.getUserUuid());
         }
-        
-    }; 
+
+    };
 
     @Bean
     public Converter<String, CurrencyUnit> convertStringIntoCurrencyUnit() {
