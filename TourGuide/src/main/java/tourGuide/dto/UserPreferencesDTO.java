@@ -4,6 +4,9 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.PositiveOrZero;
 
+/**
+ * DTO to represent the preferences of a user
+ */
 public class UserPreferencesDTO {
 
     @PositiveOrZero(message = "the distance must be a positive positive")
@@ -38,6 +41,8 @@ public class UserPreferencesDTO {
     private Integer numberOfChildren;
 
     /**
+     * All Arguments contructor
+     * 
      * @param attractionProximity
      * @param currencyUnit
      * @param lowerPricePoint
@@ -59,6 +64,9 @@ public class UserPreferencesDTO {
         this.numberOfChildren = numberOfChildren;
     }
 
+    /**
+     * No Argument constructor
+     */
     public UserPreferencesDTO() {
     }
 
