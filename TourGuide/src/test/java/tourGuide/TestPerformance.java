@@ -1,6 +1,6 @@
 package tourGuide;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -10,7 +10,10 @@ import org.apache.commons.lang3.time.StopWatch;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
@@ -26,7 +29,21 @@ import tripPricer.TripPricer;
 
 public class TestPerformance {
 
-	
+	@BeforeAll
+	public static void init() {
+			System.setProperty("path", "TestPerformance");
+	}
+
+	@AfterEach
+	public void finishedTest() {
+			System.clearProperty("logFileName");
+	}
+
+	@AfterAll
+	public static void finalStep() {
+			System.clearProperty("path");
+	}
+
 
 	/*
 	 * A note on performance improvements:
@@ -99,7 +116,6 @@ public class TestPerformance {
 
 		assertTrue(TimeUnit.MINUTES.toSeconds(15) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
-		System.clearProperty("logFileName");
 	}
 
 	@Test
@@ -158,7 +174,6 @@ public class TestPerformance {
 
 		assertTrue(TimeUnit.MINUTES.toSeconds(20) >= TimeUnit.MILLISECONDS.toSeconds(stopWatch.getTime()));
 
-		System.clearProperty("logFileName");
 	}
 
 }

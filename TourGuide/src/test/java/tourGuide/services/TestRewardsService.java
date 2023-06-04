@@ -1,7 +1,7 @@
 package tourGuide.services;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.Date;
 import java.util.List;
@@ -12,7 +12,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.core.LoggerContext;
 import org.awaitility.Awaitility;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+
+import com.google.gson.Gson;
 
 import gpsUtil.GpsUtil;
 import gpsUtil.location.Attraction;
@@ -28,7 +33,23 @@ import tourGuide.user.UserReward;
 import tripPricer.TripPricer;
 
 public class TestRewardsService {
+  
+  @BeforeAll
+	public static void setup() {
+		System.setProperty("path", "TestService/TestRewardsService");
+	}
 
+	@AfterEach
+	public void finishedTest() {
+		System.clearProperty("logFileName");
+	}
+
+	@AfterAll
+	public static void finalStep() {
+		System.clearProperty("path");
+	}
+
+  private Gson gson = new Gson();
 
   @Test
   public void userGetRewards() {
@@ -46,24 +67,29 @@ public class TestRewardsService {
 
     rootLogger.info("----------------------Test : userGetRewards with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
-    TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService,tripPricerService);
+    TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 
     User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
-    
+
     Attraction attraction = gpsUtilService.getAttractions().get(0);
-   
+
     user.addToVisitedLocations(new VisitedLocation(user.getUserId(), attraction, new Date()));
-   
+
     tourGuideService.trackUserLocation(user);
 
     Awaitility.await().until(() -> !user.getUserRewards().isEmpty());
 
     List<UserReward> userRewards = user.getUserRewards();
-    
+
     tourGuideService.addShutDownHook();
-    
+
     assertTrue(userRewards.size() >= 1);
-    
+
+    rootLogger.info("****************** user Rewards *******************");
+    for (UserReward userReward : userRewards) {
+      rootLogger.info("{}", gson.toJson(userReward));
+    }
+
     System.clearProperty("logFileName");
   }
 
@@ -78,13 +104,13 @@ public class TestRewardsService {
 
     GpsUtilService gpsUtilService = new GpsUtilService(new GpsUtil());
     RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
-    
+
     rootLogger.info("---------------------- Test : isWithinAttractionProximity -----------------------");
-   
+
     Attraction attraction = gpsUtilService.getAttractions().get(0);
-   
+
     assertTrue(rewardsService.isWithinAttractionProximity(attraction, attraction));
-   
+
     System.clearProperty("logFileName");
 
   }
@@ -94,7 +120,7 @@ public class TestRewardsService {
   public void nearAllAttractions() {
 
     InternalTestHelper.setInternalUserNumber(1);
-    
+
     System.setProperty("logFileName", "nearAllAttractions-" + InternalTestHelper.getInternalUserNumber());
     LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
     ctx.reconfigure();
@@ -106,17 +132,18 @@ public class TestRewardsService {
 
     rootLogger.info("----------------------Test :  nearAllAttractions with {} users-----------------------", InternalTestHelper.getInternalUserNumber());
 
-    //Allow to have all attraction near of user's location
+    // Allow to have all attraction near of user's location
     rewardsService.setProximityBuffer(Integer.MAX_VALUE);
 
-    TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService,tripPricerService);
+    TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
 
     User uniqUser = tourGuideService.getAllUsers().get(0);
 
     // clear all visitedLocations defined by initialisation for just have one location
     uniqUser.clearVisitedLocations();
 
-    //wait for tracker is finished and plus 1100 millisecond to be sur that all 26 rewards for all attraction are added to user
+    // wait for tracker is finished and plus 1100 millisecond to be sur that all 26 rewards for all
+    // attraction are added to user
     Awaitility.await().during(1100, TimeUnit.MILLISECONDS).untilTrue(tourGuideService.tracker.SLEEPINGTRACKER);
 
     List<UserReward> userRewards = tourGuideService.getUserRewards(uniqUser);

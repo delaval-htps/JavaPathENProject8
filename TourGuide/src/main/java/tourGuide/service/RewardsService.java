@@ -45,10 +45,6 @@ public class RewardsService {
 		proximityBuffer = defaultProximityBuffer;
 	}
 
-	public void calculateReward(User user) {
-		rewardsExecutorService.submit(() -> calculateRewards(user));
-	}
-
 	public void calculateRewards(User user) {
 		logger.debug("\033[35m - calculateRewards({}) ", user.getUserName());
 		CopyOnWriteArrayList<VisitedLocation> userLocations = new CopyOnWriteArrayList<>(user.getVisitedLocations());
@@ -58,7 +54,7 @@ public class RewardsService {
 			for (Attraction attraction : attractions) {
 				if (user.getUserRewards().stream().filter(r -> r.attraction.attractionName.equals(attraction.attractionName)).count() == 0) {
 					if (nearAttraction(visitedLocation, attraction)) {
-						logger.debug("\033[35m - setUserRewards({}, {}, {}) ", attraction.attractionName,visitedLocation,user.getUserName());
+						logger.debug("\033[35m - setUserRewards({}, {}, {}) ", attraction.attractionName, visitedLocation, user.getUserName());
 						setUserRewards(attraction, visitedLocation, user);
 					}
 				}
@@ -75,12 +71,13 @@ public class RewardsService {
 			user.addUserReward(new UserReward(visitedLocation, attraction, rewardsPoint));
 		});
 	}
-	
+
 	/**
 	 * mmethod just to calculate rewardPoints for attraction near a visited location
+	 * 
 	 * @param attractionId id of attraction
 	 * @param userId id of user to give him reward points
-	 * @return reward  point for this attraction
+	 * @return reward point for this attraction
 	 */
 	public int getNearestAttractionRewardPoints(UUID attractionId, UUID userId) {
 		return rewardsCentral.getAttractionRewardPoints(attractionId, userId);

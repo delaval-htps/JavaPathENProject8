@@ -1,0 +1,8 @@
+[37m[main                ] - INFO  - tourGuide.controller.TestTourGuideController - ---------------------- endPoint :  /getLocation -----------------------
+[m[36m[pool-4-thread-101   ] - DEBUG - tourGuide.service.TourGuideService - [32m - trackUserLocation(jon)
+[m[36m[pool-2-thread-101   ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - gpstUtils.getUserLocation(jon)
+[m[36m[pool-2-thread-101   ] - DEBUG - tourGuide.service.GpsUtilService   - [33m - tourGuideService.saveTrackedUserLocation(jon,gpsUtil.location.VisitedLocation@4fd14067)
+[m[36m[pool-2-thread-101   ] - DEBUG - tourGuide.service.RewardsService   - [35m - calculateRewards(jon) 
+[m[37m[main                ] - INFO  - tourGuide.controller.TestTourGuideController - [32m - Response status: 200 
+
+[m
