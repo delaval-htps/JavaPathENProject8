@@ -2,10 +2,8 @@ run_test:
   image: gradle:jdk11
   script:
     - cd TourGuide/
-    - ./gradlew test
+    - ./gradlew clean test
   artifacts:
     when: always
-    paths:
-      - jacocoTestReport.xml
     reports:
-      junit: build/jacocoTestReport.xml   
+      junit: build/reports/jacoco/test/jacocoTestReport.xml  
