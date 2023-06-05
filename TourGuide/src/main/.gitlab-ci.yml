@@ -3,4 +3,9 @@ run_test:
   script:
     - cd TourGuide/
     - ./gradlew test
-    
+  artifacts:
+    when: always
+    paths:
+      - jacocoTestReport.xml
+    reports:
+      junit: build/jacocoTestReport.xml   
