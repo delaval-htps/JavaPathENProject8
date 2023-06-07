@@ -2,7 +2,7 @@ default:
   image: gradle:jdk11
 
 build:
-  stage: compilation
+  stage: build
   script:
     - cd TourGuide/
     - ./gradlew clean
@@ -10,7 +10,7 @@ build:
     - ./gradlew testClasses
 
 test:
-  stage: tests
+  stage: test
   script:
     - cd TourGuide/
     - ./gradlew test
