@@ -11,6 +11,7 @@ build:
 
 test:
   stage: test
+  needs: [build]
   script:
     - cd TourGuide/
     - ./gradlew test
@@ -24,4 +25,17 @@ test:
       - TourGuide/build/reports
       - TourGuide/build/jacoco/test.exec
     reports:
-      junit: TourGuide/build/test-results/test/TEST-*.xml  
+      junit: TourGuide/build/test-results/test/TEST-*.xml
+
+deploy:
+  stage: deploy
+  needs: [test]
+  script:
+    - cd TourGuide/
+    - ./gradlew bootjar
+  artifacts:
+    when: always
+    paths:
+      - TourGuide/build/libs/
+
+
