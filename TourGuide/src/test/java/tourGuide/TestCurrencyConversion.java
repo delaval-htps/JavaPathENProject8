@@ -7,9 +7,12 @@ import javax.money.MonetaryAmount;
 import javax.money.convert.CurrencyConversion;
 import javax.money.convert.MonetaryConversions;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 public class TestCurrencyConversion {
+  
+  @Disabled("just to see for fun, how we can retrieve from moneyAPI a conversion....")
   @Test
   public void givenAmount_whenConversion_thenNotNull() {
     MonetaryAmount oneDollar = Monetary.getDefaultAmountFactory().setCurrency("USD").setNumber(1).create();

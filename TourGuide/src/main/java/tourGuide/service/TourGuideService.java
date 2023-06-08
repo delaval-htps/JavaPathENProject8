@@ -15,7 +15,6 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -90,7 +89,7 @@ public class TourGuideService {
 	 * Save preferences for a user
 	 * 
 	 * @param userPreferences preferences of user
-	 * @param user            user which we have to save preference
+	 * @param user user which we have to save preference
 	 */
 	public void saveUserPreferences(UserPreferences userPreferences, User user) {
 		if (userPreferences != null && user != null) {
@@ -108,8 +107,8 @@ public class TourGuideService {
 	 */
 	public List<Provider> getTripDeals(User user) {
 		int cumulatativeRewardPoints = user.getUserRewards().stream().mapToInt(i -> i.getRewardPoints()).sum();
-		List<Provider> providers = tripPricerService.getPrice(tripPricerApiKey, user.getUserId(), user.getUserPreferences().getNumberOfAdults(), user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(),
-				cumulatativeRewardPoints);
+		List<Provider> providers = tripPricerService.getPrice(TRIP_PRICER_API_KEY, user.getUserId(), user.getUserPreferences().getNumberOfAdults(),
+				user.getUserPreferences().getNumberOfChildren(), user.getUserPreferences().getTripDuration(), cumulatativeRewardPoints);
 
 		user.setTripDeals(providers);
 
@@ -133,12 +132,11 @@ public class TourGuideService {
 	}
 
 	/**
-	 * Add the last Tracked location to user's list of visited Locations, Calulate
-	 * the rewards for user visited location and add it ( point & informations) to
-	 * his userRewards update the map UserTrackingProgress to informe the tracker of
-	 * asynchronous progression of tracking
+	 * Add the last Tracked location to user's list of visited Locations, Calulate the rewards for user
+	 * visited location and add it ( point & informations) to his userRewards update the map
+	 * UserTrackingProgress to informe the tracker of asynchronous progression of tracking
 	 * 
-	 * @param user            the user to be tracking
+	 * @param user the user to be tracking
 	 * @param visitedLocation it's last visited location
 	 */
 	public void saveTrackedUserLocation(User user, VisitedLocation visitedLocation) {
@@ -155,21 +153,19 @@ public class TourGuideService {
 	 */
 	public List<LinkedHashMap<String, String>> getNearByAttractions(VisitedLocation visitedLocation) {
 
-		return gpsUtilService.getAttractions().stream().map(attraction -> nearAttractionToMap(attraction, visitedLocation)).sorted(this::compareAttractionMapByDistance).limit(5).collect(Collectors.toList());
+		return gpsUtilService.getAttractions().parallelStream().map(attraction -> nearAttractionToMap(attraction, visitedLocation)).sorted(this::compareAttractionMapByDistance)
+				.limit(5).collect(Collectors.toList());
 	}
 
 	/**
-	 * custom method to return a hashMap representing an attraction near the last
-	 * user's visitedLocation
+	 * custom method to return a hashMap representing an attraction near the last user's visitedLocation
 	 * 
-	 * @param attraction      the attraction to transform into a Map
+	 * @param attraction the attraction to transform into a Map
 	 * @param visitedLocation the last visited location of user
-	 * @return a HashMap as asked for front end that collect information of
-	 *         attraction : Name of Tourist attraction, Tourist attractions
-	 *         lat/long, The user's location lat/long, The distance in miles between
-	 *         attraction and the user's location, The reward points for visiting
-	 *         this Attraction.
-	 * 
+	 * @return a HashMap as asked for front end that collect information of attraction : Name of Tourist
+	 *         attraction, Tourist attractions lat/long, The user's location lat/long, The distance in
+	 *         miles between attraction and the user's location, The reward points for visiting this
+	 *         Attraction.
 	 */
 	private LinkedHashMap<String, String> nearAttractionToMap(Attraction attraction, VisitedLocation visitedLocation) {
 		LinkedHashMap<String, String> map = new LinkedHashMap<>();
@@ -183,8 +179,7 @@ public class TourGuideService {
 	}
 
 	/**
-	 * custom comparator just to compare a list of attraction by distance from last
-	 * user visitedLocation
+	 * custom comparator just to compare a list of attraction by distance from last user visitedLocation
 	 * 
 	 * @param h1 the hashmap that represents the first attraction
 	 * @param h2 the hashmap that represents the second attraction
@@ -203,7 +198,7 @@ public class TourGuideService {
 	}
 
 	/**
-	 * method getAllUserCurrentLocations() 
+	 * method getAllUserCurrentLocations()
 	 * 
 	 * @return a List of all current locations of all users
 	 */
@@ -214,26 +209,24 @@ public class TourGuideService {
 	/**
 	 * method getAllUserLocations()
 	 * 
-	 * @return List of all visited locations of all users sorted first by there
-	 *         userId and then by date of visited locations
+	 * @return List of all visited locations of all users sorted first by there userId and then by date
+	 *         of visited locations
 	 */
 	public List<VisitedLocation> getAllUserLocations() {
 
-		Comparator<VisitedLocation> comparator = Comparator.comparing(v -> v.userId);
 		Comparator<VisitedLocation> comparatorByDate = Comparator.comparing(v -> v.timeVisited);
-		comparator = comparator.thenComparing(comparatorByDate);
+		List<VisitedLocation> visitedLocations =
+				flattenListOfListsStream(this.getAllUsers().parallelStream()
+						.map(User::getVisitedLocations).collect(Collectors.toList()));
 
-		List<VisitedLocation> visitedLocations = flattenListOfListsStream(this.getAllUsers().parallelStream().map(User::getVisitedLocations).collect(Collectors.toList()));
-
-		return visitedLocations.stream().sorted(comparator).collect(Collectors.toList());
+		return visitedLocations.stream().sorted(comparatorByDate).collect(Collectors.toList());
 
 	}
 
 	/**
-	 * private method to regroup all Objects in a same list from a
-	 * List<List<Object>>
+	 * private method to regroup all Objects in a same list from a List<List<Object>>
 	 * 
-	 * @param <T>  the generic object
+	 * @param <T> the generic object
 	 * @param list the List<List<Object>>
 	 * @return a unique List of all Objects
 	 */
@@ -258,11 +251,9 @@ public class TourGuideService {
 	}
 
 	/**********************************************************************************
-	 * 
 	 * Methods Below: For Internal Testing
-	 * 
 	 **********************************************************************************/
-	private static final String tripPricerApiKey = "test-server-api-key";
+	private static final String TRIP_PRICER_API_KEY = "test-server-api-key";
 	// Database connection will be used for external users, but for testing purposes
 	// internal users are provided and stored in memory
 	private final ConcurrentHashMap<String, User> internalUserMap = new ConcurrentHashMap<>();

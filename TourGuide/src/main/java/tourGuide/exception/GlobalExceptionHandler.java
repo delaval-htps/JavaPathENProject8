@@ -5,35 +5,33 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.context.support.DefaultMessageSourceResolvable;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 
 
 @ControllerAdvice
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler {
 
-    @ExceptionHandler
-    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, HttpRequest httpRequest) {
+    @ExceptionHandler(UserNotFoundException.class)
+    protected ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, final HttpServletRequest httpRequest) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler
-    protected ResponseEntity<Object> handleUserPreferencesException(UserPreferencesException ex, HttpRequest httpRequest) {
+    @ExceptionHandler(UserPreferencesException.class)
+    protected ResponseEntity<Object> handleUserPreferencesException(UserPreferencesException ex, final HttpServletRequest httpRequest) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @Override
+    @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(
-            MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+            MethodArgumentNotValidException ex, final HttpServletRequest request) {
                 
         LinkedHashMap<String, List<String>> body = new LinkedHashMap<>();
         
