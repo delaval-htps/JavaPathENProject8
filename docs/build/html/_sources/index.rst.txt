@@ -25,9 +25,7 @@
 
 
 
-Indices and tables
-==================
+Recherche
+*********
 
-* :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

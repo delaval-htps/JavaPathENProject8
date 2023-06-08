@@ -36,19 +36,49 @@
             
   <section id="caracteristiques">
 <h1><span class="section-number">2. </span>Caractéristiques<a class="headerlink" href="#caracteristiques" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Dans ce chapitre, vous trouverez l’ensemble des fonctionnalités que propose l’application TourGuide à ses utilisateurs ainsi qu’à ses administrateurs. De part sa conception (REST API), chacunes de ses fonctionnalités n’est accessible aujourd’hui que depuis un endpoint bien prédéfini. Il est biensur évident que pour, une question de faciliter d’utilisation avec un téléphone mobile, l’application se verra plus tard aggrémenter d’une IHM coté frontEnd qui utilisera ces endpoints…</p>
 <section id="fonctionnalites-du-projet">
 <h2><span class="section-number">2.1. </span>Fonctionnalités du projet<a class="headerlink" href="#fonctionnalites-du-projet" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Pour permettre une compréhension globale des fonctionnalités de l’application nécessitant une amélioration de performance de temps, nous avons définit le modèle de domaine suivant :</p>
-<a class="reference internal image-reference" href="_static/modèle_de_domaine.png" id="modelededomaine"><img alt="modèle de domaine" id="modelededomaine" src="_static/modèle_de_domaine.png" style="width: 100%;" /></a>
+<p>Pour permettre une compréhension globale des fonctionnalités de l’application nécessitant une amélioration de performance de temps, nous avons définit <strong>Le diagramme de cas d’utilisation</strong> suivant:</p>
+<a class="reference internal image-reference" href="_images/user_case.png" id="user-case-diagram"><img alt="User case diagram" id="user-case-diagram" src="_images/user_case.png" style="width: 100%;" /></a>
 </section>
 <section id="user-stories-criteres-d-acceptation">
 <h2><span class="section-number">2.2. </span>User Stories &amp; critéres d’acceptation<a class="headerlink" href="#user-stories-criteres-d-acceptation" title="Lien permanent vers ce titre">¶</a></h2>
-<section id="a-ameliorer-les-performances-de-gpsutil">
-<h3>a. Améliorer les performances de gpsUtil<a class="headerlink" href="#a-ameliorer-les-performances-de-gpsutil" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Ce service collecte l’emplacement du téléphone mobile ou de l’ordinateur portable de l’utilisateur. En cas d’utilisation intensive, gpsUtil connaît des temps de réponse lents</p>
-</section>
-<section id="b-ameliorer-les-performances-de-rewardscentral">
-<h3>b. Améliorer les performances de RewardsCentral<a class="headerlink" href="#b-ameliorer-les-performances-de-rewardscentral" title="Lien permanent vers ce titre">¶</a></h3>
+<p>A partir de ce diagramme de cas d’utilisation, nous pouvons donc déterminer les user stories et leurs critéres d’acceptation suivantes:</p>
+<ol class="arabic">
+<li><p><strong>En tant qu’utilisateur , je veux pouvoir accéder à l’application”</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080">http://localhost:8080</a> ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page d’accueil de TrouGuide ».</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>En tant qu’utilisateur , je peux visualiser ma dernière localisation</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getLocation">http://localhost:8080/getLocation</a>?userName=&lt;mon nom d’utilisateur&gt; ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page d’accueil de TourGuide ».</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>En tant qu’utilisateur , je peux visualiser les 5 attractions les plus proches de moi</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getNearbyAttraction">http://localhost:8080/getNearbyAttraction</a>?userName=&lt;mon nom d’utilisateur&gt; ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page me donnant la liste des 5 attractions les plus proches de ma localisation (triées par distance).</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<section id="ameliorer-les-performances-de-rewardscentral">
+<h3>#. Améliorer les performances de RewardsCentral<a class="headerlink" href="#ameliorer-les-performances-de-rewardscentral" title="Lien permanent vers ce titre">¶</a></h3>
 </section>
 </section>
 </section>

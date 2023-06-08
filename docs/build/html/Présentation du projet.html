@@ -42,47 +42,60 @@ attractions touristiques à proximité et d’obtenir des réductions sur les s�
 ainsi que sur les billets de différents spectacles.</p>
 <section id="objectifs-du-projet">
 <h2><span class="section-number">1.1. </span>Objectifs du projet<a class="headerlink" href="#objectifs-du-projet" title="Lien permanent vers ce titre">¶</a></h2>
-<p><em>Décrivez les objectifs du projet (2 à 3 phrases), y compris le(s) problème(s) résolu(s).</em></p>
-<p>Dans l’état actuel des choses, TourGuide est tout simplement trop lent pour servir de nombreux clients. Les utilisateurs l’ont remarqué et se plaignent des mauvaises
-performances.</p>
+<p>Dans l’état actuel des choses, TourGuide fonctionne correctement mais elle est tout simplement trop lente pour servir de nombreux clients.
+Les utilisateurs l’ont remarqué et se plaignent des mauvaises performances.</p>
 <p>Il faudrait donc :</p>
-<ul class="simple">
-<li><dl class="simple">
-<dt><strong>Améliorer les performances de gpsUtil</strong></dt><dd><ul>
-<li><p>ce service collecte l’emplacement du téléphone mobile ou de l’ordinateur portable de l’utilisateur. En cas d’utilisation intensive, gpsUtil connaît des temps de réponse lents</p></li>
+<ol class="arabic">
+<li><p><strong>Améliorer les performances de gpsUtil</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ce service collecte l’emplacement du téléphone mobile ou de l’ordinateur portable de l’utilisateur. En cas d’utilisation intensive, gpsUtil connaît des temps de réponse lents.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><strong>Améliorer les performances de RewardsCentral</strong></dt><dd><ul>
-<li><p>ce service fait appel à un réseau de fournisseurs pour regrouper un ensemble de valeurs et déterminer les récompenses offertes pour chaque attraction touristique. La collecte de ces offres prend un temps indéterminé, car TourGuide n’a aucun contrôle sur le taux de réponse des partenaires du réseau. Lors des pics d’utilisation, certains utilisateurs se sont plaint d’avoir reçu les récompenses le lendemain voire le surlendemain.</p></li>
+<li><p><strong>Améliorer les performances de RewardsCentral</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ce service fait appel à un réseau de fournisseurs pour regrouper un ensemble de valeurs et déterminer les récompenses offertes pour chaque attraction touristique. La collecte de ces offres prend un temps indéterminé, car TourGuide n’a aucun contrôle sur le taux de réponse des partenaires du réseau. Lors des pics d’utilisation, certains utilisateurs se sont plaint d’avoir reçu les récompenses le lendemain voire le surlendemain.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
-<li><dl class="simple">
-<dt><strong>Corriger des défauts signalés</strong></dt><dd><ul>
+<li><p><strong>Corriger des défauts signalés</strong></p>
+<blockquote>
+<div><ul class="simple">
 <li><p>Certains tests unitaires échouent par intermittence</p></li>
-<li><p>Les offres de voyage ne correspondaient pas exactement à leurs préférences, par exemple au niveau du nombre d’enfants ou de la durée du séjour ;</p></li>
-<li><p>Les recommandations d’attractions touristiques ne sont pas soit reçcus par les utilisateurs ou nne sont pas pertinentes</p></li>
-<li><p>Ajout d’une nouvelle fonctionnalité: regrouper tous les emplacements de tous les utilisateurs pour les visualiser et  identifier si un schéma logique ou répétitif s’en dégage au fil du temps</p></li>
+<li><p>Les offres de voyage ne correspondaient pas exactement à leurs préférences, par exemple au niveau du nombre d’enfants ou de la durée du séjour.</p></li>
+<li><p>Les recommandations d’attractions touristiques ne sont pas soit reçues par les utilisateurs ou ne sont pas pertinentes.</p></li>
 </ul>
-</dd>
-</dl>
+</div></blockquote>
 </li>
+<li><p><strong>Ajout d’une nouvelle fonctionnalité</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Regrouper tous les emplacements de tous les utilisateurs pour les visualiser et  identifier si un schéma logique ou répétitif s’en dégage au fil du temps</p></li>
 </ul>
+</div></blockquote>
+</li>
+<li><p><strong>Amélioration du process qualité</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Mettre en place une chaîne de build (pipeline CI/CD GitLab) qui permettra d’exécuter la compilation des classes, de s’assurer de la non régréssion des tests et d’obtenir un artefact valide du projet.</p></li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
 </section>
 <section id="hors-du-champ-dapplication">
 <h2><span class="section-number">1.2. </span>Hors du champ d’application<a class="headerlink" href="#hors-du-champ-dapplication" title="Lien permanent vers ce titre">¶</a></h2>
-<p><em>Découvrez les objectifs qui ont été envisagés, mais ne sont pas couverts par ce projet.</em></p>
-<p>Le projet consiste à améliorer les performances de l’application. Il serait envisageable également pour celà de choisir certains outils permettant d’optimiser l’accés au données stockés en bdd (elasticSearch…).Voir même  d’optimiser les requétes pour accélerer les temps de réponse. Mais cela n’est pas pour le moment directement demandé car la bdd est simulée. Ceci étant, cela pourrait également faire l’objet d’axe d’amélioration par a suite.</p>
+<p>Le projet consiste à améliorer les performances de l’application.</p>
+<p>A aujourd’hui, TourGuide n’utilise pas de base de donnnée pour stocker et récupérer les données de ses utilisateurs. Il serait envisageable, par la suite, de choisir certains outils permettant d’optimiser l’accés au données stockés en bdd (elasticSearch…), et même,  d’optimiser les requétes pour accélerer les temps de réponse. Mais cela n’est pas pour le moment directement demandé car la bdd est actuellement simulée. Ceci étant, cela pourrait également faire l’objet d’axe d’amélioration.</p>
+<p>Compte tenu de sa conception actuelle (TourGuide n’est autre qu’un REST API coté back-end), il en va de soit qu’il faudra par la suite, implémenter une IHM coté front-end pour rendre plus facile son utilisation…</p>
 </section>
 <section id="mesures-du-projet">
 <h2><span class="section-number">1.3. </span>Mesures du projet<a class="headerlink" href="#mesures-du-projet" title="Lien permanent vers ce titre">¶</a></h2>
-<p><em>Indiquez comment vous allez mesurer le succès du projet.</em></p>
-<p>Les corrections de bugs et les nouvelles fonctionnalités devront être évaluées avec une suite de tests.
-On utilisera les tests de performances existants au fur et à mesure de la résolution des problèmatiques. Ces derniers nous permettront de mettre à jour le fichier Excel <cite>Graphiques et métriques des performances de TourGuide</cite> afinde vérifier si les objectifs demandés soient bien atteints.</p>
+<p>On utilisera les tests de performances existants au fur et à mesure de la résolution des problèmatiques de performances. Ces derniers nous permettront de mettre à jour le fichier Excel <cite>Graphiques et métriques des performances de TourGuide</cite> afin de vérifier si les objectifs demandés ont bien été atteints.</p>
+<p>La correction de bugs, la nouvelle fonctionnalitée devront être évaluées avec une suite de tests.</p>
+<p>La mise en place d’un pipeline CI/CD sur le Gitlab de l’application, nous permettra également de vérifier, tout le long de l’amélioration de l’application, la non régréssion des tests.</p>
 </section>
 </section>
 
