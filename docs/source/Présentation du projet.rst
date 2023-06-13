@@ -12,7 +12,7 @@ Objectifs du projet
 ===================
 
 Dans l'état actuel des choses, TourGuide fonctionne correctement mais elle est tout simplement trop lente pour servir de nombreux clients.
-Les utilisateurs l’ont remarqué et se plaignent des mauvaises performances. 
+Les utilisateurs l’ont remarqué, se plaignent des mauvaises performances et ont remonté quelques dysfonctionnements... 
 
 Il faudrait donc :
 
@@ -33,14 +33,16 @@ Il faudrait donc :
     * Les recommandations d'attractions touristiques ne sont pas soit reçues par les utilisateurs ou ne sont pas pertinentes.
     
 
-#. **Ajout d'une nouvelle fonctionnalité**
+#. **Ajouter une nouvelle fonctionnalité**
     
     * Regrouper tous les emplacements de tous les utilisateurs pour les visualiser et  identifier si un schéma logique ou répétitif s'en dégage au fil du temps
 
-#. **Amélioration du process qualité**
+#. **Améliorer le process qualité**
 
     * Mettre en place une chaîne de build (pipeline CI/CD GitLab) qui permettra d'exécuter la compilation des classes, de s'assurer de la non régréssion des tests et d'obtenir un artefact valide du projet.
 
+Tous ces améliorations sont traitées dans le chapitre 4 :ref:`resolution-pb`.
+Vous y trouverez la démarche utilisée, le traitement des erreurs, et les tests réalisés.
 
 Hors du champ d’application
 ===========================

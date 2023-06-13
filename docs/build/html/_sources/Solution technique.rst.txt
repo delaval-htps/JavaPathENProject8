@@ -1,15 +1,18 @@
-*****************
-Solution proposée
-*****************
+******************
+Solution Technique
+******************
 
 Schémas de conception technique
 ===============================
-A partir du modèle de domaine et des users stories ainsi que de leur diagramme de séquence, vous trouverez ci dessous un diagramme de classe en UML qui permettra de comprendre le fonctionnement, mais surtout de respecter et adopter le langage omniprésent de l’application.
+A partir du modèle de domaine et des users stories détaillés dans le chapitre précédent, vous trouverez ci dessous :
+
+    * un diagramme de classe en UML qui permettra de comprendre le fonctionnementde l'application et d'adopter un langage omniprésent de l’application.
+    * le schéma d'architecture de l'application pour identifier les relations entre les différentes couches de cette dernière.
 
 Glossaire
 =========
 
-Afin d'avoir une vision plus explicite de l'application, vous trouverez ci dessous le diagramme de classe
+Afin d'avoir une vision plus explicite de l'application, vous trouverez ci dessous son diagramme de classe
 
 Diagramme de classe 
 -------------------
@@ -33,32 +36,46 @@ De par son architecture, elle permettra donc:
  * D'obtenir rapidement des informations par le biais de requêtes sur des API distantes.
  * D'être déployer aisément et de fonctionner de manière autonome.
 
-.. warning::
+.. note::
     
     Il est tout de même important de préciser, qu'actuellement, cette version d'application ne comporte pas de base de donnée (celle ci est "mockée" grâce à l'utilisation d'une HashMap internalUserMap) et, en ce qui concerne l'appel a des API distantes, ce comportement est remplacé par l'utilisation de librairies embarquées dans l'application : GpsUtils, RewardsCentral et TripPricer.L'appel à leur methodes simule une requête avec un temps de réponse plus ou moins long...
  
 Ci dessous un schéma de l'architecture permettant de mettre en avant le fonctionnement des différentes couches:
 
+.. image:: _static/diagrams/Architecture_diagram/architecture_diagram.png
+    :width: 100%
+    :alt: architecture_diagram
+    :name: architecture_diagram 
 
+3.3.2 Frameworks et dépendances utilisés
+----------------------------------------
 
-3.3.2 Frameworks et IDE utilisés
---------------------------------
-    * SpringBoot 2.5.4
-    * ModelMapper 3.1.0
+Ci dessous, la listes des dépendances de l'application avec leur version:
+
+    * SpringBoot 2.7.12
     * Java 8
+    * Actuator 2.7.12
     * Gradle 7.2
-    * JUnit,Hamcrest
-    * Jacoco
+    * JavaMoney 1.3
+    * Google Gson 2.8.9
+    * ModelMapper 3.1.1
+    * Google-java-format 1.17.0
+    * Junit-jupiter-api 5.9.3
+    * Awaitility 4.2.0
+    * Hamcrest 2.1 
+    * Mockito 4.5.1
+    * Json-path 2.7.0
+    * Assertj-core 3.22.0
+    * Jacoco 0.8.4
     * Log4j2
-
-
-Solutions aux problèmes relatés au §1.1 
-=======================================
 
 Calendrier prévisionnel et exigences
 ====================================
 
-Vous trouverez ci dessous un lien vers la feuille de route (Jira) utilisée pour répondre aux besoins du projet et aux futures exigences des prochaines versions à venir...
+Toutes les améliorations et résolution de bug ont été planifiés et gérés avec l'outil Jira en utilisant la méthodologie agile.
+Chaque users story et évolution est liée étroitement à une branche et l'ensemble du projet a été traité avec l'outil de versioning GitFlow.
+
+Vous trouverez ci dessous le lien vers la feuille de route du projet, vous permettant de voir chaque sprint réalisé et les futures exigences:
 
 .. image:: _static/tourGuide_roadMap.png
     :target: https://doriandelaval.atlassian.net/jira/software/projects/TG/boards/2/roadmap

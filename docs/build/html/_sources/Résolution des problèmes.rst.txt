@@ -1,6 +1,6 @@
-*****************
-Solution proposée
-*****************
+************************
+Résolution des problèmes
+************************
 
 Schémas de conception technique
 ===============================
@@ -51,6 +51,7 @@ Ci dessous un schéma de l'architecture permettant de mettre en avant le fonctio
     * Jacoco
     * Log4j2
 
+.. _resolution-pb:
 
 Solutions aux problèmes relatés au §1.1 
 =======================================

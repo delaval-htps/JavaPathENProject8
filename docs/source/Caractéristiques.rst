@@ -38,8 +38,47 @@ A partir de ce diagramme de cas d'utilisation, nous pouvons donc déterminer les
         
         * **Scénario** l'utilisateur a accés à internet.
         * **Etant donné** que je suis un utilisateur.
-        * **Lorque** je rentre l'URL "http://localhost:8080/getNearbyAttraction?userName=<mon nom d'utilisateur>".
+        * **Lorque** je rentre l'URL "http://localhost:8080/getNearbyAttractions?userName=<mon nom d'utilisateur>".
         * **Alors** j'accède a la page me donnant la liste des 5 attractions les plus proches de ma localisation (triées par distance).
 
-#. Améliorer les performances de RewardsCentral
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4. **En tant qu'utilisateur , je peux consulter mes récompenses**  
+
+        * **Scénario** l'utilisateur a accés à internet.
+        * **Etant donné** que je suis un utilisateur.
+        * **Lorque** je rentre l'URL "http://localhost:8080/getRewards?userName=<mon nom d'utilisateur>".
+        * **Alors** j'accède a la page m'affichant la liste de mes récompenses.
+
+5. **En tant qu'utilisateur , je peux voir mes préférences**  
+
+        * **Scénario** l'utilisateur a accés à internet.
+        * **Etant donné** que je suis un utilisateur.
+        * **Lorque** je rentre l'URL "http://localhost:8080/getUserPreferences?userName=<mon nom d'utilisateur>".
+        * **Alors** j'accède a la page m'affichant mes préférences.
+
+6. **En tant qu'utilisateur , je peux modifier mes préférences**  
+
+        * **Scénario** l'utilisateur a accés à internet.
+        * **Etant donné** que je suis un utilisateur.
+        * **Lorque** je rentre l'URL "http://localhost:8080/setUserPreferences?userName=<mon nom d'utilisateur>" et ajoute dans le corps de la requete sous format json mes préférences.
+        * **Alors** l'application enregistre mes préférences si tous mes champs sont corrects.Dans le cas contraire, si une ou plusieurs valeur(s) n'est (ne sont) pas valides, j'ai pour réponse une indication sur la(les) valeur(s) erronée(s) pour pouvoir la(les) modifier.
+
+7. **En tant qu'utilisateur , je peux obtenir des propositions de voyage déterminées en fonction de mes préférences**  
+
+        * **Scénario** l'utilisateur a accés à internet.
+        * **Etant donné** que je suis un utilisateur.
+        * **Lorque** je rentre l'URL "http://localhost:8080/getTripDeals?userName=<mon nom d'utilisateur>".
+        * **Alors** j'accède a la page m'affichant une liste de propositions de voyage prennant en compte mes préférences.
+
+8. **En tant qu'administrateur , je peux obtenir la liste de toutes les localisations de tous les utilisateurs**
+
+        * **Scénario** l'utilisateur a accés à internet.
+        * **Etant donné** que je suis un administrateur.
+        * **Lorque** je rentre l'URL "http://localhost:8080/getAllUserLocations".
+        * **Alors** j'accède a la page m'affichant une liste de tous les utilisateurs avec l'historique de leurs localisations.
+
+9. **En tant qu'administrateur , je peux obtenir la liste de toutes les dernières localisations de tous les utilisateurs**
+
+        * **Scénario** l'utilisateur a accés à internet.
+        * **Etant donné** que je suis un administrateur.
+        * **Lorque** je rentre l'URL "http://localhost:8080/getAllCurrentlLocations".
+        * **Alors** j'accède a la page m'affichant une liste de tous les utilisateurs avec leur dernière localisation.

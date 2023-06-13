@@ -71,15 +71,72 @@
 <div><ul class="simple">
 <li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
 <li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
-<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getNearbyAttraction">http://localhost:8080/getNearbyAttraction</a>?userName=&lt;mon nom d’utilisateur&gt; ».</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getNearbyAttractions">http://localhost:8080/getNearbyAttractions</a>?userName=&lt;mon nom d’utilisateur&gt; ».</p></li>
 <li><p><strong>Alors</strong> j’accède a la page me donnant la liste des 5 attractions les plus proches de ma localisation (triées par distance).</p></li>
 </ul>
 </div></blockquote>
 </li>
+<li><p><strong>En tant qu’utilisateur , je peux consulter mes récompenses</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getRewards">http://localhost:8080/getRewards</a>?userName=&lt;mon nom d’utilisateur&gt; ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page m’affichant la liste de mes récompenses.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>En tant qu’utilisateur , je peux voir mes préférences</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getUserPreferences">http://localhost:8080/getUserPreferences</a>?userName=&lt;mon nom d’utilisateur&gt; ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page m’affichant mes préférences.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>En tant qu’utilisateur , je peux modifier mes préférences</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/setUserPreferences">http://localhost:8080/setUserPreferences</a>?userName=&lt;mon nom d’utilisateur&gt; » et ajoute dans le corps de la requete sous format json mes préférences.</p></li>
+<li><p><strong>Alors</strong> l’application enregistre mes préférences si tous mes champs sont corrects.Dans le cas contraire, si une ou plusieurs valeur(s) n’est (ne sont) pas valides, j’ai pour réponse une indication sur la(les) valeur(s) erronée(s) pour pouvoir la(les) modifier.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>En tant qu’utilisateur , je peux obtenir des propositions de voyage déterminées en fonction de mes préférences</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un utilisateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getTripDeals">http://localhost:8080/getTripDeals</a>?userName=&lt;mon nom d’utilisateur&gt; ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page m’affichant une liste de propositions de voyage prennant en compte mes préférences.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>En tant qu’administrateur , je peux obtenir la liste de toutes les localisations de tous les utilisateurs</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un administrateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getAllUserLocations">http://localhost:8080/getAllUserLocations</a> ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page m’affichant une liste de tous les utilisateurs avec l’historique de leurs localisations.</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p><strong>En tant qu’administrateur , je peux obtenir la liste de toutes les dernières localisations de tous les utilisateurs</strong></p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Scénario</strong> l’utilisateur a accés à internet.</p></li>
+<li><p><strong>Etant donné</strong> que je suis un administrateur.</p></li>
+<li><p><strong>Lorque</strong> je rentre l’URL « <a class="reference external" href="http://localhost:8080/getAllCurrentlLocations">http://localhost:8080/getAllCurrentlLocations</a> ».</p></li>
+<li><p><strong>Alors</strong> j’accède a la page m’affichant une liste de tous les utilisateurs avec leur dernière localisation.</p></li>
+</ul>
+</div></blockquote>
+</li>
 </ol>
-<section id="ameliorer-les-performances-de-rewardscentral">
-<h3>#. Améliorer les performances de RewardsCentral<a class="headerlink" href="#ameliorer-les-performances-de-rewardscentral" title="Lien permanent vers ce titre">¶</a></h3>
-</section>
 </section>
 </section>
 

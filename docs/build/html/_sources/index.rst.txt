@@ -13,7 +13,8 @@
 
    Présentation du projet
    Caractéristiques
-   Solution proposée
+   Solution technique
+   Résolution des problèmes 
    
 
 
