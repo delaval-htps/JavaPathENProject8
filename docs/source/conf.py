@@ -63,5 +63,6 @@ html_static_path = ['_static']
 
 # -- option for PDF --
 latex_elements = {
-  'extraclassoptions': 'openany,oneside'
+    'classoptions': ',openany,oneside',
+    'babel' : '\\usepackage[polish]{babel}'
 }
