@@ -15,18 +15,3 @@
    Caractéristiques
    Solution technique
    Résolution des problèmes 
-   
-
-
-
-
- 
-
-
-
-
-
-Recherche
-*********
-
-* :ref:`search`
