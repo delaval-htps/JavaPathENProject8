@@ -17,7 +17,7 @@ Pour permettre une compréhension globale des fonctionnalités de l’applicatio
     :width: 100%
     :alt: User case diagram
     :name: User_case_diagram
-    :class: page-break
+    :class: page_break
 
 
 User Stories & critéres d'acceptation
