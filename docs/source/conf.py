@@ -63,6 +63,9 @@ html_static_path = ['_static']
 
 # -- option for PDF --
 latex_elements = {
-    'classoptions': ',openany,oneside',
-    'babel' : '\\usepackage[polish]{babel}'
+    'extraclassoptions': 'openany'    
 }
+latex_documents = [
+    (master_doc, 'testnmat.tex', 'testnmat Documentation',
+     'jfbu', 'manual', True),
+]
