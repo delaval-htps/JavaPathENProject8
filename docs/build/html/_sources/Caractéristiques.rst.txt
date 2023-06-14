@@ -4,6 +4,8 @@ Caractéristiques
 
 Dans ce chapitre, vous trouverez l'ensemble des fonctionnalités que propose l'application TourGuide à ses utilisateurs ainsi qu'à ses administrateurs. De part sa conception (REST API), chacunes de ses fonctionnalités n'est accessible aujourd'hui que depuis un endpoint bien prédéfini. Il est biensur évident que pour, une question de faciliter d'utilisation avec un téléphone mobile, l'application se verra plus tard aggrémenter d'une IHM coté frontEnd qui utilisera ces endpoints...
 
+.. class:: page-break
+        
 Fonctionnalités du projet
 =========================
 
@@ -13,6 +15,8 @@ Pour permettre une compréhension globale des fonctionnalités de l’applicatio
     :width: 100%
     :alt: User case diagram
     :name: User_case_diagram
+    :class: page-break
+
 
 User Stories & critéres d'acceptation
 =====================================
