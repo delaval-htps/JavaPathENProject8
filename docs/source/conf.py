@@ -65,7 +65,3 @@ html_static_path = ['_static']
 latex_elements = {
     'extraclassoptions': 'openany'    
 }
-latex_documents = [
-    (master_doc, 'testnmat.tex', 'testnmat Documentation',
-     'jfbu', 'manual', True),
-]
