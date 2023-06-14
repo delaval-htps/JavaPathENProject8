@@ -62,8 +62,6 @@ html_theme = 'alabaster'
 html_static_path = ['_static']
 
 # -- option for PDF --
-
-latex_engine = 'pdflatex'
 latex_elements = {
     'extraclassoptions': 'openany'    
 }
