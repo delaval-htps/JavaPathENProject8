@@ -4,9 +4,9 @@ Caractéristiques
 
 Dans ce chapitre, vous trouverez l'ensemble des fonctionnalités que propose l'application TourGuide à ses utilisateurs ainsi qu'à ses administrateurs. De part sa conception (REST API), chacunes de ses fonctionnalités n'est accessible aujourd'hui que depuis un endpoint bien prédéfini. Il est biensur évident que pour, une question de faciliter d'utilisation avec un téléphone mobile, l'application se verra plus tard aggrémenter d'une IHM coté frontEnd qui utilisera ces endpoints...
 
-.. raw:: pdflatex
+.. raw:: pdf
 
-    \clearpage
+   PageBreak
 
 Fonctionnalités du projet
 =========================
