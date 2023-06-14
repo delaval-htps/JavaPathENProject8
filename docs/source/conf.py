@@ -67,3 +67,5 @@ latex_engine = 'pdflatex'
 latex_elements = {
     'extraclassoptions': 'openany'    
 }
+rinoh_documents = [dict(doc='index',        # top-level file (index.rst)
+                        target='manual')]   # output file (manual.pdf)
