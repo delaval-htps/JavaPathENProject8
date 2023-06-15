@@ -1,67 +1,122 @@
+.. _resolution-pb:
+
 ************************
 Résolution des problèmes
 ************************
 
-Schémas de conception technique
-===============================
-A partir du modèle de domaine et des users stories ainsi que de leur diagramme de séquence, vous trouverez ci dessous un diagramme de classe en UML qui permettra de comprendre le fonctionnement, mais surtout de respecter et adopter le langage omniprésent de l’application.
+Dans ce chapitre, nous allons reprendre les problèmatiques exposées au §1.1.
 
-Glossaire
+Pour chacune d'entre elles, nous verrons la démarche suivie pour la résolution de ces dernières, les changements et tests mis en oeuvre, ainsi que le résultat obtenu à la suite des refactorisations de code.
+
+Préambule
 =========
 
-Afin d'avoir une vision plus explicite de l'application, vous trouverez ci dessous le diagramme de classe
+La résolution des problèmes rencontrés a été effectuée avec l'outil Jira, pour suivre une démarche agile. Chaque sprint (épic) corresponds à une étape de correction, lesquels sont constitués de tickets permettant de détailler chaque point important du processus d'amélioration de l'application. 
 
-Diagramme de classe 
--------------------
-
-.. image:: _static/diagrams/Class_diagram/Diagram_class.png
+.. image:: _static/jira/outil_Jira.png
     :width: 100%
-    :alt: Diagramme de classe 
-    :name: Diagramme de classe 
+    :alt: Feuille de route TourGuide 
+    :name: Feuille de route TourGuide 
 
-Spécifications techniques
-=========================
+Mise à niveau de l'application
+==============================
 
-3.3.1 Choix de l'architecture
------------------------------
+Avant de commencer, il a fallu mettre à jour l'application et ses dépendances au moyen de Gradle. A aujourd'hui, l'application utilise Gradle version 7.2 ce qui permet de rendre visible toutes les tasks disponibles pour ce projet (ce qui n'était pas le cas avec l'ancienne version...)
 
-Cette application se repose sur une architecture 3 tiers pour exposer un REST API. Elle utilise, entre autre, le langage Java, le framework SpringBoot, ainsi que Gradle pour gérer au mieux ses dépendances.
+Les versions de SpringBoot et de Junit ont également été upgradée de sorte de pouvoir utiliser les dernières annotations et, par exemple,  utiliser des test paramétrés plus facilement...
 
-De par son architecture, elle permettra donc:
+Nous sommes aussi passé à la jdk 11 pour pouvoir utiliser JVisualVM et profiler notre application pour résoudre les lenteurs relatées par les utilisateurs.
 
- * De communiquer plus facilement avec une future implémentation d'un front-end et celà grâce à l'exposition de son REST API.
- * D'obtenir rapidement des informations par le biais de requêtes sur des API distantes.
- * D'être déployer aisément et de fonctionner de manière autonome.
+-----------
 
-.. warning::
-    
-    Il est tout de même important de préciser, qu'actuellement, cette version d'application ne comporte pas de base de donnée (celle ci est "mockée" grâce à l'utilisation d'une HashMap internalUserMap) et, en ce qui concerne l'appel a des API distantes, ce comportement est remplacé par l'utilisation de librairies embarquées dans l'application : GpsUtils, RewardsCentral et TripPricer.L'appel à leur methodes simule une requête avec un temps de réponse plus ou moins long...
+Problèmatique rencontrée
+------------------------
+
+
+Une fois l'application upgradée et lancée , l'exception suivante est apparue immédiatement :
+
+.. code-block:: shell
+
+    java.lang.NumberFormatException: For input string: "-166,341300"
+    at sun.misc.FloatingDecimal.readJavaFormatString(FloatingDecimal.java:2043)
+    at sun.misc.FloatingDecimal.parseDouble(FloatingDecimal.java:110)
+    at java.lang.Double.parseDouble(Double.java:538)
+    at gpsUtil.GpsUtil.getUserLocation(GpsUtil.java:30)
+    at tourGuide.service.TourGuideService.trackUserLocation(TourGuideService.java:87)
+    at tourGuide.TestRewardsService.userGetRewards(TestRewardsService.java:35)
  
-Ci dessous un schéma de l'architecture permettant de mettre en avant le fonctionnement des différentes couches:
+
+-----------
+
+Explication
+-----------
+
+
+Lors de l’appel à la methode  trackUserLocation() de TourGuideService, on utilise la methode getUserLocation() de GpsUtil qui parse des longitudes et latitudes sous forme de String mais avec une virgule puisque la Locale de notre application n'étant pas definie est,par défaut, en français (ex: 31,765747).
+
+
+-----------
+
+Résolution
+----------
+
+Nous avons setter la user Locale en anglais pour avoir des doubles sous forme de string avec un point et non une virgule. Ainsi le parse en double des longitudes et latitudes ne lève plus d'exception.
+
+Ajout donc dans application.properties de: 
+
+.. code-block:: java
+
+    spring.web.locale=en_EN
+
+Amélioration des performances
+=============================
+
+Dans cette  section, nous parlons de l'amélioration des performances de l'application en général.
+
+Que ce soit pour l'appel à **GspUtil** ou à **RewardsCentral**, nous avons constaté une lenteur du à l'appel de certaines méthodes qui renvoient une réponse après un certain temps (utilisation de la methode sleep() pour simuler ce temps de réponse).
+
+-----------
+
+Problèmatique rencontrée
+------------------------
+
+Tout d'abord, afin de déterminer au mieux les méthodes qui ralentissaient l'application, nous avons utiliser l'application JVisualVM afin de trouver et vérifier d'ou venaient ces lenteurs.
+
+Ci dessous, une impression d'écran de JVisualVM profilant notre application: 
+
+.. image:: _static/JvisualVm/visualVm_snapShoot1.png
+    :width: 100%
+    :alt: snapShoot du profilage de JVisualVm 
+    :name: JVisualVm_snapShoot 
 
 
 
-3.3.2 Frameworks et IDE utilisés
---------------------------------
-    * SpringBoot 2.5.4
-    * ModelMapper 3.1.0
-    * Java 8
-    * Gradle 7.2
-    * JUnit,Hamcrest
-    * Jacoco
-    * Log4j2
+Nous avons donc pu constater que les lenteurs provenaient des méthodes suivantes:
 
-.. _resolution-pb:
+    * **getUserLocation()** de GpsUtil 
+    * **calculateRewards()** de RewardsService
 
-Solutions aux problèmes relatés au §1.1 
-=======================================
 
-Calendrier prévisionnel et exigences
-====================================
+-----------
 
-Vous trouverez ci dessous un lien vers la feuille de route (Jira) utilisée pour répondre aux besoins du projet et aux futures exigences des prochaines versions à venir...
+Explication
+-----------
+Ces lenteurs contatées par les utilisateurs s'explique par le fait que l'application appelait ces méthodes de manière séquentielle et que ces dernières renvoyaient leur retour avec un temps de réponse aléatoire plus ou moins long (méthode sleep() de substitution).
 
-.. image:: _static/tourGuide_roadMap.png
-    :target: https://doriandelaval.atlassian.net/jira/software/projects/TG/boards/2/roadmap
-    :alt: Jira feuille de route
+Par conséquent, plus le nombre d'utilisateurs devenait important et plus le temps de réponse l'était aussi (cf les graphes de performances ci dessous avant refactorisation du code)
 
+-----------
+
+Résolution
+----------
+ 
+Après avoir donc identifier les méthodes fautives, nous sommes passés à l'étape de la résolution...
+
+
+
+#. Pour respecter la responsabilité unique du principe SOLID et l'architecture MVC en 3 couches distinstes, nous avons crée 3 services dédiés uniquement à la gestion des appels au librairies GspsUtil , RewardsCentral et TripPricer. Ci dessous, respectivement les trois services nouvellement crés:
+
+                        * GpsUtilService
+                        * RewardsService
+                        * TripPricerService
+#. Pour vérifier 

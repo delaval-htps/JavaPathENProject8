@@ -16,7 +16,7 @@
     <script src="_static/translations.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
-    <link rel="prev" title="3. Solution proposée" href="Solution%20technique.html" />
+    <link rel="prev" title="3. Solution Technique" href="Solution%20technique.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -34,60 +34,89 @@
           <div class="body" role="main">
             
   <section id="resolution-des-problemes">
-<h1><span class="section-number">4. </span>Résolution des problèmes<a class="headerlink" href="#resolution-des-problemes" title="Lien permanent vers ce titre">¶</a></h1>
-<section id="schemas-de-conception-technique">
-<h2><span class="section-number">4.1. </span>Schémas de conception technique<a class="headerlink" href="#schemas-de-conception-technique" title="Lien permanent vers ce titre">¶</a></h2>
-<p>A partir du modèle de domaine et des users stories ainsi que de leur diagramme de séquence, vous trouverez ci dessous un diagramme de classe en UML qui permettra de comprendre le fonctionnement, mais surtout de respecter et adopter le langage omniprésent de l’application.</p>
+<span id="resolution-pb"></span><h1><span class="section-number">4. </span>Résolution des problèmes<a class="headerlink" href="#resolution-des-problemes" title="Lien permanent vers ce titre">¶</a></h1>
+<p>Dans ce chapitre, nous allons reprendre les problèmatiques exposées au §1.1.</p>
+<p>Pour chacune d’entre elles, nous verrons la démarche suivie pour la résolution de ces dernières, les changements et tests mis en oeuvre, ainsi que le résultat obtenu à la suite des refactorisations de code.</p>
+<section id="preambule">
+<h2><span class="section-number">4.1. </span>Préambule<a class="headerlink" href="#preambule" title="Lien permanent vers ce titre">¶</a></h2>
+<p>La résolution des problèmes rencontrés a été effectuée avec l’outil Jira, pour suivre une démarche agile. Chaque sprint (épic) corresponds à une étape de correction, lesquels sont constitués de tickets permettant de détailler chaque point important du processus d’amélioration de l’application.</p>
+<a class="reference internal image-reference" href="_images/outil_Jira.png" id="feuille-de-route-tourguide"><img alt="Feuille de route TourGuide" id="feuille-de-route-tourguide" src="_images/outil_Jira.png" style="width: 100%;" /></a>
 </section>
-<section id="glossaire">
-<h2><span class="section-number">4.2. </span>Glossaire<a class="headerlink" href="#glossaire" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Afin d’avoir une vision plus explicite de l’application, vous trouverez ci dessous le diagramme de classe</p>
-<section id="diagramme-de-classe">
-<h3>Diagramme de classe<a class="headerlink" href="#diagramme-de-classe" title="Lien permanent vers ce titre">¶</a></h3>
-<a class="reference internal image-reference" href="_images/Diagram_class.png" id="id1"><img alt="Diagramme de classe" id="id1" src="_images/Diagram_class.png" style="width: 100%;" /></a>
-</section>
-</section>
-<section id="specifications-techniques">
-<h2><span class="section-number">4.3. </span>Spécifications techniques<a class="headerlink" href="#specifications-techniques" title="Lien permanent vers ce titre">¶</a></h2>
-<section id="choix-de-l-architecture">
-<h3>3.3.1 Choix de l’architecture<a class="headerlink" href="#choix-de-l-architecture" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Cette application se repose sur une architecture 3 tiers pour exposer un REST API. Elle utilise, entre autre, le langage Java, le framework SpringBoot, ainsi que Gradle pour gérer au mieux ses dépendances.</p>
-<p>De par son architecture, elle permettra donc:</p>
-<blockquote>
-<div><ul class="simple">
-<li><p>De communiquer plus facilement avec une future implémentation d’un front-end et celà grâce à l’exposition de son REST API.</p></li>
-<li><p>D’obtenir rapidement des informations par le biais de requêtes sur des API distantes.</p></li>
-<li><p>D’être déployer aisément et de fonctionner de manière autonome.</p></li>
-</ul>
-</div></blockquote>
-<div class="admonition warning">
-<p class="admonition-title">Avertissement</p>
-<p>Il est tout de même important de préciser, qu’actuellement, cette version d’application ne comporte pas de base de donnée (celle ci est « mockée » grâce à l’utilisation d’une HashMap internalUserMap) et, en ce qui concerne l’appel a des API distantes, ce comportement est remplacé par l’utilisation de librairies embarquées dans l’application : GpsUtils, RewardsCentral et TripPricer.L’appel à leur methodes simule une requête avec un temps de réponse plus ou moins long…</p>
+<section id="mise-a-niveau-de-l-application">
+<h2><span class="section-number">4.2. </span>Mise à niveau de l’application<a class="headerlink" href="#mise-a-niveau-de-l-application" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Avant de commencer, il a fallu mettre à jour l’application et ses dépendances au moyen de Gradle. A aujourd’hui, l’application utilise Gradle version 7.2 ce qui permet de rendre visible toutes les tasks disponibles pour ce projet (ce qui n’était pas le cas avec l’ancienne version…)</p>
+<p>Les versions de SpringBoot et de Junit ont également été upgradée de sorte de pouvoir utiliser les dernières annotations et, par exemple,  utiliser des test paramétrés plus facilement…</p>
+<p>Nous sommes aussi passé à la jdk 11 pour pouvoir utiliser JVisualVM et profiler notre application pour résoudre les lenteurs relatées par les utilisateurs.</p>
+<hr class="docutils" />
+<section id="problematique-rencontree">
+<h3>Problèmatique rencontrée<a class="headerlink" href="#problematique-rencontree" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Une fois l’application upgradée et lancée , l’exception suivante est apparue immédiatement :</p>
+<div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>java.lang.NumberFormatException: For input string: <span class="s2">&quot;-166,341300&quot;</span>
+at sun.misc.FloatingDecimal.readJavaFormatString<span class="o">(</span>FloatingDecimal.java:2043<span class="o">)</span>
+at sun.misc.FloatingDecimal.parseDouble<span class="o">(</span>FloatingDecimal.java:110<span class="o">)</span>
+at java.lang.Double.parseDouble<span class="o">(</span>Double.java:538<span class="o">)</span>
+at gpsUtil.GpsUtil.getUserLocation<span class="o">(</span>GpsUtil.java:30<span class="o">)</span>
+at tourGuide.service.TourGuideService.trackUserLocation<span class="o">(</span>TourGuideService.java:87<span class="o">)</span>
+at tourGuide.TestRewardsService.userGetRewards<span class="o">(</span>TestRewardsService.java:35<span class="o">)</span>
+</pre></div>
 </div>
-<p>Ci dessous un schéma de l’architecture permettant de mettre en avant le fonctionnement des différentes couches:</p>
 </section>
-<section id="frameworks-et-ide-utilises">
-<h3>3.3.2 Frameworks et IDE utilisés<a class="headerlink" href="#frameworks-et-ide-utilises" title="Lien permanent vers ce titre">¶</a></h3>
+<hr class="docutils" />
+<section id="explication">
+<h3>Explication<a class="headerlink" href="#explication" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Lors de l’appel à la methode  trackUserLocation() de TourGuideService, on utilise la methode getUserLocation() de GpsUtil qui parse des longitudes et latitudes sous forme de String mais avec une virgule puisque la Locale de notre application n’étant pas definie est,par défaut, en français (ex: 31,765747).</p>
+</section>
+<hr class="docutils" />
+<section id="resolution">
+<h3>Résolution<a class="headerlink" href="#resolution" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Nous avons setter la user Locale en anglais pour avoir des doubles sous forme de string avec un point et non une virgule. Ainsi le parse en double des longitudes et latitudes ne lève plus d’exception.</p>
+<p>Ajout donc dans application.properties de:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">spring</span><span class="p">.</span><span class="na">web</span><span class="p">.</span><span class="na">locale</span><span class="o">=</span><span class="n">en_EN</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="amelioration-des-performances">
+<h2><span class="section-number">4.3. </span>Amélioration des performances<a class="headerlink" href="#amelioration-des-performances" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Dans cette  section, nous parlons de l’amélioration des performances de l’application en général.</p>
+<p>Que ce soit pour l’appel à <strong>GspUtil</strong> ou à <strong>RewardsCentral</strong>, nous avons constaté une lenteur du à l’appel de certaines méthodes qui renvoient une réponse après un certain temps (utilisation de la methode sleep() pour simuler ce temps de réponse).</p>
+<hr class="docutils" />
+<section id="id1">
+<h3>Problèmatique rencontrée<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Tout d’abord, afin de déterminer au mieux les méthodes qui ralentissaient l’application, nous avons utiliser l’application JVisualVM afin de trouver et vérifier d’ou venaient ces lenteurs.</p>
+<p>Ci dessous, une impression d’écran de JVisualVM profilant notre application:</p>
+<a class="reference internal image-reference" href="_images/visualVm_snapShoot1.png" id="jvisualvm-snapshoot"><img alt="snapShoot du profilage de JVisualVm" id="jvisualvm-snapshoot" src="_images/visualVm_snapShoot1.png" style="width: 100%;" /></a>
+<p>Nous avons donc pu constater que les lenteurs provenaient des méthodes suivantes:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>SpringBoot 2.5.4</p></li>
-<li><p>ModelMapper 3.1.0</p></li>
-<li><p>Java 8</p></li>
-<li><p>Gradle 7.2</p></li>
-<li><p>JUnit,Hamcrest</p></li>
-<li><p>Jacoco</p></li>
-<li><p>Log4j2</p></li>
+<li><p><strong>getUserLocation()</strong> de GpsUtil</p></li>
+<li><p><strong>calculateRewards()</strong> de RewardsService</p></li>
 </ul>
 </div></blockquote>
 </section>
+<hr class="docutils" />
+<section id="id2">
+<h3>Explication<a class="headerlink" href="#id2" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ces lenteurs contatées par les utilisateurs s’explique par le fait que l’application appelait ces méthodes de manière séquentielle et que ces dernières renvoyaient leur retour avec un temps de réponse aléatoire plus ou moins long (méthode sleep() de substitution).</p>
+<p>Par conséquent, plus le nombre d’utilisateurs devenait important et plus le temps de réponse l’était aussi (cf les graphes de performances ci dessous avant refactorisation du code)</p>
 </section>
-<section id="solutions-aux-problemes-relates-au-1-1">
-<span id="resolution-pb"></span><h2><span class="section-number">4.4. </span>Solutions aux problèmes relatés au §1.1<a class="headerlink" href="#solutions-aux-problemes-relates-au-1-1" title="Lien permanent vers ce titre">¶</a></h2>
+<hr class="docutils" />
+<section id="id3">
+<h3>Résolution<a class="headerlink" href="#id3" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Après avoir donc identifier les méthodes fautives, nous sommes passés à l’étape de la résolution…</p>
+<ol class="arabic">
+<li><p>Pour respecter la responsabilité unique du principe SOLID et l’architecture MVC en 3 couches distinstes, nous avons crée 3 services dédiés uniquement à la gestion des appels au librairies GspsUtil , RewardsCentral et TripPricer. Ci dessous, respectivement les trois services nouvellement crés:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>GpsUtilService</p></li>
+<li><p>RewardsService</p></li>
+<li><p>TripPricerService</p></li>
+</ul>
+</div></blockquote>
+</li>
+<li><p>Pour vérifier</p></li>
+</ol>
 </section>
-<section id="calendrier-previsionnel-et-exigences">
-<h2><span class="section-number">4.5. </span>Calendrier prévisionnel et exigences<a class="headerlink" href="#calendrier-previsionnel-et-exigences" title="Lien permanent vers ce titre">¶</a></h2>
-<p>Vous trouverez ci dessous un lien vers la feuille de route (Jira) utilisée pour répondre aux besoins du projet et aux futures exigences des prochaines versions à venir…</p>
-<a class="reference external image-reference" href="https://doriandelaval.atlassian.net/jira/software/projects/TG/boards/2/roadmap"><img alt="Jira feuille de route" src="_images/tourGuide_roadMap.png" /></a>
 </section>
 </section>
 
@@ -112,13 +141,11 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="Pr%C3%A9sentation%20du%20projet.html">1. Présentation du projet</a></li>
 <li class="toctree-l1"><a class="reference internal" href="Caract%C3%A9ristiques.html">2. Caractéristiques</a></li>
-<li class="toctree-l1"><a class="reference internal" href="Solution%20technique.html">3. Solution proposée</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Solution%20technique.html">3. Solution Technique</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. Résolution des problèmes</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#schemas-de-conception-technique">4.1. Schémas de conception technique</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#glossaire">4.2. Glossaire</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#specifications-techniques">4.3. Spécifications techniques</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#solutions-aux-problemes-relates-au-1-1">4.4. Solutions aux problèmes relatés au §1.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#calendrier-previsionnel-et-exigences">4.5. Calendrier prévisionnel et exigences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#preambule">4.1. Préambule</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mise-a-niveau-de-l-application">4.2. Mise à niveau de l’application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#amelioration-des-performances">4.3. Amélioration des performances</a></li>
 </ul>
 </li>
 </ul>
@@ -127,7 +154,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="Solution%20technique.html" title="Chapitre précédent"><span class="section-number">3. </span>Solution proposée</a></li>
+      <li>Previous: <a href="Solution%20technique.html" title="Chapitre précédent"><span class="section-number">3. </span>Solution Technique</a></li>
   </ul></li>
 </ul>
 </div>
