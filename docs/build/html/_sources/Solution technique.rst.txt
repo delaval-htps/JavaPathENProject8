@@ -27,8 +27,8 @@ Afin d'avoir une vision plus explicite de l'application, vous trouverez ci desso
 Spécifications techniques
 =========================
 
-3.3.1 Choix de l'architecture
------------------------------
+Choix de l'architecture
+-----------------------
 
 Cette application se repose sur une architecture 3 tiers pour exposer un REST API. Elle utilise, entre autre, le langage Java, le framework SpringBoot, ainsi que Gradle pour gérer au mieux ses dépendances.
 
@@ -55,9 +55,8 @@ Ci dessous un schéma de l'architecture permettant de mettre en avant le fonctio
 
 
 
-3.3.2 Frameworks et dépendances utilisés
-----------------------------------------
-
+Frameworks et dépendances utilisés
+----------------------------------
 Ci dessous, la listes des dépendances de l'application avec leur version:
 
     * SpringBoot 2.7.12

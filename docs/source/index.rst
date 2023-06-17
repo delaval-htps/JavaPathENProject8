@@ -7,8 +7,8 @@
 =============
 
 .. toctree::
-   :maxdepth: 2
-   :numbered: 2
+   :maxdepth: 3
+   :numbered: 4
    :caption: Sommaire:
 
    Présentation du projet

@@ -9,6 +9,7 @@
     <title>4. Résolution des problèmes &#8212; Documentation TourGuide V0.1.0</title>
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -47,9 +48,8 @@
 <p>Avant de commencer, il a fallu mettre à jour l’application et ses dépendances au moyen de Gradle. A aujourd’hui, l’application utilise Gradle version 7.2 ce qui permet de rendre visible toutes les tasks disponibles pour ce projet (ce qui n’était pas le cas avec l’ancienne version…)</p>
 <p>Les versions de SpringBoot et de Junit ont également été upgradée de sorte de pouvoir utiliser les dernières annotations et, par exemple,  utiliser des test paramétrés plus facilement…</p>
 <p>Nous sommes aussi passé à la jdk 11 pour pouvoir utiliser JVisualVM et profiler notre application pour résoudre les lenteurs relatées par les utilisateurs.</p>
-<hr class="docutils" />
 <section id="problematique-rencontree">
-<h3>Problèmatique rencontrée<a class="headerlink" href="#problematique-rencontree" title="Lien permanent vers ce titre">¶</a></h3>
+<h3><span class="section-number">4.2.1. </span>Problèmatique rencontrée<a class="headerlink" href="#problematique-rencontree" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Une fois l’application upgradée et lancée , l’exception suivante est apparue immédiatement :</p>
 <div class="highlight-shell notranslate"><div class="highlight"><pre><span></span>java.lang.NumberFormatException: For input string: <span class="s2">&quot;-166,341300&quot;</span>
 at sun.misc.FloatingDecimal.readJavaFormatString<span class="o">(</span>FloatingDecimal.java:2043<span class="o">)</span>
@@ -61,14 +61,12 @@ at tourGuide.TestRewardsService.userGetRewards<span class="o">(</span>TestReward
 </pre></div>
 </div>
 </section>
-<hr class="docutils" />
 <section id="explication">
-<h3>Explication<a class="headerlink" href="#explication" title="Lien permanent vers ce titre">¶</a></h3>
+<h3><span class="section-number">4.2.2. </span>Explication<a class="headerlink" href="#explication" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Lors de l’appel à la methode  trackUserLocation() de TourGuideService, on utilise la methode getUserLocation() de GpsUtil qui parse des longitudes et latitudes sous forme de String mais avec une virgule puisque la Locale de notre application n’étant pas definie est,par défaut, en français (ex: 31,765747).</p>
 </section>
-<hr class="docutils" />
 <section id="resolution">
-<h3>Résolution<a class="headerlink" href="#resolution" title="Lien permanent vers ce titre">¶</a></h3>
+<h3><span class="section-number">4.2.3. </span>Résolution<a class="headerlink" href="#resolution" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Nous avons setter la user Locale en anglais pour avoir des doubles sous forme de string avec un point et non une virgule. Ainsi le parse en double des longitudes et latitudes ne lève plus d’exception.</p>
 <p>Ajout donc dans application.properties de:</p>
 <div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">spring</span><span class="p">.</span><span class="na">web</span><span class="p">.</span><span class="na">locale</span><span class="o">=</span><span class="n">en_EN</span>
@@ -80,13 +78,12 @@ at tourGuide.TestRewardsService.userGetRewards<span class="o">(</span>TestReward
 <h2><span class="section-number">4.3. </span>Amélioration des performances<a class="headerlink" href="#amelioration-des-performances" title="Lien permanent vers ce titre">¶</a></h2>
 <p>Dans cette  section, nous parlons de l’amélioration des performances de l’application en général.</p>
 <p>Que ce soit pour l’appel à <strong>GspUtil</strong> ou à <strong>RewardsCentral</strong>, nous avons constaté une lenteur du à l’appel de certaines méthodes qui renvoient une réponse après un certain temps (utilisation de la methode sleep() pour simuler ce temps de réponse).</p>
-<hr class="docutils" />
 <section id="id1">
-<h3>Problèmatique rencontrée<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h3>
-<p>Tout d’abord, afin de déterminer au mieux les méthodes qui ralentissaient l’application, nous avons utiliser l’application JVisualVM afin de trouver et vérifier d’ou venaient ces lenteurs.</p>
+<h3><span class="section-number">4.3.1. </span>Problèmatique rencontrée<a class="headerlink" href="#id1" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Tout d’abord, afin de déterminer au mieux les méthodes qui ralentissaient l’application, nous avons utiliser l’application JVisualVM pour trouver et vérifier d’ou venaient ces lenteurs.</p>
 <p>Ci dessous, une impression d’écran de JVisualVM profilant notre application:</p>
 <a class="reference internal image-reference" href="_images/visualVm_snapShoot1.png" id="jvisualvm-snapshoot"><img alt="snapShoot du profilage de JVisualVm" id="jvisualvm-snapshoot" src="_images/visualVm_snapShoot1.png" style="width: 100%;" /></a>
-<p>Nous avons donc pu constater que les lenteurs provenaient des méthodes suivantes:</p>
+<p>Nous avons donc pu constater que les lenteurs provenaient donc des méthodes suivantes:</p>
 <blockquote>
 <div><ul class="simple">
 <li><p><strong>getUserLocation()</strong> de GpsUtil</p></li>
@@ -94,28 +91,326 @@ at tourGuide.TestRewardsService.userGetRewards<span class="o">(</span>TestReward
 </ul>
 </div></blockquote>
 </section>
-<hr class="docutils" />
 <section id="id2">
-<h3>Explication<a class="headerlink" href="#id2" title="Lien permanent vers ce titre">¶</a></h3>
+<h3><span class="section-number">4.3.2. </span>Explication<a class="headerlink" href="#id2" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Ces lenteurs contatées par les utilisateurs s’explique par le fait que l’application appelait ces méthodes de manière séquentielle et que ces dernières renvoyaient leur retour avec un temps de réponse aléatoire plus ou moins long (méthode sleep() de substitution).</p>
 <p>Par conséquent, plus le nombre d’utilisateurs devenait important et plus le temps de réponse l’était aussi (cf les graphes de performances ci dessous avant refactorisation du code)</p>
 </section>
-<hr class="docutils" />
 <section id="id3">
-<h3>Résolution<a class="headerlink" href="#id3" title="Lien permanent vers ce titre">¶</a></h3>
+<h3><span class="section-number">4.3.3. </span>Résolution<a class="headerlink" href="#id3" title="Lien permanent vers ce titre">¶</a></h3>
 <p>Après avoir donc identifier les méthodes fautives, nous sommes passés à l’étape de la résolution…</p>
-<ol class="arabic">
-<li><p>Pour respecter la responsabilité unique du principe SOLID et l’architecture MVC en 3 couches distinstes, nous avons crée 3 services dédiés uniquement à la gestion des appels au librairies GspsUtil , RewardsCentral et TripPricer. Ci dessous, respectivement les trois services nouvellement crés:</p>
+<section id="modification-de-l-architecture-existante">
+<h4><span class="section-number">4.3.3.1. </span>Modification de l’architecture existante<a class="headerlink" href="#modification-de-l-architecture-existante" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Pour respecter la responsabilité unique du principe SOLID et l’architecture MVC en 3 couches distinstes, nous avons crée 3 services dédiés uniquement à la gestion des appels au librairies GspsUtil , RewardsCentral et TripPricer.</p>
+<p>Ci dessous, respectivement les trois services nouvellement crés:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>GpsUtilService</p></li>
-<li><p>RewardsService</p></li>
-<li><p>TripPricerService</p></li>
+<li><p><strong>GpsUtilService</strong></p></li>
+<li><p><strong>RewardsService</strong></p></li>
+<li><p><strong>TripPricerService</strong></p></li>
 </ul>
 </div></blockquote>
-</li>
-<li><p>Pour vérifier</p></li>
-</ol>
+<p>En outre, le service TourGuideService, au démarrage de l’application, instancie respectivement ces trois services.</p>
+</section>
+<section id="utilisation-de-l-api-concurrency-de-java-8">
+<h4><span class="section-number">4.3.3.2. </span>Utilisation de l’API Concurrency de Java 8<a class="headerlink" href="#utilisation-de-l-api-concurrency-de-java-8" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Pour palier aux problèmes de lenteur lors de l’appel aux méthodes getUserLocation() et calculateRewards(), nous avons utilisé <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html">l’API Concurrency de Java 8</a>, de sorte à plutôt effectuer des « requêtes asynchrones » que de faire, des appels directs aux méthodes incriminées de manière séquentielle…</p>
+<p>Ainsi, en utilisant des <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFutures</a> pour pouvoir gérer simplement le retour des méthodes, l’application utilise donc maintenant un paragdime concurrentiel. Ce qui permet d’améliorer nettement, la rapidité de cette dernière, quelque soit le nombre d’utilisateurs…</p>
+<p>De plus, l’utilisation des CompletableFutures , nous permet aussi, contrairement aux Futures, de pouvoir plus facilement enchainer d’autres taches, une fois le retour acquis et cela, grâce aux méthodes prédéfinies de l’interface <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html">CompletionStage</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pour pouvoir utiliser la concurrence, il a fallu modifier donc, quelque peu les services:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>Ajout d’une instance d’ExecutorService</strong> pour gérer correctement les threads lancés par les CompletableFutures</p></li>
+<li><p><strong>Utilisation d’un CompletableFuture</strong> pour chaque appel aux méthodes incriminées</p></li>
+<li><p><strong>Gestion des retours asynchrones</strong> avec enchaînement d’autres actions à effectuer avec ou sans répoonses.</p></li>
+<li><p><strong>Gestion de l’accés a des ressources partagées</strong> entre les différents threads</p></li>
+</ul>
+</div></blockquote>
+</div>
+</section>
+<section id="gpsutilservice">
+<h4><span class="section-number">4.3.3.3. </span>GpsUtilService<a class="headerlink" href="#gpsutilservice" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Les modifications de l’appel à l’ancienne méthode getUserLocation() de GpsUtils se sont fait en deux étapes:</p>
+<section id="refactorisation-de-tourguideservice">
+<h5>Refactorisation de TourGuideService:<a class="headerlink" href="#refactorisation-de-tourguideservice" title="Lien permanent vers ce titre">¶</a></h5>
+<p>on utilise directement une instance d’ExcecutorService tourGuideServiceExecutor pour lancer un thread permettant d’appeler la nouvelle méthode getLocation() de notre GpsUtilService. Ceci est  particulièrement intéressant lors de l’éxecution du test de performance, puisque cela permet, au travers des logs, de distinguer correctement les appels a getLocation() provenant soit du Tracker, soit de TourGuideService même.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* Track the location of a user</span>
+<span class="cm">*</span>
+<span class="cm">* @param user user to be tracking</span>
+<span class="cm">*/</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">trackUserLocation</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">try</span> <span class="p">{</span>
+        <span class="n">tourGuideServiceExecutor</span><span class="p">.</span><span class="na">submit</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span>
+            <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[32m - trackUserLocation({})&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+            <span class="n">gpsUtilService</span><span class="p">.</span><span class="na">getLocation</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="k">this</span><span class="p">);</span>
+        <span class="p">});</span>
+    <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">Exception</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="refactorisation-de-gsputilservice">
+<h5>Refactorisation de GspUtilService:<a class="headerlink" href="#refactorisation-de-gsputilservice" title="Lien permanent vers ce titre">¶</a></h5>
+<p>L’appel a la méthode getUserLocation() de GspUtils se fait maintenant en utilisant une CompletableFuture qui avec sa méthode supplyAsync() récupére, de manière asynchrone, le retour de getUserLocation().</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">getLocation</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">,</span> <span class="n">TourGuideService</span> <span class="n">tourGuideService</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="n">CompletableFuture</span><span class="p">.</span><span class="na">supplyAsync</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[33m - gpstUtils.getUserLocation({})&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+    <span class="k">return</span> <span class="n">gpsUtil</span><span class="p">.</span><span class="na">getUserLocation</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getUserId</span><span class="p">());</span>
+<span class="p">},</span> <span class="n">gpsExecutorService</span><span class="p">).</span><span class="na">thenAccept</span><span class="p">(</span><span class="n">location</span> <span class="o">-&gt;</span> <span class="p">{</span>
+    <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[33m - tourGuideService.saveTrackedUserLocation({},{})&quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">(),</span> <span class="n">location</span><span class="p">);</span>
+    <span class="n">tourGuideService</span><span class="p">.</span><span class="na">saveTrackedUserLocation</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">location</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>Une fois le retour récupéré, on enchaîne avec la suite du process implémenté dans la méthode de TourGuideService saveTrackedUSerLocation():</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>Ajouter la dernière localité visitée a l’historique de l’utilisateur</p></li>
+<li><p>Caluler les points de récompense pour cette visite</p></li>
+<li><p>Mettre à jour la HasMap trackingUsersProgress partagée avec le Tracker pour définir que l’utilisateur a bien été « localisé »</p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* Add the last Tracked location to user&#39;s list of visited Locations, Calulate the rewards for user</span>
+<span class="cm">* visited location and add it ( point &amp; informations) to his userRewards update the map</span>
+<span class="cm">* UserTrackingProgress to informe the tracker of asynchronous progression of tracking</span>
+<span class="cm">*</span>
+<span class="cm">* @param user the user to be tracking</span>
+<span class="cm">* @param visitedLocation it&#39;s last visited location</span>
+<span class="cm">*/</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">saveTrackedUserLocation</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">,</span> <span class="n">VisitedLocation</span> <span class="n">visitedLocation</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">user</span><span class="p">.</span><span class="na">addToVisitedLocations</span><span class="p">(</span><span class="n">visitedLocation</span><span class="p">);</span>
+    <span class="n">rewardsService</span><span class="p">.</span><span class="na">calculateRewards</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+    <span class="n">tracker</span><span class="p">.</span><span class="na">updateUserTrackingProgress</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Une fois ces modifications appliquées, notre application maintenant fonctionne en utilisant un paragdime concurrentiel.</p>
+<p>Cependant, étant donné que Tracker et TourguideService (notamment pendant les tests de performances) utilisent tous les deux, de manière asynchrone, une même ressource qui n’est autre que la liste des localités visitées pour chaque utilisateur, il a fallu introduire dans la classe User un ReentrantLock pour gérer correctement le partage de cette ressource entre l’instance de Tracker et de TrouguideService.</p>
+<p>Ci dessous, l’implémentation du ce ReentrantLock dans User.java:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kd">class</span> <span class="nc">User</span> <span class="p">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">UUID</span> <span class="n">userId</span><span class="p">;</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">String</span> <span class="n">userName</span><span class="p">;</span>
+    <span class="o">/</span><span class="p">...</span><span class="o">/</span>
+    <span class="kd">private</span> <span class="n">Lock</span> <span class="n">userVisitedLocations</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ReentrantLock</span><span class="p">();</span>
+    <span class="o">/</span><span class="p">...</span><span class="o">/</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">addToVisitedLocations</span><span class="p">(</span><span class="n">VisitedLocation</span> <span class="n">visitedLocation</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">userVisitedLocations</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">visitedLocations</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">visitedLocation</span><span class="p">);</span>
+        <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+            <span class="n">userVisitedLocations</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">VisitedLocation</span><span class="o">&gt;</span> <span class="nf">getVisitedLocations</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">userVisitedLocations</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">visitedLocations</span><span class="p">;</span>
+        <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+            <span class="n">userVisitedLocations</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">clearVisitedLocations</span><span class="p">()</span> <span class="p">{</span>
+        <span class="n">userVisitedLocations</span><span class="p">.</span><span class="na">lock</span><span class="p">();</span>
+        <span class="k">try</span> <span class="p">{</span>
+            <span class="n">visitedLocations</span><span class="p">.</span><span class="na">clear</span><span class="p">();</span>
+        <span class="p">}</span> <span class="k">finally</span> <span class="p">{</span>
+            <span class="n">userVisitedLocations</span><span class="p">.</span><span class="na">unlock</span><span class="p">();</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="rewardsservice">
+<h4><span class="section-number">4.3.3.4. </span>RewardsService<a class="headerlink" href="#rewardsservice" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Pour l’appel à RewardsCentral, nous avons refactorisé de la même manière la méthode calculateRewards() de sorte, à également, faire appel à cette dernière de manière asynchrone.
+N’ayant pour cette fois, pas besoin dans les logs de déterminer quelle instance appelle cette méthode, nous n’avons pas fait appel à un thread dans TourguideService…</p>
+<section id="refactorisation-de-rewardsservice">
+<h5>Refactorisation de RewardsService:<a class="headerlink" href="#refactorisation-de-rewardsservice" title="Lien permanent vers ce titre">¶</a></h5>
+<p>La méthode calculateRewards() a été, pour faciliter sa lecture, cinder en deux partie:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>une première partie pour vérifier si l’utilisateur a visité une localité proche d’une attraction existante: <strong>la méthode calculateRewards()</strong></p></li>
+<li><p>une seconde partie pour récupérer les points de récompense suite à cette visite proche d’une attraction et fournir a l’utilisateur une instance de Rewards comprennant la localité visitée , l’attraction proche de cette dernière et le nombre de points de récompense obtenus: <strong>la méthode setUserRewards()</strong></p></li>
+</ul>
+</div></blockquote>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">calculateRewards</span><span class="p">(</span><span class="n">User</span> <span class="n">user</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[35m - calculateRewards({}) &quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+            <span class="n">CopyOnWriteArrayList</span><span class="o">&lt;</span><span class="n">VisitedLocation</span><span class="o">&gt;</span> <span class="n">userLocations</span> <span class="o">=</span> <span class="k">new</span> <span class="n">CopyOnWriteArrayList</span><span class="o">&lt;&gt;</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getVisitedLocations</span><span class="p">());</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">Attraction</span><span class="o">&gt;</span> <span class="n">attractions</span> <span class="o">=</span> <span class="n">gpsUtilService</span><span class="p">.</span><span class="na">getAttractions</span><span class="p">();</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="n">VisitedLocation</span> <span class="n">visitedLocation</span> <span class="p">:</span> <span class="n">userLocations</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">for</span> <span class="p">(</span><span class="n">Attraction</span> <span class="n">attraction</span> <span class="p">:</span> <span class="n">attractions</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="k">if</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getUserRewards</span><span class="p">().</span><span class="na">stream</span><span class="p">().</span><span class="na">filter</span><span class="p">(</span><span class="n">r</span> <span class="o">-&gt;</span> <span class="n">r</span><span class="p">.</span><span class="na">attraction</span><span class="p">.</span><span class="na">attractionName</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">attraction</span><span class="p">.</span><span class="na">attractionName</span><span class="p">)).</span><span class="na">count</span><span class="p">()</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                                    <span class="k">if</span> <span class="p">(</span><span class="n">nearAttraction</span><span class="p">(</span><span class="n">visitedLocation</span><span class="p">,</span> <span class="n">attraction</span><span class="p">))</span> <span class="p">{</span>
+                                            <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[35m - setUserRewards({}, {}, {}) &quot;</span><span class="p">,</span> <span class="n">attraction</span><span class="p">.</span><span class="na">attractionName</span><span class="p">,</span> <span class="n">visitedLocation</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+                                            <span class="n">setUserRewards</span><span class="p">(</span><span class="n">attraction</span><span class="p">,</span> <span class="n">visitedLocation</span><span class="p">,</span> <span class="n">user</span><span class="p">);</span>
+                                    <span class="p">}</span>
+                            <span class="p">}</span>
+                    <span class="p">}</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">setUserRewards</span><span class="p">(</span><span class="n">Attraction</span> <span class="n">attraction</span><span class="p">,</span> <span class="n">VisitedLocation</span> <span class="n">visitedLocation</span><span class="p">,</span> <span class="n">User</span> <span class="n">user</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">CompletableFuture</span><span class="p">.</span><span class="na">supplyAsync</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="p">{</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[35m - getRewardPoints({}, {}) &quot;</span><span class="p">,</span> <span class="n">attraction</span><span class="p">.</span><span class="na">attractionName</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+                    <span class="k">return</span> <span class="n">rewardsCentral</span><span class="p">.</span><span class="na">getAttractionRewardPoints</span><span class="p">(</span><span class="n">attraction</span><span class="p">.</span><span class="na">attractionId</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserId</span><span class="p">());</span>
+            <span class="p">},</span> <span class="n">rewardsExecutorService</span><span class="p">).</span><span class="na">thenAccept</span><span class="p">(</span><span class="n">rewardsPoint</span> <span class="o">-&gt;</span> <span class="p">{</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[35m - addUserReward({}, {}, {}, {}) &quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">(),</span> <span class="n">visitedLocation</span><span class="p">,</span> <span class="n">attraction</span><span class="p">.</span><span class="na">attractionName</span><span class="p">,</span> <span class="n">rewardsPoint</span><span class="p">);</span>
+                    <span class="n">user</span><span class="p">.</span><span class="na">addUserReward</span><span class="p">(</span><span class="k">new</span> <span class="n">UserReward</span><span class="p">(</span><span class="n">visitedLocation</span><span class="p">,</span> <span class="n">attraction</span><span class="p">,</span> <span class="n">rewardsPoint</span><span class="p">));</span>
+            <span class="p">});</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Concernant la liste de localité visitées de l’utilisateur, une fois la refactorisation du code effectuée, nous avons constaté qu’une exception de concurence était levée lors de l’appel à calculateRewards(). Cette exception apparaissait car plusieurs threads voulaient parcourir avec un iterator la même liste de localités visitées userLocation en même temps.
+Pour résoudre le problème nous avons changer le type de userLocation <strong>ArrayList en CopyOnWriteArrayList</strong>. Ainsi chaque thread lorsqu’il appelle la méthode calculateRewards(), travaille non plus sur l’unique liste userLocation mais sur une copie.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="refactorisation-des-tests">
+<h3><span class="section-number">4.3.4. </span>Refactorisation des tests<a class="headerlink" href="#refactorisation-des-tests" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Toutes ces modifications apportés au code pour implémenter un paragdime concurrentiel, ont forcémenent fait passer les tests en échecs.
+Nous avons donc procéder à une refactorisation de ces derniers…</p>
+<section id="highvolumegetlocation">
+<h4><span class="section-number">4.3.4.1. </span>HighVolumeGetLocation()<a class="headerlink" href="#highvolumegetlocation" title="Lien permanent vers ce titre">¶</a></h4>
+<p>ci dessous, les principaux changements effectués:</p>
+<ul class="simple">
+<li><p>Modification du constructeur de TourguideService. Ce dernier prends en arguments maintenant les trois services décris plus haut soit:GpsUtilService, RewardsService et TripPricerService</p></li>
+<li><p>Ajout d’une interruption du main thread pour chaque utilisateur une fois l’appel à la méthode trackUserLocation() de TourGuideService terminée car il faut attendre que l’application ait bien attribué 5 localités visitées pour chacun d’entre eux ( 4 localités attribué par le Tracker et 1 par l’appel de tourGuideService) avant d’arreter l’application et vérifier le temps obtenu.</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="kt">void</span> <span class="nf">highVolumeTrackLocation</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="c1">// Users should be incremented up to 100,000, and test finishes within 15</span>
+            <span class="c1">// minutes</span>
+            <span class="n">InternalTestHelper</span><span class="p">.</span><span class="na">setInternalUserNumber</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+            <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;logFileName&quot;</span><span class="p">,</span> <span class="s">&quot;highVolumeTrackLocation-&quot;</span> <span class="o">+</span> <span class="n">InternalTestHelper</span><span class="p">.</span><span class="na">getInternalUserNumber</span><span class="p">());</span>
+            <span class="n">LoggerContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="p">(</span><span class="n">LoggerContext</span><span class="p">)</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getContext</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+            <span class="n">ctx</span><span class="p">.</span><span class="na">reconfigure</span><span class="p">();</span>
+            <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="s">&quot;testPerformance&quot;</span><span class="p">);</span>
+            <span class="n">Logger</span> <span class="n">rootLogger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getRootLogger</span><span class="p">();</span>
+
+            <span class="n">GpsUtilService</span> <span class="n">gpsUtilService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GpsUtilService</span><span class="p">(</span><span class="k">new</span> <span class="n">GpsUtil</span><span class="p">());</span>
+            <span class="n">RewardsService</span> <span class="n">rewardsService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RewardsService</span><span class="p">(</span><span class="n">gpsUtilService</span><span class="p">,</span> <span class="k">new</span> <span class="n">RewardCentral</span><span class="p">());</span>
+            <span class="n">TripPricerService</span> <span class="n">tripPricerService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TripPricerService</span><span class="p">(</span><span class="k">new</span> <span class="n">TripPricer</span><span class="p">());</span>
+
+            <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;----------------------HightVolumeTrackLocation with {} users-----------------------\t&quot;</span><span class="p">,</span> <span class="n">InternalTestHelper</span><span class="p">.</span><span class="na">getInternalUserNumber</span><span class="p">());</span>
+
+            <span class="n">TourGuideService</span> <span class="n">tourGuideService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TourGuideService</span><span class="p">(</span><span class="n">gpsUtilService</span><span class="p">,</span> <span class="n">rewardsService</span><span class="p">,</span><span class="n">tripPricerService</span><span class="p">);</span>
+
+            <span class="n">StopWatch</span> <span class="n">stopWatch</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StopWatch</span><span class="p">();</span>
+            <span class="n">stopWatch</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">allUsers</span> <span class="o">=</span> <span class="n">tourGuideService</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="n">User</span> <span class="n">user</span> <span class="p">:</span> <span class="n">allUsers</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[36m - tourGuideService.trackUserLocation({}) &quot;</span><span class="p">,</span> <span class="n">user</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+                    <span class="n">tourGuideService</span><span class="p">.</span><span class="na">trackUserLocation</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+            <span class="p">}</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">User</span> <span class="n">user</span> <span class="p">:</span> <span class="n">allUsers</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">while</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getVisitedLocations</span><span class="p">().</span><span class="na">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">TourGuideService</span><span class="p">.</span><span class="na">INITIAL_NUMBER_OF_VISITED_LOCATIONS</span> <span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+                            <span class="k">try</span> <span class="p">{</span>
+                                    <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+                            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+                                    <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+                            <span class="p">}</span>
+                    <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="n">stopWatch</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span>
+
+            <span class="n">tourGuideService</span><span class="p">.</span><span class="na">addShutDownHook</span><span class="p">();</span>
+
+            <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;highVolumeTrackLocation: Time Elapsed: {} seconds&quot;</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">toSeconds</span><span class="p">(</span><span class="n">stopWatch</span><span class="p">.</span><span class="na">getTime</span><span class="p">()));</span>
+
+            <span class="n">assertTrue</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">.</span><span class="na">toSeconds</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">toSeconds</span><span class="p">(</span><span class="n">stopWatch</span><span class="p">.</span><span class="na">getTime</span><span class="p">()));</span>
+
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="highvolumegetrewards">
+<h4><span class="section-number">4.3.4.2. </span>HighVolumeGetRewards()<a class="headerlink" href="#highvolumegetrewards" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Ci dessous, les principaux changements effectués:</p>
+<ul class="simple">
+<li><p>Modification du constructeur de TourguideService. Ce dernier prends en arguments maintenant les trois services décris plus haut soit:GpsUtilService, RewardsService et TripPricerService</p></li>
+<li><p>Suppression de l’appel à la méthode calculateRewards() de RewardsService car elle est inutile puisque lors de l’instanciation de tourGuidesService, le tracker tourne déjà. Il suffit simmplement, pour chaque utilisateur, de vider la liste des localités visitées , ajouter une nouvelle locatisation (ici une attraction pour vérifier que l’on ait bien des rewards points attribués a la fin) et laisser le tracker faire son travail.</p></li>
+<li><p>Ajout d’une interruption du main thread pour attendre que tous les utilisateurs ont bien reçu des rewards points.</p></li>
+</ul>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">highVolumeGetRewards</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="c1">// Users should be incremented up to 100,000, and test finishes within 20</span>
+            <span class="c1">// minutes</span>
+            <span class="n">InternalTestHelper</span><span class="p">.</span><span class="na">setInternalUserNumber</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+
+            <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;logFileName&quot;</span><span class="p">,</span> <span class="s">&quot;highVolumeGetRewards-&quot;</span> <span class="o">+</span> <span class="n">InternalTestHelper</span><span class="p">.</span><span class="na">getInternalUserNumber</span><span class="p">());</span>
+            <span class="n">LoggerContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="p">(</span><span class="n">LoggerContext</span><span class="p">)</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getContext</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+            <span class="n">ctx</span><span class="p">.</span><span class="na">reconfigure</span><span class="p">();</span>
+            <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="s">&quot;testPerformance&quot;</span><span class="p">);</span>
+            <span class="n">Logger</span> <span class="n">rootLogger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getRootLogger</span><span class="p">();</span>
+
+            <span class="n">GpsUtilService</span> <span class="n">gpsUtilService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GpsUtilService</span><span class="p">(</span><span class="k">new</span> <span class="n">GpsUtil</span><span class="p">());</span>
+            <span class="n">RewardsService</span> <span class="n">rewardsService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RewardsService</span><span class="p">(</span><span class="n">gpsUtilService</span><span class="p">,</span> <span class="k">new</span> <span class="n">RewardCentral</span><span class="p">());</span>
+            <span class="n">TripPricerService</span> <span class="n">tripPricerService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TripPricerService</span><span class="p">(</span><span class="k">new</span> <span class="n">TripPricer</span><span class="p">());</span>
+
+            <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;----------------------highVolumeGetRewards with {} users-----------------------&quot;</span><span class="p">,</span> <span class="n">InternalTestHelper</span><span class="p">.</span><span class="na">getInternalUserNumber</span><span class="p">());</span>
+
+            <span class="n">StopWatch</span> <span class="n">stopWatch</span> <span class="o">=</span> <span class="k">new</span> <span class="n">StopWatch</span><span class="p">();</span>
+            <span class="n">stopWatch</span><span class="p">.</span><span class="na">start</span><span class="p">();</span>
+
+            <span class="n">TourGuideService</span> <span class="n">tourGuideService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TourGuideService</span><span class="p">(</span><span class="n">gpsUtilService</span><span class="p">,</span> <span class="n">rewardsService</span><span class="p">,</span><span class="n">tripPricerService</span><span class="p">);</span>
+
+            <span class="n">Attraction</span> <span class="n">attraction</span> <span class="o">=</span> <span class="n">gpsUtilService</span><span class="p">.</span><span class="na">getAttractions</span><span class="p">().</span><span class="na">get</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">User</span><span class="o">&gt;</span> <span class="n">allUsers</span> <span class="o">=</span> <span class="n">tourGuideService</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">();</span>
+
+            <span class="n">allUsers</span><span class="p">.</span><span class="na">forEach</span><span class="p">(</span><span class="n">u</span> <span class="o">-&gt;</span> <span class="p">{</span>
+                    <span class="n">VisitedLocation</span> <span class="n">firstAttraction</span> <span class="o">=</span> <span class="k">new</span> <span class="n">VisitedLocation</span><span class="p">(</span><span class="n">u</span><span class="p">.</span><span class="na">getUserId</span><span class="p">(),</span> <span class="n">attraction</span><span class="p">,</span> <span class="k">new</span> <span class="n">Date</span><span class="p">());</span>
+                    <span class="n">logger</span><span class="p">.</span><span class="na">debug</span><span class="p">(</span><span class="s">&quot;\033[36m - addToVisitedLocations({}) to user: {} &quot;</span><span class="p">,</span>  <span class="n">attraction</span><span class="p">.</span><span class="na">attractionName</span><span class="p">,</span> <span class="n">u</span><span class="p">.</span><span class="na">getUserName</span><span class="p">());</span>
+                    <span class="n">u</span><span class="p">.</span><span class="na">getVisitedLocations</span><span class="p">().</span><span class="na">clear</span><span class="p">();</span>
+                    <span class="n">u</span><span class="p">.</span><span class="na">addToVisitedLocations</span><span class="p">(</span><span class="n">firstAttraction</span><span class="p">);</span>
+            <span class="p">});</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="n">User</span> <span class="n">user</span> <span class="p">:</span> <span class="n">allUsers</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="k">while</span> <span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getUserRewards</span><span class="p">().</span><span class="na">isEmpty</span><span class="p">())</span> <span class="p">{</span>
+                            <span class="k">try</span> <span class="p">{</span>
+                                    <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">sleep</span><span class="p">(</span><span class="mi">100</span><span class="p">);</span>
+                            <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="n">InterruptedException</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+                                    <span class="n">e</span><span class="p">.</span><span class="na">printStackTrace</span><span class="p">();</span>
+                            <span class="p">}</span>
+                    <span class="p">}</span>
+            <span class="p">}</span>
+
+            <span class="k">for</span> <span class="p">(</span><span class="n">User</span> <span class="n">user</span> <span class="p">:</span> <span class="n">allUsers</span><span class="p">)</span> <span class="p">{</span>
+                    <span class="n">assertTrue</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getUserRewards</span><span class="p">().</span><span class="na">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+            <span class="p">}</span>
+
+            <span class="n">stopWatch</span><span class="p">.</span><span class="na">stop</span><span class="p">();</span>
+
+            <span class="n">tourGuideService</span><span class="p">.</span><span class="na">addShutDownHook</span><span class="p">();</span>
+
+            <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;highVolumeGetRewards: Time Elapsed: {} seconds&quot;</span><span class="p">,</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">toSeconds</span><span class="p">(</span><span class="n">stopWatch</span><span class="p">.</span><span class="na">getTime</span><span class="p">()));</span>
+
+            <span class="n">assertTrue</span><span class="p">(</span><span class="n">TimeUnit</span><span class="p">.</span><span class="na">MINUTES</span><span class="p">.</span><span class="na">toSeconds</span><span class="p">(</span><span class="mi">20</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">TimeUnit</span><span class="p">.</span><span class="na">MILLISECONDS</span><span class="p">.</span><span class="na">toSeconds</span><span class="p">(</span><span class="n">stopWatch</span><span class="p">.</span><span class="na">getTime</span><span class="p">()));</span>
+
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="resultat-obtenus">
+<h3><span class="section-number">4.3.5. </span>Résultat obtenus<a class="headerlink" href="#resultat-obtenus" title="Lien permanent vers ce titre">¶</a></h3>
 </section>
 </section>
 </section>
@@ -144,8 +439,20 @@ at tourGuide.TestRewardsService.userGetRewards<span class="o">(</span>TestReward
 <li class="toctree-l1"><a class="reference internal" href="Solution%20technique.html">3. Solution Technique</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">4. Résolution des problèmes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#preambule">4.1. Préambule</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#mise-a-niveau-de-l-application">4.2. Mise à niveau de l’application</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#amelioration-des-performances">4.3. Amélioration des performances</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#mise-a-niveau-de-l-application">4.2. Mise à niveau de l’application</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#problematique-rencontree">4.2.1. Problèmatique rencontrée</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#explication">4.2.2. Explication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resolution">4.2.3. Résolution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#amelioration-des-performances">4.3. Amélioration des performances</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">4.3.1. Problèmatique rencontrée</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">4.3.2. Explication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">4.3.3. Résolution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#refactorisation-des-tests">4.3.4. Refactorisation des tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resultat-obtenus">4.3.5. Résultat obtenus</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
