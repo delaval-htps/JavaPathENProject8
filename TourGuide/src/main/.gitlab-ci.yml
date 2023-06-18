@@ -1,0 +1,41 @@
+default:
+  image: gradle:jdk11
+
+build:
+  stage: build
+  script:
+    - cd TourGuide/
+    - ./gradlew clean
+    - ./gradlew classes
+    - ./gradlew testClasses
+
+test:
+  stage: test
+  needs: [build]
+  script:
+    - cd TourGuide/
+    - ./gradlew test
+    - cat build/jacocoHtml/index.html | grep -o '<tfoot>.*</tfoot>'
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  
+  artifacts:
+    when: always
+    paths:
+      - TourGuide/build/jacocoHtml
+      - TourGuide/build/reports
+      - TourGuide/build/jacoco/test.exec
+    reports:
+      junit: TourGuide/build/test-results/test/TEST-*.xml
+
+deploy:
+  stage: deploy
+  needs: [test]
+  script:
+    - cd TourGuide/
+    - ./gradlew bootjar
+  artifacts:
+    when: always
+    paths:
+      - TourGuide/build/libs/
+
+

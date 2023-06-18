@@ -76,4 +76,24 @@ public class UserPreferences {
 		this.numberOfChildren = numberOfChildren;
 	}
 
+	@Override
+	public String toString() {
+		return "UserPreferences [attractionProximity=" + attractionProximity + ", currency=" + currency + ", lowerPricePoint=" + lowerPricePoint + ", highPricePoint=" + highPricePoint + ", tripDuration=" + tripDuration + ", ticketQuantity="
+				+ ticketQuantity + ", numberOfAdults=" + numberOfAdults + ", numberOfChildren=" + numberOfChildren + "]";
+	}
+
+	/**
+	 * @return the currency
+	 */
+	public CurrencyUnit getCurrency() {
+		return currency;
+	}
+
+	/**
+	 * @param currency the currency to set
+	 */
+	public void setCurrency(CurrencyUnit currency) {
+		this.currency = currency;
+	}
+
 }

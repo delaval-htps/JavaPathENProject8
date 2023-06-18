@@ -1,0 +1,11 @@
+#ignore configuration for vscode , gradle & bin 
+.gradle
+.vscode
+/bin/
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+
+# Avoid logs
+/logs/

@@ -1,0 +1,191 @@
+
+<!DOCTYPE html>
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>3. Solution Technique &#8212; Documentation TourGuide V0.1.0</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/css/custom.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/translations.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Recherche" href="search.html" />
+    <link rel="next" title="4. Résolution des problèmes" href="R%C3%A9solution%20des%20probl%C3%A8mes.html" />
+    <link rel="prev" title="2. Caractéristiques" href="Caract%C3%A9ristiques.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="solution-technique">
+<h1><span class="section-number">3. </span>Solution Technique<a class="headerlink" href="#solution-technique" title="Lien permanent vers ce titre">¶</a></h1>
+<section id="schemas-de-conception-technique">
+<h2><span class="section-number">3.1. </span>Schémas de conception technique<a class="headerlink" href="#schemas-de-conception-technique" title="Lien permanent vers ce titre">¶</a></h2>
+<p>A partir du modèle de domaine et des users stories détaillés dans le chapitre précédent, vous trouverez ci dessous :</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>un diagramme de classe en UML qui permettra de comprendre le fonctionnementde l’application et d’adopter un langage omniprésent de l’application.</p></li>
+<li><p>le schéma d’architecture de l’application pour identifier les relations entre les différentes couches de cette dernière.</p></li>
+</ul>
+</div></blockquote>
+</section>
+<section id="glossaire">
+<h2><span class="section-number">3.2. </span>Glossaire<a class="headerlink" href="#glossaire" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Afin d’avoir une vision plus explicite de l’application, vous trouverez ci dessous son diagramme de classe</p>
+<a class="reference internal image-reference" href="_images/Diagram_class.png" id="diagramme-de-classe"><img alt="Diagramme de classe" id="diagramme-de-classe" src="_images/Diagram_class.png" style="width: 100%;" /></a>
+</section>
+<section id="specifications-techniques">
+<h2><span class="section-number">3.3. </span>Spécifications techniques<a class="headerlink" href="#specifications-techniques" title="Lien permanent vers ce titre">¶</a></h2>
+<section id="choix-de-l-architecture">
+<h3><span class="section-number">3.3.1. </span>Choix de l’architecture<a class="headerlink" href="#choix-de-l-architecture" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Cette application se repose sur une architecture 3 tiers pour exposer un REST API. Elle utilise, entre autre, le langage Java, le framework SpringBoot, ainsi que Gradle pour gérer au mieux ses dépendances.</p>
+<p>De par son architecture, elle permettra donc:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>De communiquer plus facilement avec une future implémentation d’un front-end et celà grâce à l’exposition de son REST API.</p></li>
+<li><p>D’obtenir rapidement des informations par le biais de requêtes sur des API distantes.</p></li>
+<li><p>D’être déployer aisément et de fonctionner de manière autonome.</p></li>
+</ul>
+</div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Il est tout de même important de préciser, qu’actuellement, cette version d’application ne comporte pas de base de donnée (celle ci est « mockée » grâce à l’utilisation d’une HashMap internalUserMap) et, en ce qui concerne l’appel a des API distantes, ce comportement est remplacé par l’utilisation de librairies embarquées dans l’application : GpsUtils, RewardsCentral et TripPricer.L’appel à leur methodes simule une requête avec un temps de réponse plus ou moins long…</p>
+</div>
+<p>Ci dessous un schéma de l’architecture permettant de mettre en avant le fonctionnement des différentes couches:</p>
+<a class="reference internal image-reference" href="_images/architecture_diagram.png" id="architecture-diagram"><img alt="architecture_diagram" id="architecture-diagram" src="_images/architecture_diagram.png" style="width: 100%;" /></a>
+</section>
+<section id="frameworks-et-dependances-utilises">
+<h3><span class="section-number">3.3.2. </span>Frameworks et dépendances utilisés<a class="headerlink" href="#frameworks-et-dependances-utilises" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Ci dessous, la listes des dépendances de l’application avec leur version:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>SpringBoot 2.7.12</p></li>
+<li><p>Java 8</p></li>
+<li><p>Actuator 2.7.12</p></li>
+<li><p>Gradle 7.2</p></li>
+<li><p>JavaMoney 1.3</p></li>
+<li><p>Google Gson 2.8.9</p></li>
+<li><p>ModelMapper 3.1.1</p></li>
+<li><p>Google-java-format 1.17.0</p></li>
+<li><p>Junit-jupiter-api 5.9.3</p></li>
+<li><p>Awaitility 4.2.0</p></li>
+<li><p>Hamcrest 2.1</p></li>
+<li><p>Mockito 4.5.1</p></li>
+<li><p>Json-path 2.7.0</p></li>
+<li><p>Assertj-core 3.22.0</p></li>
+<li><p>Jacoco 0.8.4</p></li>
+<li><p>Log4j2</p></li>
+</ul>
+</div></blockquote>
+</section>
+</section>
+<section id="calendrier-previsionnel-et-exigences">
+<h2><span class="section-number">3.4. </span>Calendrier prévisionnel et exigences<a class="headerlink" href="#calendrier-previsionnel-et-exigences" title="Lien permanent vers ce titre">¶</a></h2>
+<p>Toutes les améliorations et résolution de bug ont été planifiés et gérés avec l’outil Jira en utilisant la méthodologie agile.
+Chaque users story et évolution est liée étroitement à une branche et l’ensemble du projet a été traité avec l’outil de versioning GitFlow.</p>
+<p>Vous trouverez ci dessous le lien vers la feuille de route du projet, vous permettant de voir chaque sprint réalisé et les futures exigences:</p>
+<a class="reference external image-reference" href="https://doriandelaval.atlassian.net/jira/software/projects/TG/boards/2/roadmap"><img alt="Jira feuille de route" src="_images/tourGuide_roadMap.png" /></a>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">TourGuide</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Sommaire:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="Pr%C3%A9sentation%20du%20projet.html">1. Présentation du projet</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Caract%C3%A9ristiques.html">2. Caractéristiques</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3. Solution Technique</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#schemas-de-conception-technique">3.1. Schémas de conception technique</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#glossaire">3.2. Glossaire</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#specifications-techniques">3.3. Spécifications techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#choix-de-l-architecture">3.3.1. Choix de l’architecture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#frameworks-et-dependances-utilises">3.3.2. Frameworks et dépendances utilisés</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#calendrier-previsionnel-et-exigences">3.4. Calendrier prévisionnel et exigences</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="R%C3%A9solution%20des%20probl%C3%A8mes.html">4. Résolution des problèmes</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="Caract%C3%A9ristiques.html" title="Chapitre précédent"><span class="section-number">2. </span>Caractéristiques</a></li>
+      <li>Next: <a href="R%C3%A9solution%20des%20probl%C3%A8mes.html" title="Chapitre suivant"><span class="section-number">4. </span>Résolution des problèmes</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Recherche rapide</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, dorian delaval.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.3.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/Solution technique.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
