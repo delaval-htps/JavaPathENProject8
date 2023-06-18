@@ -7,27 +7,11 @@
 =============
 
 .. toctree::
-   :maxdepth: 2
-   :numbered: 2
+   :maxdepth: 4
+   :numbered: 4
    :caption: Sommaire:
 
    Présentation du projet
    Caractéristiques
-   Solution proposée
-   
-
-
-
-
- 
-
-
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   Solution technique
+   Résolution des problèmes 
