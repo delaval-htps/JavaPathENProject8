@@ -1,7 +1,8 @@
 @import url("../alabaster.css");
 
 .sphinxsidebar {
-  margin-left: -110% !important;
+  width: max-content;
+  margin-left: -120% !important;
   width: max-content;
 }
 
@@ -15,4 +16,8 @@
 
 .highlight {
   font-size: 14px;
+}
+
+li{
+  margin:10px 0;
 }

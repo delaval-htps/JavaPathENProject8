@@ -7,7 +7,7 @@
 =============
 
 .. toctree::
-   :maxdepth: 3
+   :maxdepth: 4
    :numbered: 4
    :caption: Sommaire:
 

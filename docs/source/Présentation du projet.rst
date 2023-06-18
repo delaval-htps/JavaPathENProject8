@@ -49,10 +49,11 @@ Hors du champ d’application
 
 Le projet consiste à améliorer les performances de l'application. 
 
-A aujourd'hui, TourGuide n'utilise pas de base de donnnée pour stocker et récupérer les données de ses utilisateurs. Il serait envisageable, par la suite, de choisir certains outils permettant d'optimiser l'accés au données stockés en bdd (elasticSearch...), et même,  d'optimiser les requétes pour accélerer les temps de réponse. Mais cela n'est pas pour le moment directement demandé car la bdd est actuellement simulée. Ceci étant, cela pourrait également faire l'objet d'axe d'amélioration.
+* A aujourd'hui, TourGuide n'utilise pas de base de donnnée pour stocker et récupérer les données de ses utilisateurs. Il serait envisageable, par la suite, de choisir certains outils permettant d'optimiser l'accés au données stockés en bdd (elasticSearch...), et même,  d'optimiser les requétes pour accélerer les temps de réponse. Mais cela n'est pas pour le moment directement demandé car la bdd est actuellement simulée. Ceci étant, cela pourrait également faire l'objet d'axe d'amélioration.
 
-Compte tenu de sa conception actuelle (TourGuide n'est autre qu'un REST API coté back-end), il en va de soit qu'il faudra par la suite, implémenter une IHM coté front-end pour rendre plus facile son utilisation... 
+* Compte tenu de sa conception actuelle (TourGuide n'est autre qu'un REST API coté back-end), il en va de soit qu'il faudra par la suite, implémenter une IHM coté front-end pour rendre plus facile son utilisation... 
 
+* Il serait intéressant également de renommer tous les endpoints de l'application de sorte à respecter les normes imposées par le standard d’API REST. Ne sachant pas si d'autres applications à aujourd'hui utilisent l'API de TourGuide, nous n'avons pas pris l'initiative de les changer. 
 
 Mesures du projet
 =================

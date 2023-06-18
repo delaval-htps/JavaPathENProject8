@@ -15,6 +15,7 @@
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <script src="_static/translations.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Recherche" href="search.html" />
     <link rel="prev" title="3. Solution Technique" href="Solution%20technique.html" />
@@ -117,8 +118,6 @@ at tourGuide.TestRewardsService.userGetRewards<span class="o">(</span>TestReward
 <p>Pour palier aux problèmes de lenteur lors de l’appel aux méthodes getUserLocation() et calculateRewards(), nous avons utilisé <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/package-summary.html">l’API Concurrency de Java 8</a>, de sorte à plutôt effectuer des « requêtes asynchrones » que de faire, des appels directs aux méthodes incriminées de manière séquentielle…</p>
 <p>Ainsi, en utilisant des <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletableFuture.html">CompletableFutures</a> pour pouvoir gérer simplement le retour des méthodes, l’application utilise donc maintenant un paragdime concurrentiel. Ce qui permet d’améliorer nettement, la rapidité de cette dernière, quelque soit le nombre d’utilisateurs…</p>
 <p>De plus, l’utilisation des CompletableFutures , nous permet aussi, contrairement aux Futures, de pouvoir plus facilement enchainer d’autres taches, une fois le retour acquis et cela, grâce aux méthodes prédéfinies de l’interface <a class="reference external" href="https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html">CompletionStage</a></p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
 <p>Pour pouvoir utiliser la concurrence, il a fallu modifier donc, quelque peu les services:</p>
 <blockquote>
 <div><ul class="simple">
@@ -128,6 +127,32 @@ at tourGuide.TestRewardsService.userGetRewards<span class="o">(</span>TestReward
 <li><p><strong>Gestion de l’accés a des ressources partagées</strong> entre les différents threads</p></li>
 </ul>
 </div></blockquote>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Concernant l’instanciation des ExecutorService, le nombre de threads a été calulé en respectant la formule suivante:</p>
+<div class="math notranslate nohighlight">
+\[Nombre de thread = Nombre de processeurs existants * (1 + ( le temps d' attente  / temps CPU ))\]</div>
+<p>En java, pour obtenir le nombre de processeurs disponible sur une machine , il suffit d’utiliser:</p>
+<blockquote>
+<div><div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="n">Runtime</span><span class="p">.</span><span class="na">getRuntime</span><span class="p">().</span><span class="na">availableProcessors</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>Sachant que notre ordinateur posséde 6 processeurs et que le temps de réponse pour localiser un utilisateur et lui attribuer des rewards est de 100 ms +1000ms au maximum (déterminé en regardant les methodes sleep() des librairies), c’est pour cela que dans GspUtilService nous avons un thread Pool de 6006</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">GpsUtilService</span> <span class="p">{</span>
+
+<span class="kd">private</span> <span class="n">GpsUtil</span> <span class="n">gpsUtil</span><span class="p">;</span>
+
+<span class="kd">private</span> <span class="n">Logger</span> <span class="n">logger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getLogger</span><span class="p">(</span><span class="s">&quot;testPerformance&quot;</span><span class="p">);</span>
+
+<span class="kd">public</span> <span class="kd">final</span> <span class="n">ExecutorService</span> <span class="n">gpsExecutorService</span> <span class="o">=</span> <span class="n">Executors</span><span class="p">.</span><span class="na">newFixedThreadPool</span><span class="p">(</span><span class="mi">6006</span><span class="p">);</span>
+
+<span class="kd">public</span> <span class="nf">GpsUtilService</span><span class="p">(</span><span class="n">GpsUtil</span> <span class="n">gpsUtil</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="na">gpsUtil</span> <span class="o">=</span> <span class="n">gpsUtil</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </section>
 <section id="gpsutilservice">
@@ -408,9 +433,413 @@ Nous avons donc procéder à une refactorisation de ces derniers…</p>
 </pre></div>
 </div>
 </section>
+<section id="tests-des-services">
+<h4><span class="section-number">4.3.4.3. </span>Tests des Services<a class="headerlink" href="#tests-des-services" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Nous avons également refactorisé ces derniers essentiellement pour RewardsService et TourguideService. Voici ci dessous les principaux changements:</p>
+<ul class="simple">
+<li><p>Modification du constructeur de TourguideService. Ce dernier prends en arguments maintenant les trois services décris plus haut soit:GpsUtilService, RewardsService et TripPricerService</p></li>
+<li><p>Utilisation de l’API <a class="reference external" href="http://www.awaitility.org/">Awaitility</a> pour permettre de faire attendre le main thread plus proprement jusqu’à ce que toutes les opérations asynchrones soit terminées.</p></li>
+</ul>
+<p>Exemple :</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">getUserLocation</span><span class="p">()</span> <span class="kd">throws</span> <span class="n">InterruptedException</span> <span class="p">{</span>
+
+            <span class="n">InternalTestHelper</span><span class="p">.</span><span class="na">setInternalUserNumber</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+            <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;logFileName&quot;</span><span class="p">,</span> <span class="s">&quot;getUserLocation&quot;</span><span class="p">);</span>
+            <span class="n">LoggerContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="p">(</span><span class="n">LoggerContext</span><span class="p">)</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getContext</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+            <span class="n">ctx</span><span class="p">.</span><span class="na">reconfigure</span><span class="p">();</span>
+            <span class="n">Logger</span> <span class="n">rootLogger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getRootLogger</span><span class="p">();</span>
+
+            <span class="n">GpsUtilService</span> <span class="n">gpsUtilService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">GpsUtilService</span><span class="p">(</span><span class="k">new</span> <span class="n">GpsUtil</span><span class="p">());</span>
+            <span class="n">RewardsService</span> <span class="n">rewardsService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">RewardsService</span><span class="p">(</span><span class="n">gpsUtilService</span><span class="p">,</span> <span class="k">new</span> <span class="n">RewardCentral</span><span class="p">());</span>
+            <span class="n">TripPricerService</span> <span class="n">tripPricerService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TripPricerService</span><span class="p">(</span><span class="k">new</span> <span class="n">TripPricer</span><span class="p">());</span>
+
+            <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;---------------------- Test :  getUserLocation -----------------------&quot;</span><span class="p">);</span>
+
+            <span class="n">TourGuideService</span> <span class="n">tourGuideService</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TourGuideService</span><span class="p">(</span><span class="n">gpsUtilService</span><span class="p">,</span> <span class="n">rewardsService</span><span class="p">,</span> <span class="n">tripPricerService</span><span class="p">);</span>
+
+            <span class="n">User</span> <span class="n">user</span> <span class="o">=</span> <span class="k">new</span> <span class="n">User</span><span class="p">(</span><span class="n">UUID</span><span class="p">.</span><span class="na">randomUUID</span><span class="p">(),</span> <span class="s">&quot;jon&quot;</span><span class="p">,</span> <span class="s">&quot;000&quot;</span><span class="p">,</span> <span class="s">&quot;jon@tourGuide.com&quot;</span><span class="p">);</span>
+            <span class="n">tourGuideService</span><span class="p">.</span><span class="na">trackUserLocation</span><span class="p">(</span><span class="n">user</span><span class="p">);</span>
+
+            <span class="c1">// while (user.getLastVisitedLocation() == null) {</span>
+            <span class="c1">// TimeUnit.MILLISECONDS.sleep(100);</span>
+            <span class="c1">// }</span>
+
+            <span class="n">Awaitility</span><span class="p">.</span><span class="na">await</span><span class="p">().</span><span class="na">until</span><span class="p">(()</span> <span class="o">-&gt;</span> <span class="n">user</span><span class="p">.</span><span class="na">getLastVisitedLocation</span><span class="p">()</span> <span class="o">!=</span> <span class="kc">null</span><span class="p">);</span>
+
+            <span class="n">tourGuideService</span><span class="p">.</span><span class="na">addShutDownHook</span><span class="p">();</span>
+
+            <span class="n">assertTrue</span><span class="p">(</span><span class="n">tourGuideService</span><span class="p">.</span><span class="na">getUserLocation</span><span class="p">(</span><span class="n">user</span><span class="p">).</span><span class="na">userId</span><span class="p">.</span><span class="na">equals</span><span class="p">(</span><span class="n">user</span><span class="p">.</span><span class="na">getUserId</span><span class="p">()));</span>
+
+    <span class="p">}</span>
+</pre></div>
+</div>
 </section>
-<section id="resultat-obtenus">
-<h3><span class="section-number">4.3.5. </span>Résultat obtenus<a class="headerlink" href="#resultat-obtenus" title="Lien permanent vers ce titre">¶</a></h3>
+<section id="test-du-controller">
+<h4><span class="section-number">4.3.4.4. </span>Test du controller<a class="headerlink" href="#test-du-controller" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Afin d’obtenir une couverture acceptable et s’assurer de quelconque regréssion de code, un test d’intégration a également été conçu pour s’assurer du bon fonctionnement du rest API.</p>
+<p>Ce dernier comporte aussi des tests paramétrés pour vérifier notamment dans les réquètes POST que les données d’entrée du body respectent correctement les contraintes de validation exposées dans le classes DTO..</p>
+<p>Tous les endpoints ont également été testés avec l’application postman.</p>
+<p>Exemple:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">private</span> <span class="kd">static</span> <span class="n">Stream</span><span class="o">&lt;</span><span class="n">Arguments</span><span class="o">&gt;</span> <span class="nf">invalidUserPreferences</span><span class="p">()</span> <span class="p">{</span>
+           <span class="k">return</span> <span class="n">Stream</span><span class="p">.</span><span class="na">of</span><span class="p">(</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">12345</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="kc">null</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">12345</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">1234</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span> <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">,</span> <span class="mi">1</span><span class="p">)),</span>
+                           <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)),</span> <span class="n">Arguments</span><span class="p">.</span><span class="na">of</span><span class="p">(</span><span class="k">new</span> <span class="n">UserPreferencesDTO</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;USD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">10000</span><span class="p">))</span>
+           <span class="p">);</span>
+   <span class="p">}</span>
+
+   <span class="nd">@ParameterizedTest</span>
+   <span class="nd">@Order</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span>
+   <span class="nd">@MethodSource</span><span class="p">(</span><span class="s">&quot;invalidUserPreferences&quot;</span><span class="p">)</span>
+   <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setUserPreferences_whenNotValidInput_thenReturn400</span><span class="p">(</span><span class="n">UserPreferencesDTO</span> <span class="n">userPreferences</span><span class="p">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="p">{</span>
+
+           <span class="n">System</span><span class="p">.</span><span class="na">setProperty</span><span class="p">(</span><span class="s">&quot;logFileName&quot;</span><span class="p">,</span> <span class="s">&quot;setUserPreferences-InvalidBody&quot;</span><span class="p">);</span>
+           <span class="n">LoggerContext</span> <span class="n">ctx</span> <span class="o">=</span> <span class="p">(</span><span class="n">LoggerContext</span><span class="p">)</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getContext</span><span class="p">(</span><span class="kc">false</span><span class="p">);</span>
+           <span class="n">ctx</span><span class="p">.</span><span class="na">reconfigure</span><span class="p">();</span>
+           <span class="n">rootLogger</span> <span class="o">=</span> <span class="n">LogManager</span><span class="p">.</span><span class="na">getRootLogger</span><span class="p">();</span>
+
+           <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;---------------------- endPoint :  /setUserPreferences - invalid Body : \n{} -----------------------&quot;</span><span class="p">,</span> <span class="n">userPreferences</span><span class="p">.</span><span class="na">toString</span><span class="p">());</span>
+
+           <span class="n">MvcResult</span> <span class="n">result</span> <span class="o">=</span> <span class="n">mockMvc</span><span class="p">.</span><span class="na">perform</span><span class="p">(</span><span class="n">post</span><span class="p">(</span><span class="s">&quot;/setUserPreferences&quot;</span><span class="p">)</span>
+                           <span class="p">.</span><span class="na">contentType</span><span class="p">(</span><span class="n">MediaType</span><span class="p">.</span><span class="na">APPLICATION_JSON</span><span class="p">)</span>
+                           <span class="p">.</span><span class="na">content</span><span class="p">(</span><span class="n">gson</span><span class="p">.</span><span class="na">toJson</span><span class="p">(</span><span class="n">userPreferences</span><span class="p">))</span>
+                           <span class="p">.</span><span class="na">param</span><span class="p">(</span><span class="s">&quot;userName&quot;</span><span class="p">,</span> <span class="s">&quot;internalUser0&quot;</span><span class="p">))</span>
+                           <span class="p">.</span><span class="na">andExpect</span><span class="p">(</span><span class="n">status</span><span class="p">().</span><span class="na">isBadRequest</span><span class="p">()).</span><span class="na">andDo</span><span class="p">(</span><span class="n">print</span><span class="p">()).</span><span class="na">andReturn</span><span class="p">();</span>
+
+           <span class="n">assertThat</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">getResolvedException</span><span class="p">()).</span><span class="na">isInstanceOf</span><span class="p">(</span><span class="n">MethodArgumentNotValidException</span><span class="p">.</span><span class="na">class</span><span class="p">);</span>
+           <span class="n">assertThat</span><span class="p">(</span><span class="n">result</span><span class="p">.</span><span class="na">getResponse</span><span class="p">().</span><span class="na">getContentAsString</span><span class="p">()).</span><span class="na">contains</span><span class="p">(</span><span class="s">&quot;invalid data&quot;</span><span class="p">);</span>
+           <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;\033[32m - Response error message: {}&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="na">getResponse</span><span class="p">().</span><span class="na">getContentAsString</span><span class="p">());</span>
+           <span class="n">rootLogger</span><span class="p">.</span><span class="na">info</span><span class="p">(</span><span class="s">&quot;\033[32m - Response status: {} \n&quot;</span><span class="p">,</span> <span class="n">result</span><span class="p">.</span><span class="na">getResponse</span><span class="p">().</span><span class="na">getStatus</span><span class="p">());</span>
+
+   <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="amelioration-des-performances-obtenue">
+<h3><span class="section-number">4.3.5. </span>Amélioration des performances obtenue<a class="headerlink" href="#amelioration-des-performances-obtenue" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour vérifier et controller les améliorations de performances de l’application, nous avons, comme il a été demandé, sauvegardé les temps de réponse nouvellement obtenus en fonction de nombre d’utilisateurs connectés. On ne peut que constater le réel gain de temps pour obtenir soit une localisation soit une récompense.</p>
+<p>Nous avons également mis en place un système de logs précis, en utilsant log4j2, pour pouvoir voir le résultat des tests individuellement et surtout vérifier le comportement asynchrone des différents threads…</p>
+<section id="graphes-de-performances">
+<h4><span class="section-number">4.3.5.1. </span>Graphes de performances<a class="headerlink" href="#graphes-de-performances" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Ci dessous, le résultat sous forme de graphe du fichier excel <strong>Graphiques et métriques des performances de TourGuide</strong> que vous retrouverez dans le Gitlab du projet:</p>
+<a class="reference internal image-reference" href="_images/getLocationPerformances.png" id="graph-de-performance-getlocation"><img alt="graph de performance getLocation()" id="graph-de-performance-getlocation" src="_images/getLocationPerformances.png" style="width: 100%;" /></a>
+<a class="reference internal image-reference" href="_images/getRewardsPerformances.png" id="graph-de-performance-getrewards"><img alt="graph de performance getRewards()" id="graph-de-performance-getrewards" src="_images/getRewardsPerformances.png" style="width: 100%;" /></a>
+</section>
+<section id="systemes-de-logs">
+<h4><span class="section-number">4.3.5.2. </span>Systèmes de Logs<a class="headerlink" href="#systemes-de-logs" title="Lien permanent vers ce titre">¶</a></h4>
+<p>En mettant en place une configuration personnalisée avec log4j2 pour notre application, vous trouverez un répertoire de logs contenant respectivement tous les logs des tests exécutés dans le répertoire /logs à la racine.</p>
+<p>Ci dessous , le répertoire logs déployé une fois tous les tests effectués et un exemple de log highVolumeGetRewards-5_2023-06-18.10:43.log:</p>
+<p><a class="reference internal" href="_images/dir_logs.png"><img alt="pic1" src="_images/dir_logs.png" style="width: 15%;" /></a> <a class="reference internal" href="_images/Log_getTrackLocation-5.png"><img alt="pic2" src="_images/Log_getTrackLocation-5.png" style="width: 80%;" /></a></p>
+</section>
+</section>
+</section>
+<section id="correction-des-defauts-signales">
+<h2><span class="section-number">4.4. </span>Correction des défauts signalés<a class="headerlink" href="#correction-des-defauts-signales" title="Lien permanent vers ce titre">¶</a></h2>
+<section id="problematiques-rencontrees">
+<h3><span class="section-number">4.4.1. </span>Problèmatiques rencontrées<a class="headerlink" href="#problematiques-rencontrees" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Comme vu dans le §1.1 , les utilisateurs ont signalé plusieurs défauts au sein de notre application:</p>
+<ul class="simple">
+<li><p>Certains tests unitaires échouent par intermittence</p></li>
+<li><p>Les offres de voyage ne correspondaient pas exactement à leurs préférences, par exemple au niveau du nombre d’enfants ou de la durée du séjour.</p></li>
+<li><p>Les recommandations d’attractions touristiques ne sont pas soit reçues par les utilisateurs ou ne sont pas pertinentes.</p></li>
+</ul>
+</section>
+<section id="test-unitaires-en-echecs">
+<h3><span class="section-number">4.4.2. </span>Test unitaires en échecs<a class="headerlink" href="#test-unitaires-en-echecs" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Comme décrit plus haut, une fois les modifications apportées à notre application pour utiliser la concurrence, tous les tests ont été refactorisés pour passer avec succés.</p>
+<p>Par conséquent, nous ne constatons plus d’échec sur aucun test.</p>
+</section>
+<section id="tripdeals-non-pertinantes">
+<h3><span class="section-number">4.4.3. </span>TripDeals non pertinantes<a class="headerlink" href="#tripdeals-non-pertinantes" title="Lien permanent vers ce titre">¶</a></h3>
+<section id="id4">
+<h4><span class="section-number">4.4.3.1. </span>Explication<a class="headerlink" href="#id4" title="Lien permanent vers ce titre">¶</a></h4>
+<p>En effet, force est de constater que les offres de voyage ne pouvaient pas en l’état actuel prendre en compte les préférences d’un utilisateur. Lors du démarrage de l’application, chaque userPreferences était initialisé avec des valeurs par défaut et il n’existait pas de endpoint permettant de modifier ces dernières.</p>
+<p>Par conséquence, l’utilisateur ne pouvait pas obtenir une offre de voyage respectant ses préférences…</p>
+</section>
+<section id="id5">
+<h4><span class="section-number">4.4.3.2. </span>Résolution<a class="headerlink" href="#id5" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Nous avons donc créer deux endpoints pour notre application:</p>
+<ul class="simple">
+<li><p>un endpoint <strong>« getUserPreferences »</strong> en GET pour que chaque utilisateur puisse visualiser ses préférences</p></li>
+<li><p>un endpoint <strong>« setUserPreferences »</strong> en POST pour que chaque utilisateur puisse modifier ses préférences</p></li>
+</ul>
+<p>Pour celà, nous avons créer une classe DTO <strong>UserPreferencesDTO.java</strong> qui corresponds à l’ensemble des données que l’utilisateur a comme préférences.</p>
+<p>Cette classe nous permet de dissocier les données d’entrée que l’utilisateur fournira pour modifier ses préférences des données de notre future couche DAO. Mais aussi de mettre en place des contraintes de validation sur chaque champs afin de valider ses données d’entrée et signaler en retour au travers de notre API une éventuelle erreur…</p>
+<p>Il est à noter que pour « transformer » ces données d’entrée, nous utilisons un <strong>modelMapper customisé</strong> qui nous permet de gérer au mieux les conversions avec l’API Money de java…</p>
+<p>Ci dessous , notre class UserPreferencesDTO:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* DTO to represent the preferences of a user</span>
+<span class="cm">*/</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">UserPreferencesDTO</span> <span class="p">{</span>
+
+    <span class="nd">@PositiveOrZero</span><span class="p">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;the distance must be a positive positive&quot;</span><span class="p">)</span>
+    <span class="nd">@Digits</span><span class="p">(</span><span class="n">integer</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">fraction</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;the distance must be a positive integer strictly inferior to 10000 miles&quot;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">attractionProximity</span><span class="p">;</span>
+
+    <span class="nd">@NotBlank</span><span class="p">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;the currencyUnit must be not null or blank&quot;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">currencyUnit</span><span class="p">;</span>
+
+    <span class="nd">@PositiveOrZero</span><span class="p">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;the lowerPricePoint must be a positive positive&quot;</span><span class="p">)</span>
+    <span class="nd">@Digits</span><span class="p">(</span><span class="n">integer</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">fraction</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;the lowerPricePoint must be a positive integer strictly inferior to 10000 USD&quot;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">lowerPricePoint</span><span class="p">;</span>
+
+    <span class="nd">@PositiveOrZero</span><span class="p">(</span><span class="n">message</span> <span class="o">=</span> <span class="s">&quot;the highPricePoint must be a positive positive&quot;</span><span class="p">)</span>
+    <span class="nd">@Digits</span><span class="p">(</span><span class="n">integer</span> <span class="o">=</span> <span class="mi">4</span><span class="p">,</span> <span class="n">fraction</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">message</span> <span class="o">=</span> <span class="s">&quot;the highPricePoint must be a positive integer strictly inferior to 10000 USD&quot;</span><span class="p">)</span>
+    <span class="kd">private</span> <span class="n">Integer</span> <span class="n">highPricePoint</span><span class="p">;</span>
+
+<span class="c1">//... ensuite constructeur, getter &amp; setter</span>
+</pre></div>
+</div>
+<p>Il en va de soit que nous gérons les erreurs de validation avec les exceptions MethodArgumentNotValidException au travers d’un controller advice customisé <strong>GlobalExceptionHandler.java</strong> qui nous permet de retourner sous format json une réponse à l’utilisateur signalant les champs incorrects…</p>
+<p>En ayant ainsi, la possibilité de modifier ses préférences, un utilisateur désormais reçoit maintenant des offres de voyage plus pertinantes et en rapport à ses préférences.</p>
+</section>
+</section>
+<section id="recommandations-d-attractions-non-pertinantes">
+<h3><span class="section-number">4.4.4. </span>Recommandations d’attractions non pertinantes<a class="headerlink" href="#recommandations-d-attractions-non-pertinantes" title="Lien permanent vers ce titre">¶</a></h3>
+<section id="problematique">
+<h4><span class="section-number">4.4.4.1. </span>Problèmatique<a class="headerlink" href="#problematique" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Les utilisateurs ont signalé ne pas recevoir de recommandations d’attractions touristiques. Il faut que les utilisateurs reçoivent des recommandations d’attractions pertinentes, quelle que soit leur distance par rapport à leur emplacement actuel.</p>
+<p>La méthode <strong>getNearbyAttractions()</strong> de tourGuideService ne fonctionnait pas correctement</p>
+</section>
+<section id="id6">
+<h4><span class="section-number">4.4.4.2. </span>Explication<a class="headerlink" href="#id6" title="Lien permanent vers ce titre">¶</a></h4>
+<p>En effet, du par son implémentation, la méthode getNearbyAttractions() renvoyait que la liste des attractions se trouvant a moins de 200 miles de la localisation de l’utilisateur.
+Ce qui ne correspondait pas aux attentes des utilisateurs.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Attraction</span><span class="o">&gt;</span> <span class="nf">getNearByAttractions</span><span class="p">(</span><span class="n">VisitedLocation</span> <span class="n">visitedLocation</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">Attraction</span><span class="o">&gt;</span> <span class="n">nearbyAttractions</span> <span class="o">=</span> <span class="k">new</span> <span class="n">ArrayList</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">Attraction</span> <span class="n">attraction</span> <span class="p">:</span> <span class="n">gpsUtilService</span><span class="p">.</span><span class="na">getAttractions</span><span class="p">())</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">rewardsService</span><span class="p">.</span><span class="na">isWithinAttractionProximity</span><span class="p">(</span><span class="n">attraction</span><span class="p">,</span> <span class="n">visitedLocation</span><span class="p">.</span><span class="na">location</span><span class="p">))</span> <span class="p">{</span>
+                            <span class="n">nearbyAttractions</span><span class="p">.</span><span class="na">add</span><span class="p">(</span><span class="n">attraction</span><span class="p">);</span>
+                    <span class="p">}</span>
+            <span class="p">}</span>
+            <span class="k">return</span> <span class="n">nearbyAttractions</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="id7">
+<h4><span class="section-number">4.4.4.3. </span>Résolution<a class="headerlink" href="#id7" title="Lien permanent vers ce titre">¶</a></h4>
+<p>Nous avons donc refactoriser la méthode getNearbyAttractions(), ainsi que son tests et, utiliser l’API Stream de java pour simplifier l’obtention du résultat escompté.</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/*</span>
+<span class="cm">     * return the list of 5 nearest attractions from location of user</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">Attraction</span><span class="o">&gt;</span> <span class="nf">getNearByAttractions</span><span class="p">(</span><span class="n">VisitedLocation</span> <span class="n">visitedLocation</span><span class="p">)</span> <span class="p">{</span>
+
+            <span class="k">return</span> <span class="n">gpsUtilService</span><span class="p">.</span><span class="na">getAttractions</span><span class="p">().</span><span class="na">stream</span><span class="p">().</span><span class="na">sorted</span><span class="p">((</span><span class="n">a1</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="o">-&gt;</span>
+            <span class="n">Double</span><span class="p">.</span><span class="na">compare</span><span class="p">(</span><span class="n">rewardsService</span><span class="p">.</span><span class="na">getDistance</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">visitedLocation</span><span class="p">.</span><span class="na">location</span><span class="p">),</span> <span class="n">rewardsService</span><span class="p">.</span><span class="na">getDistance</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span><span class="n">visitedLocation</span><span class="p">.</span><span class="na">location</span><span class="p">))</span>
+            <span class="p">).</span><span class="na">limit</span><span class="p">(</span><span class="mi">5</span><span class="p">).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>Maintenant cette méthode retourne précisement la liste des 5 attractions les plus proches de la localisation d’un utilisateur quelque soit la distance et ce, rangée par la distance séparant la localisation visitée et l’attraction”.</p>
+<p>Concernant la façon de présenter le résultat sous format Json , nous avons fait le choix d’utiser directement une LinkedHashMap sans passer par un DTO:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">     * custom method to return a hashMap representing an attraction near the last user&#39;s visitedLocation</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param attraction the attraction to transform into a Map</span>
+<span class="cm">     * @param visitedLocation the last visited location of user</span>
+<span class="cm">     * @return a HashMap as asked for front end that collect information of attraction : Name of Tourist</span>
+<span class="cm">     *         attraction, Tourist attractions lat/long, The user&#39;s location lat/long, The distance in</span>
+<span class="cm">     *         miles between attraction and the user&#39;s location, The reward points for visiting this</span>
+<span class="cm">     *         Attraction.</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="nf">nearAttractionToMap</span><span class="p">(</span><span class="n">Attraction</span> <span class="n">attraction</span><span class="p">,</span> <span class="n">VisitedLocation</span> <span class="n">visitedLocation</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">map</span> <span class="o">=</span> <span class="k">new</span> <span class="n">LinkedHashMap</span><span class="o">&lt;&gt;</span><span class="p">();</span>
+            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="n">attraction</span><span class="p">.</span><span class="na">attractionName</span><span class="p">);</span>
+            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;touristAttraction lat/long&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;%f/%f&quot;</span><span class="p">,</span> <span class="n">attraction</span><span class="p">.</span><span class="na">latitude</span><span class="p">,</span> <span class="n">attraction</span><span class="p">.</span><span class="na">longitude</span><span class="p">));</span>
+            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;userLocation lat/long&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;%f/%f&quot;</span><span class="p">,</span> <span class="n">visitedLocation</span><span class="p">.</span><span class="na">location</span><span class="p">.</span><span class="na">latitude</span><span class="p">,</span> <span class="n">visitedLocation</span><span class="p">.</span><span class="na">location</span><span class="p">.</span><span class="na">longitude</span><span class="p">));</span>
+            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;distance&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;%f&quot;</span><span class="p">,</span> <span class="n">rewardsService</span><span class="p">.</span><span class="na">getDistance</span><span class="p">(</span><span class="n">attraction</span><span class="p">,</span> <span class="n">visitedLocation</span><span class="p">.</span><span class="na">location</span><span class="p">)));</span>
+            <span class="n">map</span><span class="p">.</span><span class="na">put</span><span class="p">(</span><span class="s">&quot;rewardPoints&quot;</span><span class="p">,</span> <span class="n">String</span><span class="p">.</span><span class="na">format</span><span class="p">(</span><span class="s">&quot;%d&quot;</span><span class="p">,</span> <span class="n">rewardsService</span><span class="p">.</span><span class="na">getNearestAttractionRewardPoints</span><span class="p">(</span><span class="n">attraction</span><span class="p">.</span><span class="na">attractionId</span><span class="p">,</span> <span class="n">visitedLocation</span><span class="p">.</span><span class="na">userId</span><span class="p">)));</span>
+
+            <span class="k">return</span> <span class="n">map</span><span class="p">;</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>Et pour avoir un résultat rangé dans l’ordre des distances croissantes, nous avons crée un comparator customisé pour la LinkedHashMap (notre retour de la méthode précédente):</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">     * custom comparator just to compare a list of attraction by distance from last user visitedLocation</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param h1 the hashmap that represents the first attraction</span>
+<span class="cm">     * @param h2 the hashmap that represents the second attraction</span>
+<span class="cm">     * @return a int to compare them By distance from user location</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="nf">compareAttractionMapByDistance</span><span class="p">(</span><span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">h1</span><span class="p">,</span> <span class="n">LinkedHashMap</span><span class="o">&lt;</span><span class="n">String</span><span class="p">,</span> <span class="n">String</span><span class="o">&gt;</span> <span class="n">h2</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">h1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;distance&quot;</span><span class="p">).</span><span class="na">equals</span><span class="p">(</span><span class="n">h2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;distance&quot;</span><span class="p">)))</span> <span class="p">{</span>
+                    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">Double</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">h1</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;distance&quot;</span><span class="p">))</span> <span class="o">&gt;</span> <span class="n">Double</span><span class="p">.</span><span class="na">valueOf</span><span class="p">(</span><span class="n">h2</span><span class="p">.</span><span class="na">get</span><span class="p">(</span><span class="s">&quot;distance&quot;</span><span class="p">)))</span> <span class="p">{</span>
+                            <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+                    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+                            <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+                    <span class="p">}</span>
+            <span class="p">}</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+</section>
+</section>
+</section>
+<section id="ajout-d-une-fonctionnalite">
+<h2><span class="section-number">4.5. </span>Ajout d’une fonctionnalité<a class="headerlink" href="#ajout-d-une-fonctionnalite" title="Lien permanent vers ce titre">¶</a></h2>
+<section id="id8">
+<h3><span class="section-number">4.5.1. </span>Problèmatique rencontrée<a class="headerlink" href="#id8" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Les responsables du produit souhaitaient pouvoir observer les déplacements des utilisateurs et ainsi identifier si un schéma logique ou répétitif s’en dégagait au fil du temps.
+Pour ce faire, ils souhaitaient ajouter une nouvelle fonctionnalité à Tour Guide : regrouper tous les emplacements de tous les utilisateurs afin de les visualiser.</p>
+</section>
+<section id="id9">
+<h3><span class="section-number">4.5.2. </span>Explication<a class="headerlink" href="#id9" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Cette demande de nouvelle fonctionnalité n’était pas forcément clairement détaillée… En effet, l’énoncée de la user storie précisait que l’on regroupe l’ensemble des emplacements de tous les utilisateurs.</p>
+<p>Cependant dans le code de <strong>TourGuideServiceController pour la méthode getAllCurrentLocations()</strong>, nous retrouvions le commentaire ci dessous :</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">* TODO: Get a list of every user&#39;s most recent location as JSON</span>
+<span class="cm">*   - Note: does not use gpsUtil to query for their current location,</span>
+<span class="cm">*        but rather gathers the user&#39;s current location from their stored location</span>
+<span class="cm">*        history.</span>
+<span class="cm">*</span>
+<span class="cm">*        Return object should be the just a JSON mapping of userId to Locations</span>
+<span class="cm">*        similar to:</span>
+<span class="cm">*        {</span>
+<span class="cm">*       &quot;019b04a9-067a-4c76-8817-ee75088c3822&quot;:</span>
+<span class="cm">*        {&quot;longitude&quot;:-48.188821,&quot;latitude&quot;:74.84371}</span>
+<span class="cm">*        ...}</span>
+<span class="cm">*/</span>
+</pre></div>
+</div>
+<p>Ce qui ne correspondait pas aux exigences demandées soit l’ensemble de localisations.</p>
+</section>
+<section id="id10">
+<h3><span class="section-number">4.5.3. </span>Résolution<a class="headerlink" href="#id10" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Par conséquent, nous avons développé deux endpoints pour cette nouvelle fonctionnalité:</p>
+<ul class="simple">
+<li><p>un premier entièrement nouveau pour respecter les exigences souhaitées : <strong>getAllUserLocations()</strong></p></li>
+<li><p>un second qui refactorisait le endpoint existant : <strong>getAllCurrentLocations()</strong></p></li>
+</ul>
+<p>Pour cela, nous avons ,tout comme pour les userPreferences, créer 2 classes DTO et utiliser l’API Stream de java pour obtenir les résultats attendus:</p>
+<ul class="simple">
+<li><p><strong>UserCurrentLocationDTO</strong>  pour représenter la dernière localité visité par un utilisateur avec uniquement sa loatitude et sa longitude</p></li>
+<li><p><strong>UserVisitedLocationDTO</strong> pour représenter une localité visité par un utilsateur avec la classe Location</p></li>
+</ul>
+<p>Nous avons utiliser également notre modelMapper pour réaliser les conversions nécéssaires entre nos DTO et nos entités.</p>
+<p>Ci dessous, les méthodes dans TourGuideService permettant de renvoyer la liste de toutes les localisations de tous les utilisateurs:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">     * method getAllUserLocations()</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return List of all visited locations of all users sorted first by there userId and then by date</span>
+<span class="cm">     *         of visited locations</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">VisitedLocation</span><span class="o">&gt;</span> <span class="nf">getAllUserLocations</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="n">Comparator</span><span class="o">&lt;</span><span class="n">VisitedLocation</span><span class="o">&gt;</span> <span class="n">comparatorByDate</span> <span class="o">=</span> <span class="n">Comparator</span><span class="p">.</span><span class="na">comparing</span><span class="p">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="p">.</span><span class="na">timeVisited</span><span class="p">);</span>
+            <span class="n">List</span><span class="o">&lt;</span><span class="n">VisitedLocation</span><span class="o">&gt;</span> <span class="n">visitedLocations</span> <span class="o">=</span>
+                            <span class="n">flattenListOfListsStream</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">().</span><span class="na">parallelStream</span><span class="p">()</span>
+                                            <span class="p">.</span><span class="na">map</span><span class="p">(</span><span class="n">User</span><span class="p">::</span><span class="n">getVisitedLocations</span><span class="p">).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">()));</span>
+
+            <span class="k">return</span> <span class="n">visitedLocations</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">sorted</span><span class="p">(</span><span class="n">comparatorByDate</span><span class="p">).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+
+    <span class="p">}</span>
+
+    <span class="cm">/**</span>
+<span class="cm">     * private method to regroup all Objects in a same list from a List&lt;List&lt;Object&gt;&gt;</span>
+<span class="cm">     *</span>
+<span class="cm">     * @param &lt;T&gt; the generic object</span>
+<span class="cm">     * @param list the List&lt;List&lt;Object&gt;&gt;</span>
+<span class="cm">     * @return a unique List of all Objects</span>
+<span class="cm">     */</span>
+    <span class="kd">private</span> <span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span> <span class="nf">flattenListOfListsStream</span><span class="p">(</span><span class="n">List</span><span class="o">&lt;</span><span class="n">List</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;&gt;</span> <span class="n">list</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="n">list</span><span class="p">.</span><span class="na">stream</span><span class="p">().</span><span class="na">flatMap</span><span class="p">(</span><span class="n">Collection</span><span class="p">::</span><span class="n">stream</span><span class="p">).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<p>Ci dessous, la méthode dans TourGuideService permettant de renvoyer la liste de toutes les dernières localisations de tous les utilisateurs:</p>
+<div class="highlight-java notranslate"><div class="highlight"><pre><span></span><span class="cm">/**</span>
+<span class="cm">     * method getAllUserCurrentLocations()</span>
+<span class="cm">     *</span>
+<span class="cm">     * @return a List of all current locations of all users</span>
+<span class="cm">     */</span>
+    <span class="kd">public</span> <span class="n">List</span><span class="o">&lt;</span><span class="n">VisitedLocation</span><span class="o">&gt;</span> <span class="nf">getAllUserCurrentLocations</span><span class="p">()</span> <span class="p">{</span>
+            <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="na">getAllUsers</span><span class="p">().</span><span class="na">parallelStream</span><span class="p">().</span><span class="na">map</span><span class="p">(</span><span class="n">User</span><span class="p">::</span><span class="n">getLastVisitedLocation</span><span class="p">).</span><span class="na">collect</span><span class="p">(</span><span class="n">Collectors</span><span class="p">.</span><span class="na">toList</span><span class="p">());</span>
+    <span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Pour information, nous avons remplacer Json par Gson (la librairie Google) car il s’est avéré que Json était incapable de parse correctement un UUID.</p>
+</div>
+</section>
+</section>
+<section id="ameliorer-le-process-qualite">
+<h2><span class="section-number">4.6. </span>Améliorer le process qualité<a class="headerlink" href="#ameliorer-le-process-qualite" title="Lien permanent vers ce titre">¶</a></h2>
+<section id="problematique-rencontre">
+<h3><span class="section-number">4.6.1. </span>Problèmatique rencontré<a class="headerlink" href="#problematique-rencontre" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Mettre en place une chaîne de build (pipeline CI/CD GitLab) qui permettra d’exécuter la compilation des classes, de s’assurer de la non régréssion des tests et obtenir un artefact valide du projet.</p>
+</section>
+<section id="id11">
+<h3><span class="section-number">4.6.2. </span>Résolution<a class="headerlink" href="#id11" title="Lien permanent vers ce titre">¶</a></h3>
+<p>Pour celà , nous avons dés le début du projet, mis en place dans le Gitlab une pipeline CI/CD en implémentant un fichier <strong>.gitlab-ci.yml</strong></p>
+<div class="highlight-ruby notranslate"><div class="highlight"><pre><span></span><span class="ss">default</span><span class="p">:</span>
+<span class="ss">image</span><span class="p">:</span> <span class="ss">gradle</span><span class="p">:</span><span class="n">jdk11</span>
+
+<span class="ss">build</span><span class="p">:</span>
+<span class="ss">stage</span><span class="p">:</span> <span class="n">build</span>
+<span class="ss">script</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">cd</span> <span class="no">TourGuide</span><span class="o">/</span>
+    <span class="o">-</span> <span class="o">.</span><span class="n n-Operator">/</span><span class="n">gradlew</span> <span class="n">clean</span>
+    <span class="o">-</span> <span class="o">.</span><span class="n n-Operator">/</span><span class="n">gradlew</span> <span class="n">classes</span>
+    <span class="o">-</span> <span class="o">.</span><span class="n n-Operator">/</span><span class="n">gradlew</span> <span class="n">testClasses</span>
+
+<span class="nb">test</span><span class="p">:</span>
+<span class="ss">stage</span><span class="p">:</span> <span class="nb">test</span>
+<span class="ss">needs</span><span class="p">:</span> <span class="o">[</span><span class="n">build</span><span class="o">]</span>
+<span class="ss">script</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">cd</span> <span class="no">TourGuide</span><span class="o">/</span>
+    <span class="o">-</span> <span class="o">.</span><span class="n n-Operator">/</span><span class="n">gradlew</span> <span class="nb">test</span>
+    <span class="o">-</span> <span class="n">cat</span> <span class="n">build</span><span class="o">/</span><span class="n">jacocoHtml</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span> <span class="o">|</span> <span class="n">grep</span> <span class="o">-</span><span class="n">o</span> <span class="s1">&#39;&lt;tfoot&gt;.*&lt;/tfoot&gt;&#39;</span>
+<span class="ss">coverage</span><span class="p">:</span> <span class="s1">&#39;/Total.*?([0-9]{1,3})%/&#39;</span>
+
+<span class="ss">artifacts</span><span class="p">:</span>
+    <span class="k">when</span><span class="p">:</span> <span class="n">always</span>
+    <span class="ss">paths</span><span class="p">:</span>
+    <span class="o">-</span> <span class="no">TourGuide</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">jacocoHtml</span>
+    <span class="o">-</span> <span class="no">TourGuide</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">reports</span>
+    <span class="o">-</span> <span class="no">TourGuide</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">jacoco</span><span class="o">/</span><span class="nb">test</span><span class="o">.</span><span class="n">exec</span>
+    <span class="ss">reports</span><span class="p">:</span>
+    <span class="ss">junit</span><span class="p">:</span> <span class="no">TourGuide</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="nb">test</span><span class="o">-</span><span class="n">results</span><span class="o">/</span><span class="nb">test</span><span class="o">/</span><span class="no">TEST</span><span class="o">-*.</span><span class="n">xml</span>
+
+<span class="ss">deploy</span><span class="p">:</span>
+<span class="ss">stage</span><span class="p">:</span> <span class="n">deploy</span>
+<span class="ss">needs</span><span class="p">:</span> <span class="o">[</span><span class="nb">test</span><span class="o">]</span>
+<span class="ss">script</span><span class="p">:</span>
+    <span class="o">-</span> <span class="n">cd</span> <span class="no">TourGuide</span><span class="o">/</span>
+    <span class="o">-</span> <span class="o">.</span><span class="n n-Operator">/</span><span class="n">gradlew</span> <span class="n">bootjar</span>
+<span class="ss">artifacts</span><span class="p">:</span>
+    <span class="k">when</span><span class="p">:</span> <span class="n">always</span>
+    <span class="ss">paths</span><span class="p">:</span>
+    <span class="o">-</span> <span class="no">TourGuide</span><span class="o">/</span><span class="n">build</span><span class="o">/</span><span class="n">libs</span><span class="o">/</span>
+</pre></div>
+</div>
+<p>Cette dernière s’appuie donc sur une image docker <strong>gradle:jdk11</strong>.</p>
+<p>Elle est contituée de 3 stages comprennant chacun 1 job qui dependent les un des autres:</p>
+<ul class="simple">
+<li><p><strong>build</strong> pour compiler les classes source et test</p></li>
+<li><p><strong>test</strong> qui lance les tests et crée un artifact comprennant la couverture jacoco des test</p></li>
+<li><p><strong>deploy</strong> pour créer le jar de TourGuide</p></li>
+</ul>
+<p>Ci dessous les dependances des jobs:</p>
+<img alt="job_dependencies" id="job-dependencies" src="_images/job_dependencies.png" />
+<p>Ci dessous la représentation du taux de couvertures avec les tests effectués:</p>
+<a class="reference internal image-reference" href="_images/jacoco_coverage.png" id="jacoco-coverage"><img alt="jacoco_coverage" id="jacoco-coverage" src="_images/jacoco_coverage.png" style="width: 100%;" /></a>
+<p>Ci dessous une vue des artifacts crée:</p>
+<a class="reference internal image-reference" href="_images/pipeline_artifacts.png" id="pipeline-artifacts"><img alt="pipeline_artifacts" id="pipeline-artifacts" src="_images/pipeline_artifacts.png" style="width: 100%;" /></a>
 </section>
 </section>
 </section>
@@ -448,9 +877,52 @@ Nous avons donc procéder à une refactorisation de ces derniers…</p>
 <li class="toctree-l2"><a class="reference internal" href="#amelioration-des-performances">4.3. Amélioration des performances</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id1">4.3.1. Problèmatique rencontrée</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#id2">4.3.2. Explication</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#id3">4.3.3. Résolution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#refactorisation-des-tests">4.3.4. Refactorisation des tests</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#resultat-obtenus">4.3.5. Résultat obtenus</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">4.3.3. Résolution</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#modification-de-l-architecture-existante">4.3.3.1. Modification de l’architecture existante</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#utilisation-de-l-api-concurrency-de-java-8">4.3.3.2. Utilisation de l’API Concurrency de Java 8</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#gpsutilservice">4.3.3.3. GpsUtilService</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rewardsservice">4.3.3.4. RewardsService</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#refactorisation-des-tests">4.3.4. Refactorisation des tests</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#highvolumegetlocation">4.3.4.1. HighVolumeGetLocation()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#highvolumegetrewards">4.3.4.2. HighVolumeGetRewards()</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tests-des-services">4.3.4.3. Tests des Services</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#test-du-controller">4.3.4.4. Test du controller</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#amelioration-des-performances-obtenue">4.3.5. Amélioration des performances obtenue</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#graphes-de-performances">4.3.5.1. Graphes de performances</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#systemes-de-logs">4.3.5.2. Systèmes de Logs</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#correction-des-defauts-signales">4.4. Correction des défauts signalés</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#problematiques-rencontrees">4.4.1. Problèmatiques rencontrées</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#test-unitaires-en-echecs">4.4.2. Test unitaires en échecs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tripdeals-non-pertinantes">4.4.3. TripDeals non pertinantes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id4">4.4.3.1. Explication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id5">4.4.3.2. Résolution</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#recommandations-d-attractions-non-pertinantes">4.4.4. Recommandations d’attractions non pertinantes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#problematique">4.4.4.1. Problèmatique</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id6">4.4.4.2. Explication</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id7">4.4.4.3. Résolution</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ajout-d-une-fonctionnalite">4.5. Ajout d’une fonctionnalité</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">4.5.1. Problèmatique rencontrée</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">4.5.2. Explication</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">4.5.3. Résolution</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#ameliorer-le-process-qualite">4.6. Améliorer le process qualité</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#problematique-rencontre">4.6.1. Problèmatique rencontré</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">4.6.2. Résolution</a></li>
 </ul>
 </li>
 </ul>

@@ -130,13 +130,45 @@ Ainsi, en utilisant des `CompletableFutures <https://docs.oracle.com/javase/8/do
 
 De plus, l'utilisation des CompletableFutures , nous permet aussi, contrairement aux Futures, de pouvoir plus facilement enchainer d'autres taches, une fois le retour acquis et cela, grâce aux méthodes prédéfinies de l'interface `CompletionStage <https://docs.oracle.com/javase/8/docs/api/java/util/concurrent/CompletionStage.html>`_
 
-.. note::
-    Pour pouvoir utiliser la concurrence, il a fallu modifier donc, quelque peu les services:
 
-        * **Ajout d'une instance d'ExecutorService** pour gérer correctement les threads lancés par les CompletableFutures
-        * **Utilisation d'un CompletableFuture** pour chaque appel aux méthodes incriminées
-        * **Gestion des retours asynchrones** avec enchaînement d'autres actions à effectuer avec ou sans répoonses.
-        * **Gestion de l'accés a des ressources partagées** entre les différents threads
+Pour pouvoir utiliser la concurrence, il a fallu modifier donc, quelque peu les services:
+
+    * **Ajout d'une instance d'ExecutorService** pour gérer correctement les threads lancés par les CompletableFutures
+    * **Utilisation d'un CompletableFuture** pour chaque appel aux méthodes incriminées
+    * **Gestion des retours asynchrones** avec enchaînement d'autres actions à effectuer avec ou sans répoonses.
+    * **Gestion de l'accés a des ressources partagées** entre les différents threads
+
+.. note::
+
+    Concernant l'instanciation des ExecutorService, le nombre de threads a été calulé en respectant la formule suivante:
+
+    .. math::
+        
+        Nombre de thread = Nombre de processeurs existants * (1 + ( le temps d' attente  / temps CPU ))
+
+
+    En java, pour obtenir le nombre de processeurs disponible sur une machine , il suffit d'utiliser:
+     
+     .. code:: java
+
+        Runtime.getRuntime().availableProcessors();
+
+    Sachant que notre ordinateur posséde 6 processeurs et que le temps de réponse pour localiser un utilisateur et lui attribuer des rewards est de 100 ms +1000ms au maximum (déterminé en regardant les methodes sleep() des librairies), c'est pour cela que dans GspUtilService nous avons un thread Pool de 6006
+
+    .. code:: java
+
+        @Service
+        public class GpsUtilService {
+
+        private GpsUtil gpsUtil;
+        
+        private Logger logger = LogManager.getLogger("testPerformance");
+
+        public final ExecutorService gpsExecutorService = Executors.newFixedThreadPool(6006);
+
+        public GpsUtilService(GpsUtil gpsUtil) {
+            this.gpsUtil = gpsUtil;
+        }
 
 
 
@@ -366,10 +398,6 @@ ci dessous, les principaux changements effectués:
 
 	}
 
-
-
-
-
 HighVolumeGetRewards()
 ``````````````````````
 Ci dessous, les principaux changements effectués:
@@ -439,7 +467,487 @@ Ci dessous, les principaux changements effectués:
 	}
 
 
-Résultat obtenus
-----------------
+Tests des Services
+``````````````````
+
+Nous avons également refactorisé ces derniers essentiellement pour RewardsService et TourguideService. Voici ci dessous les principaux changements:
+
+* Modification du constructeur de TourguideService. Ce dernier prends en arguments maintenant les trois services décris plus haut soit:GpsUtilService, RewardsService et TripPricerService
+* Utilisation de l'API `Awaitility <http://www.awaitility.org/>`_ pour permettre de faire attendre le main thread plus proprement jusqu'à ce que toutes les opérations asynchrones soit terminées.
+
+Exemple :
+
+.. code:: java
+
+    @Test
+	public void getUserLocation() throws InterruptedException {
+
+		InternalTestHelper.setInternalUserNumber(0);
+
+		System.setProperty("logFileName", "getUserLocation");
+		LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+		ctx.reconfigure();
+		Logger rootLogger = LogManager.getRootLogger();
+
+		GpsUtilService gpsUtilService = new GpsUtilService(new GpsUtil());
+		RewardsService rewardsService = new RewardsService(gpsUtilService, new RewardCentral());
+		TripPricerService tripPricerService = new TripPricerService(new TripPricer());
+
+		rootLogger.info("---------------------- Test :  getUserLocation -----------------------");
+
+		TourGuideService tourGuideService = new TourGuideService(gpsUtilService, rewardsService, tripPricerService);
+
+		User user = new User(UUID.randomUUID(), "jon", "000", "jon@tourGuide.com");
+		tourGuideService.trackUserLocation(user);
+
+		// while (user.getLastVisitedLocation() == null) {
+		// TimeUnit.MILLISECONDS.sleep(100);
+		// }
+
+		Awaitility.await().until(() -> user.getLastVisitedLocation() != null);
+
+		tourGuideService.addShutDownHook();
+
+		assertTrue(tourGuideService.getUserLocation(user).userId.equals(user.getUserId()));
+
+	}
+    
+
+Test du controller
+``````````````````
+Afin d'obtenir une couverture acceptable et s'assurer de quelconque regréssion de code, un test d'intégration a également été conçu pour s'assurer du bon fonctionnement du rest API.
+
+Ce dernier comporte aussi des tests paramétrés pour vérifier notamment dans les réquètes POST que les données d'entrée du body respectent correctement les contraintes de validation exposées dans le classes DTO..
+
+Tous les endpoints ont également été testés avec l'application postman.
+
+Exemple:
+
+.. code:: java
+
+     private static Stream<Arguments> invalidUserPreferences() {
+                return Stream.of(
+                                Arguments.of(new UserPreferencesDTO(-1, "USD", 0, 100, 1, 10, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(12345, "USD", 0, 100, 1, 10, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(1, null, 0, 100, 1, 10, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(1, "", 0, 100, 1, 10, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(1, "USD", -1, 100, 1, 10, 1, 1)), Arguments.of(new UserPreferencesDTO(1, "USD", 12345, 100, 1, 10, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(1, "USD", 12, -1, 1, 10, 1, 1)), Arguments.of(new UserPreferencesDTO(1, "USD", 1234, 10000, 1, 10, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(1, "USD", 1234, 100, -1, 10, 1, 1)), Arguments.of(new UserPreferencesDTO(1, "USD", 0, 1, 10000, 10, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(1, "USD", 0, 100, 1, -1, 1, 1)), Arguments.of(new UserPreferencesDTO(1, "USD", 0, 100, 1, 10000, 1, 1)),
+                                Arguments.of(new UserPreferencesDTO(1, "USD", 0, 100, 1, 1, -1, 1)), Arguments.of(new UserPreferencesDTO(1, "USD", 0, 100, 1, 1, 10000, 1)),
+                                Arguments.of(new UserPreferencesDTO(-1, "USD", 0, 100, 1, 1, 1, -1)), Arguments.of(new UserPreferencesDTO(1, "USD", 0, 100, 1, 1, 1, 10000))
+                );
+        }
+
+        @ParameterizedTest
+        @Order(12)
+        @MethodSource("invalidUserPreferences")
+        public void setUserPreferences_whenNotValidInput_thenReturn400(UserPreferencesDTO userPreferences) throws Exception {
+
+                System.setProperty("logFileName", "setUserPreferences-InvalidBody");
+                LoggerContext ctx = (LoggerContext) LogManager.getContext(false);
+                ctx.reconfigure();
+                rootLogger = LogManager.getRootLogger();
+
+                rootLogger.info("---------------------- endPoint :  /setUserPreferences - invalid Body : \n{} -----------------------", userPreferences.toString());
+
+                MvcResult result = mockMvc.perform(post("/setUserPreferences")
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(gson.toJson(userPreferences))
+                                .param("userName", "internalUser0"))
+                                .andExpect(status().isBadRequest()).andDo(print()).andReturn();
+
+                assertThat(result.getResolvedException()).isInstanceOf(MethodArgumentNotValidException.class);
+                assertThat(result.getResponse().getContentAsString()).contains("invalid data");
+                rootLogger.info("\033[32m - Response error message: {}", result.getResponse().getContentAsString());
+                rootLogger.info("\033[32m - Response status: {} \n", result.getResponse().getStatus());
+
+        }
 
 
+
+Amélioration des performances obtenue
+-------------------------------------
+
+Pour vérifier et controller les améliorations de performances de l'application, nous avons, comme il a été demandé, sauvegardé les temps de réponse nouvellement obtenus en fonction de nombre d'utilisateurs connectés. On ne peut que constater le réel gain de temps pour obtenir soit une localisation soit une récompense.
+
+Nous avons également mis en place un système de logs précis, en utilsant log4j2, pour pouvoir voir le résultat des tests individuellement et surtout vérifier le comportement asynchrone des différents threads...
+
+Graphes de performances
+```````````````````````
+
+Ci dessous, le résultat sous forme de graphe du fichier excel **Graphiques et métriques des performances de TourGuide** que vous retrouverez dans le Gitlab du projet:
+
+.. image:: _static/tests_performance/getLocationPerformances.png
+    :width: 100%
+    :alt: graph de performance getLocation() 
+    :name: graph de performance getLocation() 
+
+
+.. image:: _static/tests_performance/getRewardsPerformances.png
+    :width: 100%
+    :alt: graph de performance getRewards() 
+    :name: graph de performance getRewards() 
+
+Systèmes de Logs
+````````````````
+En mettant en place une configuration personnalisée avec log4j2 pour notre application, vous trouverez un répertoire de logs contenant respectivement tous les logs des tests exécutés dans le répertoire /logs à la racine.
+
+Ci dessous , le répertoire logs déployé une fois tous les tests effectués et un exemple de log highVolumeGetRewards-5_2023-06-18.10:43.log:
+
+|pic1| |pic2|
+
+.. |pic1| image:: _static/logs/dir_logs.png
+    :width: 15%    
+
+.. |pic2| image:: _static/logs/Log_getTrackLocation-5.png
+    :width: 80%
+    
+
+Correction des défauts signalés
+===============================
+
+Problèmatiques rencontrées
+--------------------------
+
+Comme vu dans le §1.1 , les utilisateurs ont signalé plusieurs défauts au sein de notre application:
+
+* Certains tests unitaires échouent par intermittence
+* Les offres de voyage ne correspondaient pas exactement à leurs préférences, par exemple au niveau du nombre d’enfants ou de la durée du séjour.
+* Les recommandations d'attractions touristiques ne sont pas soit reçues par les utilisateurs ou ne sont pas pertinentes.
+
+Test unitaires en échecs
+------------------------
+Comme décrit plus haut, une fois les modifications apportées à notre application pour utiliser la concurrence, tous les tests ont été refactorisés pour passer avec succés.
+
+Par conséquent, nous ne constatons plus d'échec sur aucun test.
+
+TripDeals non pertinantes
+-------------------------
+
+Explication
+```````````
+En effet, force est de constater que les offres de voyage ne pouvaient pas en l'état actuel prendre en compte les préférences d'un utilisateur. Lors du démarrage de l'application, chaque userPreferences était initialisé avec des valeurs par défaut et il n'existait pas de endpoint permettant de modifier ces dernières.
+
+Par conséquence, l'utilisateur ne pouvait pas obtenir une offre de voyage respectant ses préférences...
+
+Résolution
+```````````
+Nous avons donc créer deux endpoints pour notre application:
+
+* un endpoint **"getUserPreferences"** en GET pour que chaque utilisateur puisse visualiser ses préférences
+* un endpoint **"setUserPreferences"** en POST pour que chaque utilisateur puisse modifier ses préférences
+
+Pour celà, nous avons créer une classe DTO **UserPreferencesDTO.java** qui corresponds à l'ensemble des données que l'utilisateur a comme préférences.
+
+Cette classe nous permet de dissocier les données d'entrée que l'utilisateur fournira pour modifier ses préférences des données de notre future couche DAO. Mais aussi de mettre en place des contraintes de validation sur chaque champs afin de valider ses données d'entrée et signaler en retour au travers de notre API une éventuelle erreur...
+
+Il est à noter que pour "transformer" ces données d'entrée, nous utilisons un **modelMapper customisé** qui nous permet de gérer au mieux les conversions avec l'API Money de java...
+
+Ci dessous , notre class UserPreferencesDTO:
+
+.. code:: java
+
+    /**
+    * DTO to represent the preferences of a user
+    */
+    public class UserPreferencesDTO {
+
+        @PositiveOrZero(message = "the distance must be a positive positive")
+        @Digits(integer = 4, fraction = 0, message = "the distance must be a positive integer strictly inferior to 10000 miles")
+        private Integer attractionProximity;
+
+        @NotBlank(message = "the currencyUnit must be not null or blank")
+        private String currencyUnit;
+
+        @PositiveOrZero(message = "the lowerPricePoint must be a positive positive")
+        @Digits(integer = 4, fraction = 0, message = "the lowerPricePoint must be a positive integer strictly inferior to 10000 USD")
+        private Integer lowerPricePoint;
+
+        @PositiveOrZero(message = "the highPricePoint must be a positive positive")
+        @Digits(integer = 4, fraction = 0, message = "the highPricePoint must be a positive integer strictly inferior to 10000 USD")
+        private Integer highPricePoint;
+
+    //... ensuite constructeur, getter & setter
+    
+Il en va de soit que nous gérons les erreurs de validation avec les exceptions MethodArgumentNotValidException au travers d'un controller advice customisé **GlobalExceptionHandler.java** qui nous permet de retourner sous format json une réponse à l'utilisateur signalant les champs incorrects...
+
+En ayant ainsi, la possibilité de modifier ses préférences, un utilisateur désormais reçoit maintenant des offres de voyage plus pertinantes et en rapport à ses préférences.
+
+Recommandations d'attractions non pertinantes
+---------------------------------------------
+
+Problèmatique
+`````````````
+Les utilisateurs ont signalé ne pas recevoir de recommandations d'attractions touristiques. Il faut que les utilisateurs reçoivent des recommandations d’attractions pertinentes, quelle que soit leur distance par rapport à leur emplacement actuel.
+
+La méthode **getNearbyAttractions()** de tourGuideService ne fonctionnait pas correctement
+
+Explication
+```````````
+
+En effet, du par son implémentation, la méthode getNearbyAttractions() renvoyait que la liste des attractions se trouvant a moins de 200 miles de la localisation de l'utilisateur.
+Ce qui ne correspondait pas aux attentes des utilisateurs.
+
+.. code:: java
+
+    public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
+		List<Attraction> nearbyAttractions = new ArrayList<>();
+		for (Attraction attraction : gpsUtilService.getAttractions()) {
+			if (rewardsService.isWithinAttractionProximity(attraction, visitedLocation.location)) {
+				nearbyAttractions.add(attraction);
+			}
+		}
+		return nearbyAttractions;
+	}
+
+Résolution
+```````````
+Nous avons donc refactoriser la méthode getNearbyAttractions(), ainsi que son tests et, utiliser l'API Stream de java pour simplifier l'obtention du résultat escompté.
+
+.. code:: java
+
+    /*	
+	 * return the list of 5 nearest attractions from location of user
+	 */
+	public List<Attraction> getNearByAttractions(VisitedLocation visitedLocation) {
+	
+		return gpsUtilService.getAttractions().stream().sorted((a1, a2) -> 
+		Double.compare(rewardsService.getDistance(a1,visitedLocation.location), rewardsService.getDistance(a2,visitedLocation.location))
+		).limit(5).collect(Collectors.toList());
+	}
+
+Maintenant cette méthode retourne précisement la liste des 5 attractions les plus proches de la localisation d'un utilisateur quelque soit la distance et ce, rangée par la distance séparant la localisation visitée et l'attraction'.
+
+Concernant la façon de présenter le résultat sous format Json , nous avons fait le choix d'utiser directement une LinkedHashMap sans passer par un DTO:
+
+.. code:: java
+
+    /**
+	 * custom method to return a hashMap representing an attraction near the last user's visitedLocation
+	 * 
+	 * @param attraction the attraction to transform into a Map
+	 * @param visitedLocation the last visited location of user
+	 * @return a HashMap as asked for front end that collect information of attraction : Name of Tourist
+	 *         attraction, Tourist attractions lat/long, The user's location lat/long, The distance in
+	 *         miles between attraction and the user's location, The reward points for visiting this
+	 *         Attraction.
+	 */
+	private LinkedHashMap<String, String> nearAttractionToMap(Attraction attraction, VisitedLocation visitedLocation) {
+		LinkedHashMap<String, String> map = new LinkedHashMap<>();
+		map.put("name", attraction.attractionName);
+		map.put("touristAttraction lat/long", String.format("%f/%f", attraction.latitude, attraction.longitude));
+		map.put("userLocation lat/long", String.format("%f/%f", visitedLocation.location.latitude, visitedLocation.location.longitude));
+		map.put("distance", String.format("%f", rewardsService.getDistance(attraction, visitedLocation.location)));
+		map.put("rewardPoints", String.format("%d", rewardsService.getNearestAttractionRewardPoints(attraction.attractionId, visitedLocation.userId)));
+
+		return map;
+	}
+
+Et pour avoir un résultat rangé dans l'ordre des distances croissantes, nous avons crée un comparator customisé pour la LinkedHashMap (notre retour de la méthode précédente):
+
+.. code:: java
+
+    /**
+	 * custom comparator just to compare a list of attraction by distance from last user visitedLocation
+	 * 
+	 * @param h1 the hashmap that represents the first attraction
+	 * @param h2 the hashmap that represents the second attraction
+	 * @return a int to compare them By distance from user location
+	 */
+	private int compareAttractionMapByDistance(LinkedHashMap<String, String> h1, LinkedHashMap<String, String> h2) {
+		if (h1.get("distance").equals(h2.get("distance"))) {
+			return 0;
+		} else {
+			if (Double.valueOf(h1.get("distance")) > Double.valueOf(h2.get("distance"))) {
+				return 1;
+			} else {
+				return -1;
+			}
+		}
+	}
+
+Ajout d'une fonctionnalité
+==========================
+
+Problèmatique rencontrée
+------------------------
+
+Les responsables du produit souhaitaient pouvoir observer les déplacements des utilisateurs et ainsi identifier si un schéma logique ou répétitif s'en dégagait au fil du temps.
+Pour ce faire, ils souhaitaient ajouter une nouvelle fonctionnalité à Tour Guide : regrouper tous les emplacements de tous les utilisateurs afin de les visualiser.
+
+Explication
+-----------
+
+Cette demande de nouvelle fonctionnalité n'était pas forcément clairement détaillée... En effet, l'énoncée de la user storie précisait que l'on regroupe l'ensemble des emplacements de tous les utilisateurs.
+
+Cependant dans le code de **TourGuideServiceController pour la méthode getAllCurrentLocations()**, nous retrouvions le commentaire ci dessous :
+
+.. code:: java
+
+    /**
+    * TODO: Get a list of every user's most recent location as JSON
+    *   - Note: does not use gpsUtil to query for their current location,
+    *        but rather gathers the user's current location from their stored location
+    *        history.
+    *        
+    *        Return object should be the just a JSON mapping of userId to Locations
+    *        similar to:
+    *        {
+    *       "019b04a9-067a-4c76-8817-ee75088c3822":
+    *        {"longitude":-48.188821,"latitude":74.84371}
+    *        ...}
+    */
+
+Ce qui ne correspondait pas aux exigences demandées soit l'ensemble de localisations.
+
+Résolution
+----------
+
+Par conséquent, nous avons développé deux endpoints pour cette nouvelle fonctionnalité:
+
+* un premier entièrement nouveau pour respecter les exigences souhaitées : **getAllUserLocations()**
+* un second qui refactorisait le endpoint existant : **getAllCurrentLocations()**
+
+Pour cela, nous avons ,tout comme pour les userPreferences, créer 2 classes DTO et utiliser l'API Stream de java pour obtenir les résultats attendus:
+
+* **UserCurrentLocationDTO**  pour représenter la dernière localité visité par un utilisateur avec uniquement sa loatitude et sa longitude
+* **UserVisitedLocationDTO** pour représenter une localité visité par un utilsateur avec la classe Location
+
+Nous avons utiliser également notre modelMapper pour réaliser les conversions nécéssaires entre nos DTO et nos entités.
+
+Ci dessous, les méthodes dans TourGuideService permettant de renvoyer la liste de toutes les localisations de tous les utilisateurs:
+
+.. code:: java
+
+    /**
+	 * method getAllUserLocations()
+	 * 
+	 * @return List of all visited locations of all users sorted first by there userId and then by date
+	 *         of visited locations
+	 */
+	public List<VisitedLocation> getAllUserLocations() {
+
+		Comparator<VisitedLocation> comparatorByDate = Comparator.comparing(v -> v.timeVisited);
+		List<VisitedLocation> visitedLocations =
+				flattenListOfListsStream(this.getAllUsers().parallelStream()
+						.map(User::getVisitedLocations).collect(Collectors.toList()));
+
+		return visitedLocations.stream().sorted(comparatorByDate).collect(Collectors.toList());
+
+	}
+
+	/**
+	 * private method to regroup all Objects in a same list from a List<List<Object>>
+	 * 
+	 * @param <T> the generic object
+	 * @param list the List<List<Object>>
+	 * @return a unique List of all Objects
+	 */
+	private <T> List<T> flattenListOfListsStream(List<List<T>> list) {
+		return list.stream().flatMap(Collection::stream).collect(Collectors.toList());
+	}
+
+Ci dessous, la méthode dans TourGuideService permettant de renvoyer la liste de toutes les dernières localisations de tous les utilisateurs:
+
+.. code:: java
+
+    /**
+	 * method getAllUserCurrentLocations()
+	 * 
+	 * @return a List of all current locations of all users
+	 */
+	public List<VisitedLocation> getAllUserCurrentLocations() {
+		return this.getAllUsers().parallelStream().map(User::getLastVisitedLocation).collect(Collectors.toList());
+	}
+
+
+.. note::
+
+    Pour information, nous avons remplacer Json par Gson (la librairie Google) car il s'est avéré que Json était incapable de parse correctement un UUID.
+    
+
+Améliorer le process qualité
+============================
+
+Problèmatique rencontré
+-----------------------
+
+Mettre en place une chaîne de build (pipeline CI/CD GitLab) qui permettra d’exécuter la compilation des classes, de s’assurer de la non régréssion des tests et obtenir un artefact valide du projet.
+
+
+Résolution
+----------
+
+Pour celà , nous avons dés le début du projet, mis en place dans le Gitlab une pipeline CI/CD en implémentant un fichier **.gitlab-ci.yml**
+
+.. code:: ruby
+
+    default:
+    image: gradle:jdk11
+
+    build:
+    stage: build
+    script:
+        - cd TourGuide/
+        - ./gradlew clean
+        - ./gradlew classes
+        - ./gradlew testClasses
+
+    test:
+    stage: test
+    needs: [build]
+    script:
+        - cd TourGuide/
+        - ./gradlew test
+        - cat build/jacocoHtml/index.html | grep -o '<tfoot>.*</tfoot>'
+    coverage: '/Total.*?([0-9]{1,3})%/'
+    
+    artifacts:
+        when: always
+        paths:
+        - TourGuide/build/jacocoHtml
+        - TourGuide/build/reports
+        - TourGuide/build/jacoco/test.exec
+        reports:
+        junit: TourGuide/build/test-results/test/TEST-*.xml
+
+    deploy:
+    stage: deploy
+    needs: [test]
+    script:
+        - cd TourGuide/
+        - ./gradlew bootjar
+    artifacts:
+        when: always
+        paths:
+        - TourGuide/build/libs/
+
+Cette dernière s'appuie donc sur une image docker **gradle:jdk11**.
+
+Elle est contituée de 3 stages comprennant chacun 1 job qui dependent les un des autres:
+
+* **build** pour compiler les classes source et test
+* **test** qui lance les tests et crée un artifact comprennant la couverture jacoco des test
+* **deploy** pour créer le jar de TourGuide 
+
+Ci dessous les dependances des jobs:
+
+.. image:: _static/pipeline/job_dependencies.png
+    :alt: job_dependencies
+    :name: job_dependencies
+
+Ci dessous la représentation du taux de couvertures avec les tests effectués:
+
+.. image:: _static/pipeline/jacoco_coverage.png
+    :width: 100%
+    :alt: jacoco_coverage
+    :name: jacoco_coverage
+
+Ci dessous une vue des artifacts crée:
+
+.. image:: _static/pipeline/pipeline_artifacts.png
+    :width: 100%
+    :alt: pipeline_artifacts
+    :name: pipeline_artifacts
